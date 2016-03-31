@@ -40,7 +40,7 @@
 考虑图\ref{fig:basic_concurrency_drawback}和图\ref{fig:basic_concurrency_drawback_compare}中的模型，当检索满足条件“任务`F'和任务`C'满足因果关系且任务`B'和任务`C'满足并行关系”的模型时，两个模型都符合检索条件。另一方面，将检索条件更改为“任务`F'和任务`C'满足因果关系，且当任务`F'被执行时，任务`C'一定在同一个执行实例中被执行，同时当任务`C'被执行时，任务`F'一定在同一个执行实例中被执行；任务`B'和任务`C'满足并行关系，当任务`B'被执行时，任务`C'一定在同一个执行实例中被执行，同时当任务`C'被执行时，任务`B'一定在同一个执行实例中被执行”时，只有图\ref{fig:basic_concurrency_drawback_compare}中的模型符合条件。显然，精炼后的任务间有序关系能够更加精确地刻画流程模型的行为语义。类似的，这种精炼后的刻画方法可以被当作业务规则用于流程模型的符合性检测。
 \end{example}
 
-Jin等人在\cite{jin2014computing}中已经提出了一种精炼有序关系RORU及其计算方法，本文重点对其进行了研究。针对该方法存在的问题，本文提出了改进方案，将新的方法命名为扩展的任务间不确定性精炼有序关系（Extended Refined Ordering Relations with Uncertainty，简称ExRORU）。由于ExRORU是一种刻画流程行为语义的方法，因此在实验过程中，本文将ExRORU与基于行为语义的流程特征刻画算法和流程相似性度量算法进行比较。
+Jin等人已经提出了一种精炼有序关系RORU及其计算方法\cite{jin2014computing}，本文重点对其进行了研究。针对该方法存在的问题，本文提出了改进方案，将新的方法命名为扩展的任务间不确定性精炼有序关系（Extended Refined Ordering Relations with Uncertainty，简称ExRORU）。由于ExRORU是一种刻画流程行为语义的方法，因此在实验过程中，本文将ExRORU与基于行为语义的流程特征刻画算法和流程相似性度量算法进行比较。
 
 \section{预备知识}\label{sec:preliminaries}
 
