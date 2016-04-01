@@ -48,7 +48,7 @@ Jin等人已经提出了一种精炼有序关系RORU及其计算方法\cite{jin2
 \subsection{Petri网}\label{subsec:petrinet}
 业务过程建模给业务过程分析人员提供了建立过程模型并分析它们的能力，有许多论著和建模工具对其进行详尽地描述和实现。建模语言是业务过程建模中的核心部分，目前的建模语言包括但不限于：Petri网、EPC（Event-driven process chain，事件驱动过程链）、BPMN（Business Process Model and Notation，业务过程建模符号）、BPEL（Business Process Execution Language，业务过程执行语言）、UML（Unified Modeling Language，统一建模语言）、APROMORE\cite{la2011apromore}。
 
-Petri网是一种有向二分图，于1960年代由Carl Adam Petri发明\cite{petri1962kommunikation}，适合于描述含有异步、并发过程的系统。Petri网既有严格的数学表述方式，也有良好的图形化基础。本文使用Petri网作为建模语言。
+Petri网是一种有向二分图，于1960年代由Carl Adam Petri发明\cite{petri1962kommunikation}，适合于描述含有异步、并发过程的系统。Petri网既有严格的数学表述方式，也有良好的图形化基础。本文使用Petri网作为建模语言，以下概念来自\onlinecite{van2004workflow}。有关Petri网及其性质的详细介绍，请参见\onlinecite{desel2005free,murata1989petri,reisig1998lectures,袁祟义2005petri}。
 
 \begin{definition}[Petri网]\label{def:petrinet}
 Petri网是一个三元组$N=(P,T,F)$，其中：
