@@ -72,7 +72,7 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
   \caption{标识Petri网示例\label{fig:petri_net_example}}
 \end{figure}
 
-图\ref{fig:petri_net_example}展示了一个由8个库所和7个变迁组成的Petri网。变迁$A$有一个输入库所和一个输出库所，变迁$AND$-$split$有一个输入库所和两个输出库所，变迁$AND$-$join$有两个输入库所和一个输出库所。变迁$A$的输入库所中的黑点表示一个托肯（token），这个托肯即为该Petri网的初始标识。该Petri网的行为由如下发生规则定义。
+图\ref{fig:petri_net_example}展示了一个由8个库所和8个变迁组成的Petri网。变迁$A$有一个输入库所$p_{1}$和一个输出库所$p_{2}$，变迁$AND$-$split$有一个输入库所$p_{2}$和两个输出库所$p_{3}$、$p_{4}$，变迁$AND$-$join$有两个输入库所$p_{5}$、$p_{6}$和一个输出库所$p_{7}$。变迁$A$的输入库所中的黑点表示一个托肯（token），这个托肯即为该Petri网的初始标识。该Petri网的行为由如下发生规则定义。
 
 \begin{definition}[发生规则]\label{def:firing_rule}
 令$\Sigma=(N=(P,T,F),M_{0})$是一个Petri网系统：
@@ -125,8 +125,89 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 图\ref{fig:petri_net_example}中的标识Petri网的所有变迁都不是死变迁。但是它不是活的，因为它无法使每个变迁不断地发生。
 
 \subsection{工作流网}\label{subsec:workflow_net}
+大多数工作流系统提供了构建标准逻辑的连接语义词，例如$AND$-$split$，$AND$-$join$，$OR$-$split$和$OR$-$join$\cite{van2004workflowbook,fischer2002workflow,jablonski1996workflow,leymann2000production}。这些语义词被用于建模顺序、条件、并行和循环结构\cite{fischer2002workflow}。显然，Petri网拥有足够的能力来表达上述结构：用变迁表示任务，库所和边表示因果依赖。例如，库所可以表示任务的前驱条件或者后继条件；$AND$-$split$可以用含有多个输出库所的变迁表示；$OR$-$split$/$OR$-$join$可以用含有多条出边/入边的库所表示。
+
+用于建模工作流中控制流维度的Petri网称作工作流网（Workflow net，缩写为WF-net）。工作流网最先由荷兰教授Wil M.P. van der Aalst提出\cite{van1998application}。
+
+\begin{definition}[工作流网]\label{def:workflow_net}
+令$N=(P,T,F)$是一个Petri网，$\overline{t}$是不属于$P\cup T$的新节点。$N$是工作流网（WF-net）当且仅当：
+  \begin{itemize}
+  	\item[-] 对象创建：$P$含有一个输入库所$i$满足：$\bullet i=\emptyset$；
+  	\item[-] 对象完成：$P$含有一个输出库所$o$满足：$o\bullet=\emptyset$；
+  	\item[-] 连通性：$\overline{N}=(P,T\cup\{\overline{t}\},F\cup\{(o,\overline{t}),(\overline{t},i)\})$是强连通的。
+  \end{itemize}
+\end{definition}
+
+图\ref{fig:petri_net_example}中的标识Petri网是一个WF-net。虽然该网不是强连通的，但其短回路网$\overline{N}=(P,T\cup\{\overline{t}\},F\cup\{(o,\overline{t}),(\overline{t},i)\})$是强连通的。即使一个网满足定义\ref{def:workflow_net}中的所有条件，其对应的过程模型仍然可能包含诸如死锁、永远不被使能的任务、活锁、过程终止后有残留托肯等错误。因此，需要定义如下原则。
+
+\begin{definition}[合理性]\label{def:sound}
+令$N=(P,T,F)$为一个WF-net，其输入库所为$i$，输出库所为$o$。$N$是合理的，当且仅当：
+  \begin{itemize}
+  	\item[-] 安全性：$(N,[i])$是安全的；
+  	\item[-] 恰当完成：$\forall s\in[N,[i]\rangle,s.t.~o\in s\Rightarrow s=[o]$；
+  	\item[-] 可完成：$\forall s\in[N,[i]\rangle,s.t.~[o]\in[N,s\rangle$；
+  	\item[-] 不含死任务：$(N,[i])$不包含死变迁。
+  \end{itemize}
+所有合理的WF-net组成集合$\mathcal{W}$。
+\end{definition}
+
+图\ref{fig:petri_net_example}中的WF-net是合理的。合理性可以用标准Petri网分析技术来验证。事实上，WF-net的合理性对应于其短回路网的活性和安全性\cite{van1997verification,van1998application,van2004workflowbook}。因此，可以应用高效的算法和工具验证WF-net的合理性，例如针对WF-net的裁剪分析工具Woflan\cite{verbeek2001diagnosing}。
 
 \subsection{过程流}\label{subsec:process_run}
+本文针对过程模型的任务间有序关系进行精炼，首先给出有序关系的标准定义。
+
+\begin{definition}[任务间有序关系\cite{esparza2002improvement}]\label{def:ordering_relations}
+Petri网的任意一对节点$x,y$之间有三种基本有序关系：
+  \begin{itemize}
+  	\item[-] $x$和$y$满足因果关系，当且仅当该网存在一条至少包含一条边、从$x$到$y$的路径，记作$x<y$；
+  	\item[-] $x$和$y$满足冲突关系，当且仅当该网存在两条开始于同一个库所$s$的路径$st_{1}...x$和$st_{2}...y$，且$t_{1}...x$和$t_{2}...y$不相交，记作$x\#y$；
+  	\item[-] $x$和$y$满足并行关系，当且仅当$x$和$y$既不满足因果关系，也不满足冲突关系，记作$x~co~y$。
+  \end{itemize}
+\end{definition}
+
+如前文所述，本文对因果关系和并行关系进行精炼。为了便于定义与描述，本文使用过程流来描述仅含有上述两种关系的模型。使用过程流可以恰当地描述变迁发生序列中的因果和并行关系。一个网系统的过程流是一种称作因果网的特殊网，并使用一个函数将因果网的节点映射到原网系统的节点上。
+
+\begin{definition}[因果网\cite{polyvyanyy20144c}]\label{def:causal_net}
+$N=(B,E,G)$是因果网，当且仅当：
+  \begin{itemize}
+  	\item[-] 对于任意$b\in B$，满足：$|\bullet b|\leq 1$且$|b\bullet|\leq 1$；
+  	\item[-] $N$是无环的，即$G^{+}$是非自反的。
+  \end{itemize}
+\end{definition}
+
+$B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的两个节点$x$和$y$满足因果关系，当且仅当$(x,y)\in G^{+}$；$x$和$y$满足并行关系，当且仅当$x\neq y$，$(x,y)\notin G^{+}$且$(y,x)\notin G^{+}$。一个因果网的割是其所有俩俩并行条件的最大集合。
+
+因果网的事件可以用来描述变迁发生序列。
+
+\begin{definition}[过程流\cite{polyvyanyy20144c}]\label{def:process_run}
+标识Petri网$(N=(P,T,F),s)$的过程流是一个有序二元组$\pi=(N_{\pi},\rho)$，其中$N_{\pi}=(B,E,G)$是一个因果网，$\rho:B\cup E\rightarrow P\cup T$是一个映射函数且满足如下条件：
+  \begin{itemize}
+  	\item[-] $\rho(B)\subseteq P$且$\rho(E)\subseteq T$；
+  	\item[-] $Min(N_{\pi})$是一个割且$\forall p\in P:s(p)=|\rho^{-1}(p)\cap Min(N_{\pi})|$，即$\pi$的初始标识是$s$；
+  	\item[-] 对于任意事件$e\in E$和任意库所$p\in P$满足：$\bm{1}_{F}((p,\rho(e)))=|\rho^{-1}(p)\cap\bullet e|$且$\bm{1}_{F}((\rho(e),p))=|\rho^{-1}(p)\cap e\bullet|$.\footnote{$\bm{1}_{F}$表示$F$在集合$(P\times T)\cup(T\times P)$上的特征函数。}
+  \end{itemize}
+\end{definition}
+
+给定一个过程流$\pi$，事件集合$E$和映射函数$\rho$经常被记作$E_{\pi}$和$\rho_{\pi}$。前文提到的因果关系和并行关系同样可以定义在$\pi$的因果网节点上，分别记作$\parallel_{\pi}$和$\rightarrow_{\pi}$，在含义明确的情况下脚标常被省略。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}{1\textwidth}
+  	\centering
+  	\includegraphics[width=0.6\textwidth]{process_run_example_1}
+  	\caption{\label{fig:process_run_example_1}}
+  \end{subfigure}
+  \begin{subfigure}{1\textwidth}
+  	\centering
+  	\includegraphics[width=1\textwidth]{process_run_example_2}
+  	\caption{\label{fig:process_run_example_2}}
+  \end{subfigure}
+  \caption{图\ref{fig:petri_net_example}中模型的两个过程流示例}
+\end{figure}
+
+图\ref{fig:process_run_example_1}和图\ref{fig:process_run_example_2}展示了图\ref{fig:petri_net_example}中模型的两个过程流$\pi_{1}$和$\pi_{2}$。当对过程流进行图形化展示时，条件$c_{i},c_{i}'...$对应于库所$p_{i}$，即$\rho(c_{i})=\rho(c_{i}')=p_{i}$。类似的，事件$e_{j},e_{j}'...$对应于变迁$t_{j}$，即$\rho(e_{j})=\rho(e_{j}')=t_{j}$。在图\ref{fig:process_run_example_2}中，$e_{3}\parallel e_{4}$、$e_{4}\rightarrow e_{4}'$、$e_{3}'\parallel e_{4}'$。显然，若两个事件在一个Petri网$N$的过程流$\pi$中满足因果关系，则它们在原网中对应的变迁必然能在某个变迁发生序列中顺序发生。类似的，若两个事件在$\pi$中满足并行关系，则它们在原网中对应的变迁必然会在某个可达标识$s$下同时被使能，而且可以在$s$这个标识下以任意顺序发生。
+
+每个事件$e\in E_{\pi}$都代表着对应变迁$\rho_{\pi}(e)$的一次发生。J{\"o}rg Desel等人给出了一个网系统的过程流与其变迁发生序列对应的方法\cite{desel2000validation}。给定一个Petri网，对其过程流加标识得到$(N_{\pi},s)$，其中$N_{\pi}$是该网过程流$(N_{\pi},\rho)$的因果网且标识$s$仅在每个源条件中放置一个托肯。通过映射函数$\rho$可以将该过程流的事件发生序列与原网的变迁发生序列对应起来。例如，图\ref{fig:process_run_example_1}中的过程流的事件发生序列可以对应图\ref{fig:petri_net_example}中模型的变迁发生序列$t_{1}t_{2}t_{3}t_{4}t_{5}t_{6}$。
 
 \subsection{完全前缀展开}\label{subsec:cpu}
 
