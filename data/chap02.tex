@@ -1,7 +1,72 @@
 \chapter{相关工作}\label{cha:related_work}
+本章将重点介绍现有的刻画过程模型行为语义的算法和分析工具，同时对本文改进的RORU算法进行介绍和分析。
 
-\section{流程模型行为语义刻画及相似性算法}\label{sec:related_algorithms}
+\section{过程模型行为语义刻画方法}\label{sec:related_algorithms}
+国内外学者提出了诸多刻画过程模型行为语义的方法与工具，它们的适用场景和刻画能力各有不同。对过程模型行为语义的刻画可以应用到过程模型相似性度量方法及过程模型差异性检测中，本节重点介绍部分主流过程模型行为语义刻画方法和基于过程模型行为特征的相似性度量算法。
 
-\section{流程模型行为语义分析工具}\label{sec:related_tools}
+Zha等人基于两个模型的变迁发生序列集提出了一种简单的相似性度量方法，即参考相似性算法（reference similarity）\cite{zha2010workflow}。作者同时给出了此方法的两个严重问题：首先，该方法不适用于带环模型，因为带环模型的变迁发生序列是无穷多的；其次，该方法过于严格，现实中存在发生序列相似但无完全相同序列的模型对，该类模型对会被认为完全不相似。
+
+基于上述原因，Zha等人又提出了另一种相似性算法，即TAR算法（Trasition adjacency relation，变迁紧邻关系）。一对变迁$A,B$被认为是$TAR$集合中的元素当且仅当模型存在一条形如$\langle ...,A,B,...\rangle$的变迁发生序列，即变迁$A$后面紧跟着变迁$B$。令模型$M_{0}$和模型$M_{1}$的$TAR$关系集合分别是$TAR_{0}$和$TAR_{1}$，则两个模型间的$TAR$相似度被定义为$sim(M_{0},M_{1})=(\#(TAR_{0}\cap TAR_{1})/\#(TAR_{0}\cup TAR_{1}))$。因为模型$M_{0}$和$M_{1}$中的变迁数量是有限的，所以$TAR_{0}$和$TAR_{1}$是有穷的。作者同时证明了该算法对应的距离度量是度量空间中的距离函数。
+
+TAR相似性算法解决了带环WF-net的相似性度量问题，是一种基于过程模型行为特征的相似性算法。但是TAR算法只考虑了变迁之间的直接紧邻关系，而忽略了变迁紧邻关系之间的传递闭包。该算法只考虑了“变迁$A$后可以被变迁$B$直接跟随”，而没有考虑“变迁$A$发生后，变迁$B$可以在之后某个时候发生”。该缺陷导致算法不能对循环结构与顺序结构对应的紧邻关系进行区分，影响度量结果。此外，TAR算法也不能正确处理带有非自由选择结构的过程模型。
+
+Weidlich等人通过抽取两个变迁执行之间的依赖关系刻画一个过程模型的行为语义\cite{weidlich2011efficient,weidlich2010efficient}。变迁之间的依赖关系被分成四类：
+\begin{itemize}
+  \item[-] 变迁$A$和变迁$B$满足严格顺序关系（strict order relation），当且仅当变迁$A$可能在变迁$B$之前被执行，而变迁$B$不可能在变迁$A$之前被执行，即存在形如$\langle ...A...B...\rangle$的变迁发生序列而不存在形如$\langle ...B...A...\rangle$的变迁发生序列。
+  \item[-] 变迁$A$和变迁$B$满足互斥关系（exclusiveness relation），当且仅当变迁$A$和变迁$B$不可能在同一个变迁发生序列中同时出现。
+  \item[-] 变迁$A$和变迁$B$满足观察并行关系（observation concurrency relation）（\onlinecite{weidlich2011efficient}中称之为交错顺序关系（interleaving order relation）），当且仅当变迁$A$可能在变迁$B$之前被执行，变迁$B$也可能在变迁$A$之前被执行。
+  \item[-] 变迁$A$和变迁$B$满足共现关系（co-occurrence relation），当且仅当在每个变迁$A$出现的变迁发生序列中，变迁$B$也被执行。
+\end{itemize}
+上述四种关系被称为因果行为轮廓（causal behavioural profile，简称CBP）。
+
+为了比较模型$M_{0}$和模型$M_{1}$的行为，首先需要为两个模型的变迁之间建立一个映射关系，该映射关系由一个相关关系$\sim$表示。关系$\sim$满足$M_{0}$可以与$M_{1}$的多个点对应，反之亦然。
+
+Weidlich等人基于如下思想定义了一种相似性度量方法（\onlinecite{weidlich2011efficient,weidlich2010efficient}中称之为一致性程度）：对于一个模型中每对变迁，如果在另一个模型中有对应的变迁对（由关系$\sim$决定），就检查这两个模型对是否满足相同的关系（严格顺序、互斥、交错顺序、共现）。
+
+形式化的，令$T_{0}$和$T_{1}$分别为模型$M_{0}$和模型$M_{1}$的变迁集。定义$T_{0}^{\sim}=\{a\in T_{0}:\exists b\in T_{1},\text{s.t.}~a\sim b\}$以及$T_{1}^{\sim}=\{b\in T_{1}:\exists a\in T_{0},\text{s.t.}~a\sim b\}$。因为存在一对多的映射，所以$T_{0}^{\sim}$的大小与$T_{1}^{\sim}$不一定一致。一致性变迁对集合$C_{0}\subseteq T_{0}^{\sim}\times T_{0}^{\sim}$是所有满足如下条件的变迁对$(x_{0},y_{0})\in T_{0}^{\sim}\times T_{0}^{\sim}$：对于所有满足$x_{0}\sim x_{1}$且$y_{0}\sim y_{1}$的变迁对$(x_{1},y_{1})\in T_{1}^{\sim}\times T_{1}^{\sim}$，$x_{0}$和$y_{0}$有着与$x_{1}$和$y_{1}$相同的关系。同理定义一致性变迁对集合$C_{1}\subseteq T_{1}^{\sim}\times T_{1}^{\sim}$。
+
+基于上述定义，可以用如下公式计算相似性（被称为一致性度量）：
+\begin{displaymath}
+  sim(M_{0},M_{1})=\frac{\#C_{0}+\#C_{1}}{\#(T_{0}^{\sim}\times T_{0}^{\sim})+\#(T_{1}^{\sim}\times T_{1}^{\sim})}
+\end{displaymath}
+
+CBP可以被应用于模型检索和一致性检测。作者给出了一个高效计算过程模型因果行为轮廓的算法\cite{weidlich2010efficient}，但该算法只适用于合理的自由选择WF-net。此外，在部分模型中，CBP不能区分循环结构和并行结构，所以拥有相同CBP的两个模型可能有着不同的行为。
+
+Dijkman等人提出了因果足迹（causal footprints，简称CF）算法来抽取过程模型变迁之间的前驱关系\cite{dijkman2011similarity}。假定过程模型的变迁集合为$T$，它的因果足迹是一个二元组$(L_{lb},L_{la})$。该二元组的第一个元素$L_{lb}\subseteq (\wp(T)\times T)$被称为后向链接集合，$(S,a)\in L_{lb}$当且仅当在某个变迁发生序列中每次变迁$a$的发生都有变迁集合$S$中某个变迁的发生作为其前驱。同理，$L_{la}$被称为前向链接集合，$(T\times\wp(T))\supseteq(a,S)\in L_{la}$当且仅当在某个变迁发生序列中每次变迁$a$的发生都有变迁集合$S$中某个变迁的发生作为其后继。
+
+为了度量两个模型间的相似性，需要计算它们的因果足迹之间的相似性。CF被当作文档向量空间中的文档，这是在信息过滤和信息检索领域中被广泛使用的一个概念\cite{salton1975vector}。因果足迹（“文档”）被表示成索引项的向量。假定模型$M_{0}=(N_{0},E_{0})$和$M_{1}=(N_{1},E_{1})$的前向链接集合分别为$L_{la}^{M_{0}}$和$L_{la}^{M_{1}}$，后向链接集合分别为$L_{lb}^{M_{0}}$和$L_{lb}^{M_{1}}$。索引项集合$\Uptheta=N_{0}\cup N_{1}\cup L_{la}^{M_{0}}\cup L_{la}^{M_{1}}\cup L_{lb}^{M_{0}}\cup L_{lb}^{M_{1}}$，即$\Uptheta$包含了两个模型的所有节点及所有的前向链接和后向链接。令$\lambda:\Uptheta\rightarrow\mathbb{N}$是一个索引函数，它给每个索引项赋予一个递增数字。
+
+模型$M_{i}$（$i\in\{0,1\}$）被表示成向量$\vec{g^{i}}=(g_{1}^{i},g_{2}^{i},...,g_{\#\Uptheta}^{i})$。\onlinecite{van2008measuring}给出了其取值：
+\begin{displaymath}
+  g{_{\lambda(t)}^i}=
+    \begin{cases}
+        0& if\quad t\notin N_i\cup L{_{la}^{M_i}}\cup L{_{lb}^{M_i}}\\
+        1& if\quad t\in N_i\\
+        \frac{1}{2^{len(t)}-1}& if\quad t\in L{_{la}^{M_i}}\cup L{_{lb}^{M_i}}
+    \end{cases}
+\end{displaymath}
+其中$len(t)$是前向链接集合或者后向链接集合中元素的个数。模型$M_{0}$和模型$M_{1}$的相似度用两个模型的向量夹角余弦值表示：
+\begin{displaymath}
+  sim(M_{0},M_{1})=\frac{\vec{g^{0}}\times\vec{g^{1}}}{\vec{g^{0}}\cdot\vec{g^{1}}}
+\end{displaymath}
+
+CF的最大缺点在于$L_{la}$和$L_{lb}$含有大量的无用元素\cite{dijkman2011similarity,van2008measuring}。由于该方法使用的向量空间维度很高，因此向量的计算效率很低。另外，CF算法不区分$OR$连接和$XOR$连接，从而影响计算结果的合理性。
+
+为了解决带环模型变迁发生序列集合无穷大的问题，Wang等人通过限制子序列来度量相似性：一条不含重复变迁的发生序列被看作一个整体来处理\cite{wang2010behavioral}。该算法被称为主变迁序列（principle transition sequences，简称PTS）。含有重复变迁$x$的序列$\sigma$被表达为$\sigma=\langle\sigma_{prefix},x,\sigma_{repeatable},x,...\rangle$，其中$\sigma_{prefix}$和$\sigma_{repeatable}$是$\sigma$的子序列。如此，在计算过程中，子序列$\sigma_{prefix}$和$\sigma_{repeatable}$会替代$\sigma$来参与计算。作者证明了对于每个过程模型，子序列的数量是有限的。
+
+基于最长公共子序列可以定义两个子序列之间的相似性：
+\begin{displaymath}
+  sim_{trace}(\sigma_{1},\sigma_{2})=\frac{len(lcs(\sigma_{1},\sigma_{2}))}{max(len(\sigma_{1}),len(\sigma_{2}))}
+\end{displaymath}
+假定模型$M_{0}$和模型$M_{1}$的变迁集分别为$T_{0}$和$T_{1}$，基于上述子序列相似性可以得到模型相似性公式如下：
+\begin{displaymath}
+  sim(M_{0},M_{1})=\frac{\sum_{\sigma\in T_{0}}\text{max}_{\sigma'\in T_{1}}sim_{trace}(\sigma,\sigma')+\sum_{\sigma'\in T_{1}}\text{max}_{\sigma\in T_{0}}sim_{trace}(\sigma',\sigma)}{\#T_{0}+\#T_{1}}
+\end{displaymath}
+
+PTS算法对变迁发生序列集合的相似性计算较为粗糙，未考虑子序列基数差异的影响，且其只使用最大相似度来衡量集合间的相似性，计算结果不够精确。另一方面，当处理含有高并发结构的过程模型时，PTS算法存在状态空间爆炸的问题。
+
+\section{精炼不确定性任务间有序关系}\label{sec:roru}
+
+\section{过程模型行为语义分析工具}\label{sec:related_tools}
 
 \section{本章小结}
