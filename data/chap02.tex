@@ -65,7 +65,15 @@ CF的最大缺点在于$L_{la}$和$L_{lb}$含有大量的无用元素\cite{dijkm
 
 PTS算法对变迁发生序列集合的相似性计算较为粗糙，未考虑子序列基数差异的影响，且其只使用最大相似度来衡量集合间的相似性，计算结果不够精确。另一方面，当处理含有高并发结构的过程模型时，PTS算法存在状态空间爆炸的问题。
 
-作为对PTS算法的改进，Dong等人提出了基于触发序列集合的过程模型相似性算法，即CFS（全称complete firing sequences）\cite{dong2014cfs}。
+作为对PTS算法的改进，Dong等人提出了基于触发序列集合的过程模型相似性算法，即CFS（全称complete firing sequences）\cite{dong2014cfs}。相比于PTS，CFS算法引入了循环计数的概念从而避免计算所有触发序列。CFS算法使用过程模型的覆盖树来计算触发序列集合，通过比较两个过程模型的触发序列集合来衡量两者的相似性。与PTS类似，作者首先定义了触发序列之间的相似性：
+\begin{displaymath}
+  sims(\sigma,\sigma')=\frac{length(lcs(L(\sigma),L(\sigma')))}{max(length(L(\sigma)),length(L(\sigma')))}
+\end{displaymath}
+在度量触发序列集合之间的相似性时，CFS不仅考虑了集合元素间的相似度，还考虑了两集合的基数差异。令$A$，$B$是两个完整触发序列集合，不失一般性假定$|A|\leq|B|$，令$\text{avg}(A,\sigma')=\frac{\sum_{\sigma\in A}sims(\sigma,\sigma')}{|A|}$表示完整触发序列集合$A$与单一完整触发序列$\sigma$的相似度，$\text{dis}(A,B)=\frac{||A|-|B||}{|B|}$表示$A$和$B$的基数距离。同时，令$M:A\rightarrow B$为一个单射，它将$A$中的完整触发序列映射到$B$中的序列，令$B'=B-\text{cod}(M)$，$n$为正整数，则$A$与$B$的相似度公式定义为：
+\begin{displaymath}
+  simc(A,B)=\frac{\sum_{(\sigma,\sigma')\in M}sims(\sigma,\sigma')+\sum_{\sigma'\in B'}\text{avg}(A,\sigma')}{|B|}\times(1-\frac{\text{dis}(A,B)}{n})
+\end{displaymath}
+并将此作为两个过程模型间的相似度。作者同时给出了利用贪心算法和$A^{*}$算法求解完整触发序列集合间最优映射的方法。与PTS类似，基于覆盖树的CFS算法也存在状态空间爆炸的问题。
 
 \section{精炼不确定性任务间有序关系}\label{sec:roru}
 
