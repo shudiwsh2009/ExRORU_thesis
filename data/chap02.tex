@@ -75,6 +75,102 @@ PTS算法对变迁发生序列集合的相似性计算较为粗糙，未考虑�
 \end{displaymath}
 并将此作为两个过程模型间的相似度。作者同时给出了利用贪心算法和$A^{*}$算法求解完整触发序列集合间最优映射的方法。与PTS类似，基于覆盖树的CFS算法也存在状态空间爆炸的问题。
 
+Artem Polyvyanyy等人定义了Petri网的4C频谱（共现co-occurrence、冲突conflict、因果causality和并行concurrency）并据此刻画模型的行为语义\cite{polyvyanyy20144c}。作者首先探讨了冲突和共现关系，任意一种刻画变迁的发生之间关联情况的关系都可以被归纳成以下两种情况之一：两个变迁是否能在同一个发生序列中同时出现；一个变迁是否可以在某个其他变迁不发生的情况发生。基于此作者给出基本冲突和基本共现的定义：
+\begin{definition}[基本冲突和基本共现]
+令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。
+  \begin{itemize}
+    \item[-] $x$与$y$可以冲突，当且仅当$S$中存在一个变迁发生序列$\sigma$使得$x\in\sigma$且$y\notin\sigma$，记作$x\dashedrightarrow_{S}y$；
+    \item[-] $x$与$y$可以共现，当且仅当$S$中存在一个变迁发生序列$\sigma$使得$x\in\sigma$且$y\in\sigma$，记作$x\leftrightharpoonupdown_{S}y$。\footnote{给定一个变迁发生序列$\sigma$，$x\in\sigma$表示$x$在$\sigma$中出现。}
+  \end{itemize}
+\end{definition}
+在含义明确的情况脚标常被省略。借用析取范式和合取范式的概念作者进一步给出了4C频谱中的冲突和共现定义：
+\begin{definition}[冲突和共现]
+令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。
+  \begin{itemize}
+    \item[-] $x$与$y$共现，当且仅当$\overline{x\dashedrightarrow_{S}y}\wedge\overline{y\dashedrightarrow_{S}x}\wedge x\leftrightharpoonupdown_{S}y$，记作$x\leftrightarrow_{S}y$；
+    \item[-] $x$与$y$冲突，当且仅当$x\dashedrightarrow_{S}y\wedge y\dashedrightarrow_{S}x\wedge\overline{x\leftrightharpoonupdown_{S}y}$，记作$x\#_{S}y$；
+    \item[-] $x$需要$y$，当且仅当$\overline{x\dashedrightarrow_{S}y}\wedge y\dashedrightarrow_{S}x\wedge x\leftrightharpoonupdown_{S}y$，记作$x\rightharpoonup_{S}y$；
+    \item[-] $x$与$y$相互独立，当且仅当$x\dashedrightarrow_{S}y\wedge y\dashedrightarrow_{S}x\wedge x\leftrightharpoonupdown_{S}y$，记作$x\rightleftharpoons_{S}y$。
+  \end{itemize}
+\end{definition}
+除此之外还有两种与死变迁相关的合取范式：
+\begin{definition}[不发生]
+令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。
+  \begin{itemize}
+    \item[-] $x$与$y$从不发生，当且仅当$\overline{x\dashedrightarrow_{S}y}\wedge\overline{y\dashedrightarrow_{S}x}\wedge\overline{x\leftrightharpoonupdown_{S}y}$，记作$x\mid_{S}y$；
+    \item[-] $x$发生但$y$不发生，当且仅当$x\dashedrightarrow_{S}y\wedge\overline{y\dashedrightarrow_{S}x}\wedge\overline{x\leftrightharpoonupdown_{S}y}$，记作$x\vdash_{S}y$。
+  \end{itemize}
+\end{definition}
+综上得到冲突和共现关系的频谱：
+\begin{definition}[冲突和共现关系的频谱]\label{def:spectrum_of_conflict_cooccurence}
+令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。$\Omega$是一个由原子命题$x\dashedrightarrow_{S}y$、$y\dashedrightarrow_{S}x$和$x\leftrightharpoonupdown_{S}y$组成的命题范式。
+  \begin{itemize}
+    \item[-] $\Omega$描述$x$和$y$之间的冲突关系当且仅当$\Omega$的完美3DNF的每个合取范式含有$x\dashedrightarrow_{S}y$或者$y\dashedrightarrow_{S}x$；
+    \item[-] $\Omega$描述$x$和$y$之间的共现关系当且仅当$\Omega$的完美3DNF的每个合取范式含有$x\leftrightharpoonupdown_{S}y$。
+  \end{itemize}
+\end{definition}
+给定网$S$，分别用$\diamondtimes_{S}$和$\diamondplus_{S}$表示$S$中所有的冲突和共现关系。给定两个变迁$x$和$y$，共有四种合取范式包含了原子$x\leftrightharpoonupdown y$：（1）$x\dashedrightarrow y\wedge y\dashedrightarrow x\wedge x\leftrightharpoonupdown y$；（2）$\overline{x\dashedrightarrow y}\wedge y\dashedrightarrow x\wedge x\leftrightharpoonupdown y$；（3）$\overline{x\dashedrightarrow y}\wedge y\dashedrightarrow x\wedge x\leftrightharpoonupdown y$；（4）$\overline{x\dashedrightarrow y}\wedge\overline{y\dashedrightarrow x}\wedge x\leftrightharpoonupdown y$。因此，共有$2^{4}-1$，即15中不同的共现关系，每种共现关系都是一个或者多个上述合取范式的析取范式。同理，共有63中不同的冲突关系。
+
+之后，作者开始探讨因果和并行关系。给定两个变迁$x$和$y$，对于因果和并行关系的分类建立在三个维度上：（1）关系是否在模型的部分或者全部过程流中成立；（2）关系是否在一个或者全部含有$x$的过程流中成立；（3）关系是否在一个或者全部含有$y$的过程流中成立。为了便于理解，首先给出一个能选择出描述$x$和$y$发生情况的过程流的过滤器：$\Delta_{S}(x,y)=\{\pi\in\Pi_{S}|\exists e_{1}\in E_{\pi}\exists e_{2}\in E_{\pi}:e_{1}\neq e_{2}\wedge\rho_{\pi}(e_{1})=x\wedge\rho_{\pi}(e_{2})=y\}$。为了检查两个变迁在所有包含它们的过程流中的并行模式，作者定义了完全并行关系。
+\begin{definition}[完全并行]\label{def:total_concurrency}
+令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。
+  \begin{itemize}[leftmargin=22pt]
+    \item[-] $x$和$y$满足完全（相互）并行关系，记作$x\parallel_{S}^{\forall\forall\forall}y$，当且仅当\\
+    $
+      \forall\pi\in\Delta_{S}(x,y)\forall e_{1}\in E_{\pi}\forall e_{2}\in E_{\pi}:(e_{1}\neq e_{2}\wedge\rho_{\pi}(e_{1})=x\wedge\rho_{\pi}(e_{2})=y)\Rightarrow e_{1}\parallel_{\pi}e_{2}
+    $；
+    \item[-] $x$对于$y$满足完全功能并行关系，记作$x\parallel_{S}^{\forall\forall\exists}y$，当且仅当\\
+    $
+      \forall\pi\in\Delta_{S}(x,y)\forall e_{1}\in E_{\pi}\exists e_{2}\in E_{\pi}:\rho(e_{1})=x\Rightarrow(\rho_{\pi}(e_{2})\wedge e_{1}\parallel_{\pi}e_{2})
+    $；
+    \item[-] $x$对于$y$满足完全支配并行关系，记作$x\parallel_{S}^{\forall\exists\forall}y$，当且仅当\\
+    $
+      \forall\pi\in\Delta_{S}(x,y)\exists e_{1}\in E_{\pi}\forall e_{2}\in E_{\pi}:\rho_{\pi}(e_{1})=x\wedge((\rho_{\pi}(e_{2})=y\wedge e_{1}\neq e_{2})\Rightarrow e_{1}\parallel_{\pi}e_{2})
+    $；
+    \item[-] $x$与$y$满足完全存在并行关系，记作$x\parallel_{S}^{\forall\exists\exists}y$，当且仅当\\
+    $
+      \forall\pi\in\Delta_{S}(x,y)\exists e_{1}\in E_{\pi}\exists e_{2}\in E_{\pi}:\rho_{\pi}(e_{1})=x\wedge\rho_{\pi}(e_{2})=y\wedge e_{1}\parallel_{\pi}e_{2}
+    $。
+  \end{itemize}
+\end{definition}
+为了检查两个变迁在至少一个包含它们的过程流中的并行模式，作者定义了存在并行关系。
+\begin{definition}[存在并行]\label{def:existential_concurrency}
+令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。
+  \begin{itemize}[leftmargin=22pt]
+    \item[-] $x$和$y$满足存在完全并行关系，记作$x\parallel_{S}^{\exists\forall\forall}y$，当且仅当\\
+    $
+      \exists\pi\in\Delta_{S}(x,y)\forall e_{1}\in E_{\pi}\forall e_{2}\in E_{\pi}:(e_{1}\neq e_{2}\wedge\rho_{\pi}(e_{1})=x\wedge\rho_{\pi}(e_{2})=y)\Rightarrow e_{1}\parallel_{\pi}e_{2}
+    $；
+    \item[-] $x$对于$y$满足存在功能并行关系，记作$x\parallel_{S}^{\exists\forall\exists}y$，当且仅当\\
+    $
+      \exists\pi\in\Delta_{S}(x,y)\forall e_{1}\in E_{\pi}\exists e_{2}\in E_{\pi}:\rho(e_{1})=x\Rightarrow(\rho_{\pi}(e_{2})\wedge e_{1}\parallel_{\pi}e_{2})
+    $；
+    \item[-] $x$对于$y$满足存在支配并行关系，记作$x\parallel_{S}^{\exists\exists\forall}y$，当且仅当\\
+    $
+      \exists\pi\in\Delta_{S}(x,y)\exists e_{1}\in E_{\pi}\forall e_{2}\in E_{\pi}:\rho_{\pi}(e_{1})=x\wedge((\rho_{\pi}(e_{2})=y\wedge e_{1}\neq e_{2})\Rightarrow e_{1}\parallel_{\pi}e_{2})
+    $；
+    \item[-] $x$与$y$满足存在（完全）并行关系，记作$x\parallel_{S}^{\exists\exists\exists}y$，当且仅当\\
+    $
+      \exists\pi\in\Delta_{S}(x,y)\exists e_{1}\in E_{\pi}\exists e_{2}\in E_{\pi}:\rho_{\pi}(e_{1})=x\wedge\rho_{\pi}(e_{2})=y\wedge e_{1}\parallel_{\pi}e_{2}
+    $。
+  \end{itemize}
+\end{definition}
+将定义\ref{def:total_concurrency}和定义\ref{def:existential_concurrency}中的$e_{1}\parallel_{\pi}e_{2}$替换成$e_{1}\rightarrowtail_{\pi}e_{2}$就得到了完全因果关系和存在因果关系的定义。
+
+令$\Phi=\{\forall\forall\forall,\forall\forall\exists,\forall\exists\forall,\forall\exists\exists,\exists\forall\forall,\exists\forall\exists,\exists\exists\forall,\exists\exists\exists\}$，因果和并行关系的频谱定义如下：
+\begin{definition}[因果和并行关系的频谱]\label{def:spectrum_of_causality_concurrency}
+令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。
+  \begin{itemize}
+    \item[-] $x$和$y$满足因果关系，记作$x\rightarrowtail_{S,\diamonddot}^{\phi}y$，当且仅当\\
+    $(x\diamonddot_{S}y)\wedge(x\rightarrowtail_{S}^{\phi}y)$，其中$\diamonddot_{S}\in\diamondplus_{S}$，$\phi\in\Phi$；
+    \item[-] $x$和$y$满足并行关系，记作$x\parallel_{S,\diamonddot}^{\phi}y$，当且仅当\\
+    $(x\diamonddot_{S}y)\wedge(x\parallel_{S}^{\phi}y)$，其中$\diamonddot_{S}\in\diamondplus_{S}$，$\phi\in\Phi$。
+  \end{itemize}
+\end{definition}
+定义\ref{def:spectrum_of_causality_concurrency}可以推导出$15\times 8=120$中不同的因果关系和相同数量的并行关系。定义\ref{def:spectrum_of_conflict_cooccurence}和定义\ref{def:spectrum_of_causality_concurrency}共同组成了变迁之间行为关系的4C频谱。
+
+4C频谱是一种完整且基本的关系定义，但是作者在\onlinecite{polyvyanyy20144c}只给出了其中四种关系的计算方法。此外，存在两个拥有相同4C频谱关系但有着不同行为语义的模型\cite{armas2014suitability}。
+
 \section{精炼不确定性任务间有序关系}\label{sec:roru}
 
 \section{过程模型行为语义分析工具}\label{sec:related_tools}
