@@ -214,7 +214,7 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
 
 考虑一个含有根节点的有向图$G$。众所周知该图可以被展开成一棵带有标签的树（树的节点正好是图$G$中从根节点开始的所有路径上的点）。树上的节点标签由图中的节点决定。上述展开过程可以在任意时间停止，从而得到不同的树。显然，如果尽可能多地将图展开，总会得到一棵唯一的标签树，通常是无穷大的。这棵最大的树称为该图的展开（unfolding）。
 
-类似的，Petri网也可以被展开成带标签的发生网（occurrence nets，是一种带有类树型结构的简单图）。发生网的节点标签由原网的库所和标签决定。通过一个Petri网展开得到的发生网被称作分支过程（branching processes）。展开过程可以在任意时间停止，从而得到不同的分支过程。显然，如果尽可能多地将Petri网展开，总会得到一个唯一的分支过程，通常是无穷大的。这个最大的分支进程称为该Petri网的展开。
+类似的，Petri网也可以被展开成带标签的发生网（occurrence nets，是一种带有类树型结构的简单图）。发生网的节点标签由原网的库所和标签决定。通过一个Petri网展开得到的发生网被称作分支过程（branching processes）。展开过程可以在任意时间停止，从而得到不同的分支过程。显然，如果尽可能多地将Petri网展开，总会得到一个唯一的分支过程，通常是无穷大的。这个最大的分支过程称为该Petri网的展开。
 
 \begin{definition}[发生网]\label{def:occurrence_net}
 发生网$O=(B,E,F)$是满足如下条件的网：
@@ -228,8 +228,8 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
 
 显然，发生网中的任意两个节点间正好满足定义\ref{def:ordering_relations}中的三种关系之一。$B$和$E$中的元素通常被称为条件和事件。$Min(O)$表示$B\cup E$中前集为空的元素集合。由于在合理WF-net中所有的变迁前集都不为空，所以$Min(O)$中的元素只有条件。
 
-\begin{definition}[分支进程]\label{def:branching_process}
-标识Petri网$\Sigma=(P,T,F,s_{0})$的分支进程是一个标签发生网$\beta=(O,p)=(B,E,F,p)$，其中函数$p$满足如下性质：
+\begin{definition}[分支过程]\label{def:branching_process}
+标识Petri网$\Sigma=(P,T,F,s_{0})$的分支过程是一个标签发生网$\beta=(O,p)=(B,E,F,p)$，其中函数$p$满足如下性质：
   \begin{enumerate}[(i)]
   	\item $p(B)\subseteq P$且$p(E)\subseteq T$（$p$保持了节点的本性）；
   	\item 对于任意$e\in E$，函数$p$对于$\bullet e$的约束是一个从$\bullet e$（$\sigma$中）到$\bullet p(e)$（$\beta$中）的双射，$e\bullet$和$p(e)\bullet$类似（$p$保持了标签的环境）；
@@ -250,13 +250,13 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
   	\includegraphics[width=1\textwidth]{branching_process_example_2}
   	\caption{\label{fig:branching_process_example_2}}
   \end{subfigure}
-  \caption{图\ref{fig:petri_net_example}中模型的两个分支进程}
+  \caption{图\ref{fig:petri_net_example}中模型的两个分支过程}
 \end{figure}
 
-图\ref{fig:branching_process_example_1}和图\ref{fig:branching_process_example_2}展示了图\ref{fig:petri_net_example}中模型的两个分支进程。分支进程的差别在于它们展开的程度，展开少的分支进程是那些展开的多的分支进程的前缀。
+图\ref{fig:branching_process_example_1}和图\ref{fig:branching_process_example_2}展示了图\ref{fig:petri_net_example}中模型的两个分支过程。分支过程的差别在于它们展开的程度，展开少的分支过程是那些展开的多的分支过程的前缀。
 
-\begin{definition}[分支进程前缀]\label{def:branching_process_prefix}
-令$\beta'=(O',p')$和$\beta=(O,p)$是一个标识Petri网的两个分支进程。$\beta'$是$\beta$的前缀，当且仅当$O'$是$O$的子图且满足如下条件：
+\begin{definition}[分支过程前缀]\label{def:branching_process_prefix}
+令$\beta'=(O',p')$和$\beta=(O,p)$是一个标识Petri网的两个分支过程。$\beta'$是$\beta$的前缀，当且仅当$O'$是$O$的子图且满足如下条件：
   \begin{itemize}
   	\item[-] $Min(O)$属于$O'$；
   	\item[-] 如果条件$b$属于$O'$，那么它在$O$中的输入事件$e\in\bullet b$也属于$O'$（如果存在的话）；
@@ -265,9 +265,9 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
   $p'$是函数$p$在$O'$上的对应。
 \end{definition}
 
-根据上述前缀定义，一个Petri网总有一个唯一的最大分支进程\cite{engelfriet1991branching}，即前文所述的Petri网展开。图\ref{fig:petri_net_example}中模型的展开是无穷大的。
+根据上述前缀定义，一个Petri网总有一个唯一的最大分支过程\cite{engelfriet1991branching}，即前文所述的Petri网展开。图\ref{fig:petri_net_example}中模型的展开是无穷大的。
 
-一个分支进程有一个自然的初始标识，即在每个源条件内放置一个托肯。据此，可以形式化一个展开如何描述Petri网的行为：令$\Sigma$是一个标识Petri网，$\beta$是它的展开。$\Sigma$和$\beta$的可达图有着同构化的展开形式。$\Sigma$的可达标识就是满足$s$是$\beta$的可达标识的那些$p(s)$；对于$\beta$的一个可达标识$s$和$\Sigma$的可达标识$s''$、变迁$t$，存在可达标识$s'$和事件$e$满足$p(s')=s''$，$p(e)=t$且$s\overset{e}{\rightarrow}s'$当且仅当在$\Sigma$中$p(s)\overset{t}{\rightarrow}s''$成立。
+一个分支过程有一个自然的初始标识，即在每个源条件内放置一个托肯。据此，可以形式化一个展开如何描述Petri网的行为：令$\Sigma$是一个标识Petri网，$\beta$是它的展开。$\Sigma$和$\beta$的可达图有着同构化的展开形式。$\Sigma$的可达标识就是满足$s$是$\beta$的可达标识的那些$p(s)$；对于$\beta$的一个可达标识$s$和$\Sigma$的可达标识$s''$、变迁$t$，存在可达标识$s'$和事件$e$满足$p(s')=s''$，$p(e)=t$且$s\overset{e}{\rightarrow}s'$当且仅当在$\Sigma$中$p(s)\overset{t}{\rightarrow}s''$成立。
 
 \begin{definition}[完全前缀展开，CPU]\label{def:cpu}
 令$O=(B,E,A,p)$是一个发生网，其中$p$是发生网节点到原始标识Petri网节点的多对一映射，$e\in E$是任意事件。
