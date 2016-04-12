@@ -1,5 +1,5 @@
 \chapter{相关工作}\label{cha:related_work}
-本章将重点介绍现有的刻画过程模型行为语义的算法和分析工具，同时对本文改进的RORU算法进行介绍和分析。
+本章将重点介绍现有的刻画过程模型行为语义的算法，同时对本文改进的RORU算法进行介绍和分析。
 
 \section{过程模型行为语义刻画方法}\label{sec:related_algorithms}
 国内外学者提出了诸多刻画过程模型行为语义的方法与工具，它们的适用场景和刻画能力各有不同。对过程模型行为语义的刻画可以应用到过程模型相似性度量方法及过程模型差异性检测中，本节重点介绍部分主流过程模型行为语义刻画方法和基于过程模型行为特征的相似性度量算法。
@@ -171,7 +171,7 @@ Artem Polyvyanyy等人定义了Petri网的4C频谱（共现co-occurrence、冲�
 
 4C频谱是一种完整且基本的关系定义，但是作者在\onlinecite{polyvyanyy20144c}中只给出了其中四种关系的计算方法。此外，存在两个拥有相同4C频谱关系但有着不同行为语义的模型\cite{armas2014suitability}。
 
-\section{精炼不确定性任务间有序关系}\label{sec:roru}
+\section{精炼不确定性有序关系}\label{sec:roru}
 既然本文主要工作是对RORU算法的改进，有必要对\onlinecite{jin2014computing}中的RORU算法进行介绍。首先定义$\Sigma=(P,T,F,M_{0})$是标识Petri网，$\beta=(B,E,A,f)$是$\Sigma$的分支过程，$x,y,a,b,c\in E$都是$\beta$的事件。一条路径指分支过程中从开始状态到终止状态的一条有向路径。
 
 基于一个任务是否总是和另一个任务在同一个执行实例中被执行，因果关系可以被精炼成以下四种。其中C是Certain的简写，U是Uncertain的简写。
@@ -269,6 +269,24 @@ $x$和$y$满足UU并行关系，记作$x\Updownarrow y$，当且仅当：
 
 首先，RORU不能被应用于带环的WF-net，这已经在\onlinecite{jin2014computing}的标题中明确指出。其次，由于RORU没有考虑不可见变迁，变迁发生序列中的发生顺序紧邻但模型结构上不紧邻的变迁无法被区分，所以两个有着不同行为语义的WF-net可能会被混淆。例如，图\ref{fig:sda_example_1}中WF-net的变迁发生序列集合是$\{\langle I,A,B,O\rangle,\langle I,B,A,O\rangle,\langle I,A,O\rangle,\langle I,B,O\rangle\}$而图\ref{fig:sda_example_2}中WF-net的变迁发生序列集合是$\{\langle I,A,B,O\rangle,\langle I,B,A,O\rangle,\langle I,A,O\rangle,\langle I,B,O\rangle,\langle I,O\rangle\}$。显然，这两个WF-net的行为是不一致的，但是RORU不能区分它们。
 
-\section{过程模型行为语义分析工具}\label{sec:related_tools}
+\begin{figure}[htbp]
+  \centering
+  \subcaptionbox{\label{fig:nfc_example_1}}{
+    \centering
+    \includegraphics[width=0.45\textwidth]{nfc_example_1}
+  }
+  \hspace{1em}
+  \subcaptionbox{\label{fig:nfc_example_2}}{
+    \centering
+    \includegraphics[width=0.45\textwidth]{nfc_example_2}
+  }
+  \caption{RORU无法区分的一对含有非自由选择结构的模型}
+  \label{fig:nfc_example}
+\end{figure}
+
+在一个含有非自由选择结构\cite{de2003workflow}的WF-net中，变迁之间的因果关系不一定满足传递性。以图\ref{fig:nfc_example_1}和图\ref{fig:nfc_example_2}中的模型为例，变迁$A$和变迁$C$满足因果关系，变迁$C$和变迁$E$亦满足因果关系。根据RORU的传递性规则，变迁$A$和变迁$E$应满足因果关系。然而，这在图\ref{fig:nfc_example_1}含有非自由选择结构的WF-net中是不正确的，因为当变迁$A$首先被执行后，只有变迁$C$和变迁$D$（而不是变迁$E$）可以被执行。因此，变迁$A$和变迁$E$永远不会满足因果关系。
+
+为了解决上述RORU存在的问题，本文将RORU中的有序关系进一步扩展，从而得到一个更为精细的方法去区分任意两个过程模型的行为语义。除了细化原算法的不确定性概念之外，本文引入了任务间多关系的概念，即一对任务之间可能含有不止一种关系。多关系概念的引入可以检测两个过程模型间更为细微的差异。
 
 \section{本章小结}
+本章首先对过程模型行为语义刻画算法的国内外研究现状进行了简要介绍和分析，选取了TAR、BP、CF、PTS、CFS、4C等算法为例并分析了它们的优缺点。本章随后对本文工作的基础RORU算法进行了详细的介绍并探讨了其缺陷。
