@@ -31,7 +31,7 @@ ExRORU计算步骤如下：
   \caption{图\ref{fig:case_study_petri}的CPU\label{fig:case_study_cpu}}
 \end{figure}
 
-\subsection{扩展不确定性精炼因果关系}
+\subsection{事件间扩展不确定性精炼因果关系}\label{subsec:exroru_causal}
 本文用形如$[ab\{c,d\}e]$的表达式来描述过程流的行为语义。连续出现的字母表示处于顺序结构中的事件；大括号中的表达式表示并行结构，其不同分支用逗号隔开。该表达式可以互相嵌套以表达复杂过程流的语义。例如在图\ref{fig:case_study_cpu}的CPU中，$[I\{D,AC\}O]$、$[I\{D,BC\}O]$和$[I\{DED,AC\}O]$是一些过程流表达式示例。
 
 轨迹是一系列事件的有穷序列$\sigma\in E^{*}$，可以从网的初始状态开始按顺序执行其中的事件最终得到终止状态。令$\Omega$是$U$中所有过程流的轨迹集合。不可见事件/变迁是模型中起路由作用的无意义事件/变迁，在逻辑流中不被表达出来\cite{wen2007mining}。本文使用带斜线的阴影方框表示不可见事件/变迁，如图\ref{fig:sda_example}所示。基于两个事件是否能在一条轨迹中紧邻发生，首先定义直接和简介因果关系。
@@ -40,19 +40,32 @@ ExRORU计算步骤如下：
 事件$x$和$y$满足因果关系，即$x<y$。它们满足直接因果关系当且仅当：$\exists\sigma=\langle e_{1},e_{2},...,e_{n}\rangle\in\Omega,1\leq i<j\leq n,e_{i}=x,e_{j}=y$，使得$\forall k\in(i,j)$，$e_{k}$是不可见事件。否则，$x$和$y$满足间接因果关系。
 \end{definition}
 
-\begin{example}
+\begin{example}\label{ex:sda}
 在图\ref{fig:case_study_cpu}的CPU中，事件$A$和$C$、事件$C$和$O$都满足直接因果关系而事件$A$和$O$满足间接因果关系。
 \end{example}
 
 令$\Uptheta$是经$U$展开得到的所有过程流集合，$\Uptheta_{x}$是$\Uptheta$中含有$x$的过程流子集，即$\Uptheta_{x}=\{\beta\in\Uptheta|x\in\beta\}$。$TS(\beta)$表示过程流$\beta$所有轨迹的集合。
 
-\begin{definition}[扩展不确定性精炼因果关系]\label{def:exroru_causal}
+\begin{definition}[事件间扩展不确定性精炼因果关系]\label{def:exroru_causal}
 事件$x$和$y$满足：
   \begin{itemize}
   	\item[-] 总是因果关系（always causal relation），记作$x\overset{\text{\tiny{A}}}{\rightarrow}y$，当且仅当：$x<y$且$\forall\beta_{x}\in\Uptheta_{x}$，$\forall\sigma\in TS(\beta_{x})$：在$x$被执行后，$y$必须被执行且在每两个$x$的执行之间（如果$\sigma$中有超过一个$x$）至少有一个$y$要被执行。
   	\item[-] 从不因果关系（never causal relation），记作$x\overset{\text{\tiny{N}}}{\rightarrow}y$，当且仅当：$\forall\beta_{x}\in\Uptheta_{x}$，$\forall\sigma\in TS(\beta_{x})$：当$x$被执行，$y$不能在其后被执行。
   	\item[-] 有时因果关系（sometimes causal relation），记作记作$x\overset{\text{\tiny{S}}}{\rightarrow}y$，当且仅当$x$和$y$不满足上述两种关系。
   \end{itemize}
+进一步，如果$x$和$y$满足直接因果关系，则$x\overset{\text{\tiny{DA}}}{\rightarrow}y$或者$x\overset{\text{\tiny{DS}}}{\rightarrow}y$（“$D$”表示“direct”）；否则$x\overset{\text{\tiny{IA}}}{\rightarrow}y$或者$x\overset{\text{\tiny{IS}}}{\rightarrow}y$（“$I$”表示“indirect”）。
+\end{definition}
+
+以上定义的关系统称扩展不确定性精炼因果关系（extened refined causal relation with uncertainty），用$\rightarrow$表示。显然，满足“从不因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
+
+\begin{example}\label{ex:exroru_causal}
+在图\ref{fig:case_study_cpu}的CPU中，事件$A$和事件$C$满足“直接总是因果关系”（direct always causal relation），即$A\overset{\text{\tiny{DA}}}{\rightarrow}C$，因为在所有含有事件$A$的轨迹中两者都满足定义\ref{def:exroru_causal}中的条件，且它们可以被紧邻执行；事件$E$和事件$O$满足“间接有时因果关系”（indirect sometimes causal relation），即$E\overset{\text{\tiny{IS}}}{\rightarrow}O$，因为在第一次$E$被执行和$O$被执行之间可能有更多的$E$，且两者的执行之间事件$D$至少会被执行一次（不能被紧邻执行）；事件$A$和事件$B$满足“从不因果关系”（never causal relation），即$A\overset{\text{\tiny{N}}}{\rightarrow}B$，因为两者不会同时在一条轨迹中被执行。
+\end{example}
+
+根据定义\ref{def:exroru_causal}，两个事件之间的扩展不确定性精炼因果关系共有五种，分别用$\overset{\text{\tiny{DA}}}{\rightarrow}$，$\overset{\text{\tiny{DS}}}{\rightarrow}$，$\overset{\text{\tiny{IA}}}{\rightarrow}$，$\overset{\text{\tiny{IS}}}{\rightarrow}$，$\overset{\text{\tiny{N}}}{\rightarrow}$表示。在实际应用中，只有正向的因果关系往往无法完整表达过程模型的行为语义，因为两个事件的正向因果关系不确定性和逆向因果关系不确定性常常是不一样的。为了更为准确地刻画过程模型的行为语义，本文进一步引入了扩展不确定性精炼逆因果关系（extened refined inverse causal relation with uncertainty）。
+
+\begin{definition}[事件间扩展不确定性精炼逆因果关系]\label{def:exroru_inverse_causal}
+
 \end{definition}
 
 \section{本章小结}

@@ -58,6 +58,11 @@
 \DeclareMathSymbol{\diamondtimes}{\mathrel}{MnSyC}{125}
 \DeclareMathSymbol{\diamonddot}{\mathrel}{MnSyC}{126}
 
+\newcommand\xqed[1]{%
+  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+  \quad\hbox{#1}}
+\newcommand\qqed{\xqed{$\triangle$}}
+
 % 定义所有的图片文件在 figures 子目录下
 \graphicspath{{figures/}}
 
