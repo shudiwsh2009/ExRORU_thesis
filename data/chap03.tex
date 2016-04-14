@@ -165,7 +165,7 @@ ExRORU计算步骤如下：
 令$\Omega_{x}$表示含有事件$x$的轨迹集合，即$\Omega_{x}=\{\sigma\in\Omega|x\in\sigma\}$。本文用$\sigma\uparrow X$表示轨迹$\sigma$到某些事件的集合$X\subseteq E$上的投影，即$\sigma$的子轨迹$\sigma'\subseteq\sigma$，其中$\sigma'$只含有集合$X$中的事件且其出现顺序保持和$\sigma$中一致。令$P(\sigma,x,y)=\sigma\uparrow\{x,y\}$表示轨迹$\sigma$到事件$x$和事件$y$上的投影。
 
 \begin{definition}[事件间扩展不确定性精炼并行关系]\label{def:exroru_concurrent}
-事件$x$和事件$y$满足：
+事件$x$和$y$满足：
   \begin{itemize}
   	\item[-] 总是并行关系（always concurrent relation），记作$x\Updownarrow y$，当且仅当：$\forall\sigma_{x}\in\Omega_{x}$，$x~co~y$且$P(\sigma,x,y)$满足正则表达式$[xy|yx|yy]*y?$\footnote{\url{https://en.wikipedia.org/wiki/Regular\_expression}，正则表达式不是本文重点，对其详细的介绍可参见\onlinecite{mitkov2005oxford,lawson2003finite}}。
   	\item[-] 从不并行关系（never concurrent relation），记作$x\nparallel y$，当且仅当：$\forall\sigma_{x}\in\Omega_{x}$，$x$和$y$不满足定义\ref{def:ordering_relations}中的并行关系。
@@ -240,5 +240,142 @@ ExRORU计算步骤如下：
 图\ref{fig:concurrent_case_a}中，上方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*A*\rangle$等形式的轨迹，下方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*A*A*B*\rangle$、$\langle I*A*A*A*B*\rangle$等形式的轨迹。当考察事件$A$和事件$B$的并行关系时，轨迹不符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$；然而，当考察事件$B$和事件$A$的并行关系时，轨迹符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$B$和事件$A$满足“总是并行关系”，即$B\Updownarrow A$。
 
 图\ref{fig:concurrent_case_b}中，上方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*B*\rangle$等形式的轨迹，下方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*A*B*B*\rangle$、$\langle I*A*B*B*B*\rangle$等形式的轨迹。当考察事件$A$和事件$B$的并行关系时，轨迹符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“总是并行关系”，即$A\Updownarrow B$；然而，当考察事件$B$和事件$A$的并行关系时，轨迹不符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$B$和事件$A$满足“有时并行关系”，即$B\Uparrow A$。
+
+图\ref{fig:concurrent_case_c}中的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*X*\rangle$等形式的轨迹，事件$A$和事件$B$要么都被执行一次，要么都不被执行，因此事件$A$和事件$B$满足“总是并行关系”，即$A\Updownarrow B$，反之亦然，即$B\Updownarrow A$。类似的，在图\ref{fig:concurrent_case_d}中的局部CPU中，事件$A$和事件$B$要么都被执行一次，要么都被执行两次……以此类推，它们被执行的次数相同且与循环次数有关。显然，含有事件$A$或者$B$的轨迹都符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“总是并行关系”，即$A\Updownarrow B$，反之亦然，即$B\Updownarrow A$。
+
+图\ref{fig:concurrent_case_d}中的局部CPU展示了一个非自由选择结构的部分，其有诸如$\langle *I*A*B*\rangle$、$\langle *I*B*A*\rangle$、$\langle *X*A*\rangle$等形式的轨迹。当考察事件$A$和事件$B$的并行关系时，含有事件$A$的轨迹不一定包含事件$B$，故事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$；当考察事件$B$和事件$A$的并行关系时，含有事件$B$的轨迹一定包含事件$A$，且轨迹符合定义\ref{def:exroru_concurrent}中的正则表达式，故事件$B$和事件$A$满足“总是并行关系”，即$B\Updownarrow A$。本文将会对非自由选择结构进行更为详细的探讨。
+
+表\ref{tab:exroru}给出了所有的事件间ExRORU关系，共11种。
+
+\begin{table}[htbp]
+  \centering
+  \begin{minipage}[t]{0.8\textwidth}
+  	\caption{事件间ExRORU关系概览}
+  	\label{tab:exroru}
+  	\begin{tabularx}{\textwidth}{clclcl}
+  	  \toprule[1.5pt]
+  	  关系 & 描述 & 关系 & 描述 & 关系 & 描述 \\\midrule[1pt]
+  	  $\overset{\text{\tiny{DA}}}{\rightarrow}$ & 直接总是因果 & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & 直接总是逆因果 & $\Updownarrow$ & 总是并行\\
+  	  $\overset{\text{\tiny{IA}}}{\rightarrow}$ & 间接总是因果 & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & 间接总是逆因果 & $\Uparrow$ & 有时并行\\
+  	  $\overset{\text{\tiny{DS}}}{\rightarrow}$ & 直接有时因果 & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & 直接有时逆因果 & $\nparallel$ & 从不并行\\
+  	  $\overset{\text{\tiny{IS}}}{\rightarrow}$ & 间接有时因果 & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & 间接有时逆因果 & & \\
+  	  $\overset{\text{\tiny{N}}}{\rightarrow}$ & 从不因果 & $\overset{\text{\tiny{N}}}{\leftarrow}$ & 从不逆因果 & & \\
+  	  \bottomrule[1.5pt]
+  	\end{tabularx}
+  \end{minipage}
+\end{table}
+
+\begin{example}\label{ex:exroru_matrix}
+表\ref{tab:exroru_matrix}展示了图\ref{fig:case_study_cpu}中CPU的事件间ExRORU关系。三个矩阵分别对应因果关系、逆因果关系和并行关系。每个单元格内显示了该单元格所对应的行列对$(X,Y)$之间的ExRORU关系。
+\end{example}
+
+\begin{table}[htbp]
+  \centering
+  \caption{图\ref{fig:case_study_cpu}中CPU的事件间ExRORU关系}
+  \label{tab:exroru_matrix}
+  \begin{subtable}{0.45\textwidth}
+    \centering
+    \caption{因果关系（5种）}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|} \hline
+	  $\rightarrow$ & $A$ & $B$ & $C$ & $D$ & $E$ & $I$ & $O$\\ \hline
+	  $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+	  $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+	  $C$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+	  $D$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+	  $E$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+	  $I$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+	  $O$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+	\end{tabular}
+  \end{subtable}
+  \hspace{1em}
+  \begin{subtable}{0.45\textwidth}
+    \centering
+    \caption{逆因果关系（5种）}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|} \hline
+		$\leftarrow$ & $A$ & $B$ & $C$ & $D$ & $E$ & $I$ & $O$\\ \hline
+		$A$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+		$B$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+		$C$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+		$D$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+		$E$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+		$I$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+		$O$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+	\end{tabular}
+  \end{subtable}
+  \begin{subtable}{\textwidth}
+  	\vspace{1em}
+    \centering
+    \caption{并行关系（3种）}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|} \hline
+		$\parallel$ & $A$ & $B$ & $C$ & $D$ & $E$ & $I$ & $O$\\ \hline
+		$A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\Uparrow$ & $\nparallel$ & $\nparallel$\\ \hline
+		$B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\Uparrow$ & $\nparallel$ & $\nparallel$\\ \hline
+		$C$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\Uparrow$ & $\nparallel$ & $\nparallel$\\ \hline
+		$D$ & $\Uparrow$ & $\Uparrow$ & $\Uparrow$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+		$E$ & $\Uparrow$ & $\Uparrow$ & $\Uparrow$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+		$I$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+		$O$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+	\end{tabular}
+  \end{subtable}
+\end{table}
+
+\subsection{变迁间扩展不确定性精炼有序关系}\label{subsec:exroru_transition}
+本小节重点介绍如何折叠定义\ref{def:exroru_causal}、定义\ref{def:exroru_inverse_causal}和定义\ref{def:exroru_concurrent}中的事件间ExRORU关系得到原WF-net中变迁间ExRORU关系。一个WF-net中的变迁可能对应其CPU中的多个事件。这些对应的事件互不相同，在获取CPU中事件间ExRORU关系时都被当作独立事件处理。然而，这多个对应的事件与其他事件间的ExRORU关系通常是不一样的。因此，在获取WF-net中变迁间ExRORU关系时，需要逐一检查这些对应事件与其他变迁的对应事件间的关系，并将不同的事件间ExRORU关系折叠得到变迁间ExRORU关系。
+
+上述情况出现的一个典型场景是含有非自由选择结构的过程模型。图\ref{fig:nfc_exroru}展示了一个含有非自由选择结构的WF-net及其对应的CPU。图\ref{fig:nfc_petri}所示WF-net中的变迁$C$对应了图\ref{fig:nfc_cpu}所示CPU中的事件$C_{1}$和事件$C_{2}$。根据定义\ref{def:exroru_causal}，事件$C_{1}$和事件$D$满足“直接总是因果关系”而事件$C_{2}$和事件$D$满足“从不因果关系”，即$C_{1}\overset{\text{\tiny{DA}}}{\rightarrow}D$，$C_{2}\overset{\text{\tiny{N}}}{\rightarrow}D$。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}{1\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{nfc_petri}
+    \caption{含有非自由选择结构的WF-net}
+    \label{fig:nfc_petri}
+  \end{subfigure}
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \includegraphics[width=0.7\textwidth]{nfc_cpu}
+    \caption{图\subref{fig:nfc_petri}中WF-net对应的CPU}
+    \label{fig:nfc_cpu}
+  \end{subfigure}
+  \caption{RORU无法区分的一对含有不可见变迁的模型}
+  \label{fig:nfc_exroru}
+\end{figure}
+
+定义\ref{def:exroru_causal_transition}、\ref{def:exroru_inverse_causal_transition}、\ref{def:exroru_concurrent_transition}定性给出了上述折叠过程。令$\Sigma=(P,T,F,M_{0})$是一个WF-net，$U=(B,E,A,f)$是其CPU，$A,B\in T$是$\Sigma$的两个变迁。用$map-to-events(A)$表示变迁$A$在CPU中对应的所有事件集合。
+
+\begin{definition}[变迁间扩展不确定性精炼因果关系]\label{def:exroru_causal_transition}
+变迁$A$和$B$满足：
+  \begin{itemize}
+    \item[-] 总是因果关系（always causal relation），记作$A\overset{\text{\tiny{A}}}{\rightarrow}B$，当且仅当：$\forall a\in map$-$to$-$events(A),\exists b\in map$-$to$-$events(B),s.t.~a\overset{\text{\tiny{A}}}{\rightarrow}b$。
+    \item[-] 从不因果关系（never causal relation），记作$A\overset{\text{\tiny{N}}}{\rightarrow}B$，当且仅当：$\forall a\in map$-$to$-$events(A),\forall b\in map$-$to$-$events(B),s.t.~a\overset{\text{\tiny{N}}}{\rightarrow}b$。
+    \item[-] 有时因果关系（sometimes causal relation），记作$A\overset{\text{\tiny{S}}}{\rightarrow}B$，当且仅当$A$和$B$不满足上述两种关系。
+  \end{itemize}
+进一步，如果$\exists a\in map$-$to$-$events(A),\exists b\in map$-$to$-$events(B),s.t.~a\overset{\text{\tiny{DA}}}{\rightarrow}b$或者$a\overset{\text{\tiny{DS}}}{\rightarrow}b$，则$A\overset{\text{\tiny{DA}}}{\rightarrow}B$或者$A\overset{\text{\tiny{DS}}}{\rightarrow}B$；否则$A\overset{\text{\tiny{IA}}}{\rightarrow}B$或者$A\overset{\text{\tiny{IS}}}{\rightarrow}B$。
+\end{definition}
+
+\begin{definition}[变迁间扩展不确定性精炼逆因果关系]\label{def:exroru_inverse_causal_transition}
+变迁$B$和$A$满足：
+  \begin{itemize}
+    \item[-] 总是逆因果关系（always inverse causal relation），记作$B\overset{\text{\tiny{A}}}{\leftarrow}A$，当且仅当：$\forall b\in map$-$to$-$events(B),\exists a\in map$-$to$-$events(A),s.t.~b\overset{\text{\tiny{A}}}{\leftarrow}a$。
+    \item[-] 从不逆因果关系（never inverse causal relation），记作$B\overset{\text{\tiny{N}}}{\leftarrow}A$，当且仅当：$\forall b\in map$-$to$-$events(B),\forall a\in map$-$to$-$events(A),s.t.~b\overset{\text{\tiny{N}}}{\leftarrow}a$。
+    \item[-] 有时逆因果关系（sometimes inverse causal relation），记作$B\overset{\text{\tiny{S}}}{\leftarrow}A$，当且仅当$B$和$A$不满足上述两种关系。
+  \end{itemize}
+进一步，如果$\exists b\in map$-$to$-$events(B),\exists a\in map$-$to$-$events(A),s.t.~b\overset{\text{\tiny{DA}}}{\leftarrow}a$或者$b\overset{\text{\tiny{DS}}}{\leftarrow}a$，则$B\overset{\text{\tiny{DA}}}{\leftarrow}A$或者$B\overset{\text{\tiny{DS}}}{\leftarrow}A$；否则$B\overset{\text{\tiny{IA}}}{\leftarrow}A$或者$B\overset{\text{\tiny{IS}}}{\leftarrow}A$。
+\end{definition}
+
+\begin{definition}[变迁间扩展不确定性精炼并行关系]\label{def:exroru_concurrent_transition}
+变迁$A$和$B$满足：
+  \begin{itemize}
+    \item[-] 总是并行关系（always concurrent relation），记作$A\Updownarrow B$，当且仅当：$\forall a\in map$-$to$-$events(A),\exists b\in map$-$to$-$events(B),s.t.~a\Updownarrow b$。
+    \item[-] 从不并行关系（never concurrent relation），记作$A\nparallel B$，当且仅当：$\forall a\in map$-$to$-$events(A),\forall b\in map$-$to$-$events(B),s.t.~a\nparallel b$。
+    \item[-] 有时并行关系（sometimes concurrent relation），记作$A\Uparrow B$，当且仅当$A$和$B$不满足上述两种关系。
+  \end{itemize}
+\end{definition}
+
+\begin{example}\label{ex:exroru_transition}
+在图\ref{fig:nfc_petri}所示的WF-net中，变迁$C$对应图\ref{fig:nfc_cpu}所示CPU中的事件$C_{1}$和事件$C_{2}$。根据定义\ref{def:exroru_causal}，$C_{1}\overset{\text{\tiny{DA}}}{\rightarrow}D$、$C_{2}\overset{\text{\tiny{N}}}{\rightarrow}D$，经定义\ref{def:exroru_causal_transition}折叠得到变迁$C$和变迁$D$满足“直接有时因果关系”，即$C\overset{\text{\tiny{DS}}}{\rightarrow}D$。根据定义\ref{def:exroru_inverse_causal}，$C_{1}\overset{\text{\tiny{N}}}{\leftarrow}B$、$C_{2}\overset{\text{\tiny{DA}}}{\leftarrow}B$，经定义\ref{def:exroru_inverse_causal_transition}折叠得到变迁$C$和变迁$B$满足“直接有时逆因果关系”，即$C\overset{\text{\tiny{DS}}}{\leftarrow}B$。根据定义\ref{def:exroru_concurrent}，$C_{1}\Updownarrow X$、$C_{2}\nparallel X$，经定义\ref{def:exroru_concurrent_transition}折叠得到变迁$C$和变迁$X$满足“有时并行关系”，即$C\Uparrow X$。值得注意的是，$X\Updownarrow C_{1}$、$X\nparallel C_{2}$，经定义\ref{def:exroru_concurrent_transition}折叠得到变迁$X$和变迁$C$满足“总是并行关系”，即$X\Updownarrow C$。
+\end{example}
 
 \section{本章小结}
