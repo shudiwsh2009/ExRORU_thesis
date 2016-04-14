@@ -17,18 +17,25 @@ ExRORU计算步骤如下：
 }
 
 \section{ExRORU定义}\label{sec:exroru_definition}
-本节主要介绍ExRORU的定义，首先介绍事件间的扩展不确定性精炼因果关系和并行关系，随后介绍变迁间的ExRORU关系。方便起见，约定$\Sigma=(P,T,F,M_{0})$是一个合理WF-net，$U=(B,E,A,f)$是其CPU。令$x,y\in E$是$U$的两个事件。示例WF-net及其CPU如图\ref{fig:case_study_petri}和图\ref{fig:case_study_cpu}所示。
+本节主要介绍ExRORU的定义，首先介绍事件间的扩展不确定性精炼因果关系和并行关系，随后介绍变迁间的ExRORU关系。方便起见，约定$\Sigma=(P,T,F,M_{0})$是一个合理WF-net，$U=(B,E,A,f)$是其CPU。令$x,y\in E$是$U$的两个事件。示例WF-net及其CPU如图\ref{fig:case_study}所示。
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.7\textwidth]{case_study_petri}
-  \caption{一个合理WF-net\label{fig:case_study_petri}}
-\end{figure}
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.7\textwidth]{case_study_cpu}
-  \caption{图\ref{fig:case_study_petri}的CPU\label{fig:case_study_cpu}}
+  \begin{subfigure}{1\textwidth}
+  	\centering
+  	\includegraphics[width=0.8\textwidth]{case_study_petri}
+  	\caption{一个合理WF-net}
+  	\label{fig:case_study_petri}
+  \end{subfigure}
+  \begin{subfigure}{1\textwidth}
+  	\vspace{1em}
+  	\centering
+  	\includegraphics[width=0.8\textwidth]{case_study_cpu}
+  	\caption{图\subref{fig:case_study_petri}的CPU}
+  	\label{fig:case_study_cpu}
+  \end{subfigure}
+  \caption{一个合理WF-net及其CPU示例}
+  \label{fig:case_study}
 \end{figure}
 
 \subsection{事件间扩展不确定性精炼因果关系}\label{subsec:exroru_causal}
@@ -50,13 +57,13 @@ ExRORU计算步骤如下：
 事件$x$和$y$满足：
   \begin{itemize}
   	\item[-] 总是因果关系（always causal relation），记作$x\overset{\text{\tiny{A}}}{\rightarrow}y$，当且仅当：$x<y$且$\forall\beta_{x}\in\Uptheta_{x}$，$\forall\sigma\in TS(\beta_{x})$：在$x$被执行后，$y$必须被执行且在每两个$x$的执行之间（如果$\sigma$中有超过一个$x$）至少有一个$y$要被执行。
-  	\item[-] 从不因果关系（never causal relation），记作$x\overset{\text{\tiny{N}}}{\rightarrow}y$，当且仅当：$\forall\beta_{x}\in\Uptheta_{x}$，$\forall\sigma\in TS(\beta_{x})$：当$x$被执行，$y$不能在其后被执行。
+  	\item[-] 从不因果关系（never causal relation），记作$x\overset{\text{\tiny{N}}}{\rightarrow}y$，当且仅当：$\forall\beta_{x}\in\Uptheta_{x}$，$\forall\sigma\in TS(\beta_{x})$：当$x$被执行，$y$不能在其之后被执行。
   	\item[-] 有时因果关系（sometimes causal relation），记作记作$x\overset{\text{\tiny{S}}}{\rightarrow}y$，当且仅当$x$和$y$不满足上述两种关系。
   \end{itemize}
 进一步，如果$x$和$y$满足直接因果关系，则$x\overset{\text{\tiny{DA}}}{\rightarrow}y$或者$x\overset{\text{\tiny{DS}}}{\rightarrow}y$（“$D$”表示“direct”）；否则$x\overset{\text{\tiny{IA}}}{\rightarrow}y$或者$x\overset{\text{\tiny{IS}}}{\rightarrow}y$（“$I$”表示“indirect”）。
 \end{definition}
 
-以上定义的关系统称扩展不确定性精炼因果关系（extened refined causal relation with uncertainty），用$\rightarrow$表示。显然，满足“从不因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
+定义\ref{def:exroru_causal}中的关系统称扩展不确定性精炼因果关系（extened refined causal relation with uncertainty），用$\rightarrow$表示。显然，满足“从不因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
 
 \begin{example}\label{ex:exroru_causal}
 在图\ref{fig:case_study_cpu}的CPU中，事件$A$和事件$C$满足“直接总是因果关系”（direct always causal relation），即$A\overset{\text{\tiny{DA}}}{\rightarrow}C$，因为在所有含有事件$A$的轨迹中两者都满足定义\ref{def:exroru_causal}中的条件，且它们可以被紧邻执行；事件$E$和事件$O$满足“间接有时因果关系”（indirect sometimes causal relation），即$E\overset{\text{\tiny{IS}}}{\rightarrow}O$，因为在第一次$E$被执行和$O$被执行之间可能有更多的$E$，且两者的执行之间事件$D$至少会被执行一次（不能被紧邻执行）；事件$A$和事件$B$满足“从不因果关系”（never causal relation），即$A\overset{\text{\tiny{N}}}{\rightarrow}B$，因为两者不会同时在一条轨迹中被执行。
@@ -65,7 +72,84 @@ ExRORU计算步骤如下：
 根据定义\ref{def:exroru_causal}，两个事件之间的扩展不确定性精炼因果关系共有五种，分别用$\overset{\text{\tiny{DA}}}{\rightarrow}$，$\overset{\text{\tiny{DS}}}{\rightarrow}$，$\overset{\text{\tiny{IA}}}{\rightarrow}$，$\overset{\text{\tiny{IS}}}{\rightarrow}$，$\overset{\text{\tiny{N}}}{\rightarrow}$表示。在实际应用中，只有正向的因果关系往往无法完整表达过程模型的行为语义，因为两个事件的正向因果关系不确定性和逆向因果关系不确定性常常是不一样的。为了更为准确地刻画过程模型的行为语义，本文进一步引入了扩展不确定性精炼逆因果关系（extened refined inverse causal relation with uncertainty）。
 
 \begin{definition}[事件间扩展不确定性精炼逆因果关系]\label{def:exroru_inverse_causal}
-
+事件$y$和$x$满足：
+  \begin{itemize}
+  	\item[-] 总是逆因果关系（always inverse causal relation），记作$y\overset{\text{\tiny{A}}}{\leftarrow}x$，当且仅当：$x<y$且$\forall\beta_{y}\in\Uptheta_{y}$，$\forall\sigma\in TS(\beta_{y})$：在$y$被执行前，$x$必须被执行且在每两个$y$的执行之间（如果$\sigma$中有超过一个$y$）至少有一个$x$要被执行。
+  	\item[-] 从不逆因果关系（never inverse causal relation），记作$y\overset{\text{\tiny{N}}}{\leftarrow}x$，当且仅当：$\forall\beta_{y}\in\Uptheta_{y}$，$\forall\sigma\in TS(\beta_{y})$：当$y$被执行，$x$不能在其之前被执行。
+  	\item[-] 有时逆因果关系（sometimes inverse causal relation），记作$y\overset{\text{\tiny{S}}}{\leftarrow}x$，当且仅当$y$和$x$不满足上述两种关系。
+  \end{itemize}
+进一步，如果$y$和$x$满足直接因果关系，则$y\overset{\text{\tiny{DA}}}{\leftarrow}x$或者$y\overset{\text{\tiny{DS}}}{\leftarrow}x$；否则$y\overset{\text{\tiny{IA}}}{\leftarrow}x$或者$y\overset{\text{\tiny{IS}}}{\leftarrow}x$。
 \end{definition}
+
+定义\ref{def:exroru_inverse_causal}中的关系统称扩展不确定性精炼逆因果关系，用$\leftarrow$表示。显然，满足“从不逆因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
+
+\begin{example}\label{ex:exroru_inverse_causal}
+在图\ref{fig:case_study_cpu}的CPU中，事件$O$和事件$D$满足“直接总是逆因果关系”（direct always inverse causal relation），即$O\overset{\text{\tiny{DA}}}{\leftarrow}D$，因为在所有含有事件$O$的轨迹中两者都满足定义\ref{def:exroru_inverse_causal}中的条件，且它们可以被紧邻执行；事件$O$和事件$A$满足“间接有时逆因果关系”（indirect sometimes inverse causal relation），即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$，因为在部分含有事件$O$的轨迹中$A$可能不被执行，且两者的执行之间事件$C$一定会被执行（不能被紧邻执行）；事件$A$和事件$B$满足“从不逆因果关系”（never inverse causal relation），即$A\overset{\text{\tiny{N}}}{\leftarrow}B$，因为两者不会同时在一条轨迹中被执行。
+\end{example}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}{0.45\textwidth}
+  	\centering
+  	\begin{minipage}[b]{1\textwidth}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_a_1}
+  	\end{minipage}
+  	\begin{minipage}[b]{1\textwidth}
+  	  \vspace{1em}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_a_2}
+  	\end{minipage}
+  	\caption{}
+  	\label{fig:causal_case_a}
+  \end{subfigure}
+  \hspace{2em}
+  \begin{subfigure}{0.45\textwidth}
+  	\centering
+  	\begin{minipage}[b]{1\textwidth}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_b_1}
+  	\end{minipage}
+  	\begin{minipage}[b]{1\textwidth}
+  	  \vspace{1em}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_b_2}
+  	\end{minipage}
+  	\caption{}
+  	\label{fig:causal_case_b}
+  \end{subfigure}
+  \begin{subfigure}{0.6\textwidth}
+  	\vspace{1em}
+  	\centering
+  	\begin{minipage}[b]{1\textwidth}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_c_1}
+  	\end{minipage}
+  	\begin{minipage}[b]{1\textwidth}
+  	  \vspace{1em}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_c_2}
+  	\end{minipage}
+  	\caption{}
+  	\label{fig:causal_case_c}
+  \end{subfigure}
+  \begin{subfigure}{0.7\textwidth}
+  	\vspace{1em}
+  	\centering
+  	\begin{minipage}[b]{1\textwidth}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_d_1}
+  	\end{minipage}
+  	\begin{minipage}[b]{1\textwidth}
+  	  \vspace{1em}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{causal_case_d_2}
+  	\end{minipage}
+  	\caption{}
+  	\label{fig:causal_case_d}
+  \end{subfigure}
+  \caption{因果关系和逆因果关系的图形化抽象形式。\subref{fig:causal_case_a} $A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；\subref{fig:causal_case_b} $A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$；\subref{fig:causal_case_c} $A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；\subref{fig:causal_case_d} $A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$。}
+  \label{fig:causal_case_formulas}
+\end{figure}
 
 \section{本章小结}
