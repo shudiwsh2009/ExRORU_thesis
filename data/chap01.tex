@@ -20,7 +20,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{basic_concurrency_drawback}
+  \includegraphics[width=1.0\textwidth]{basic_concurrency_drawback}
   \caption{含有不同并行关系的BPMN模型\label{fig:basic_concurrency_drawback}}
 \end{figure}
 
@@ -32,7 +32,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{basic_concurrency_drawback_compare}
+  \includegraphics[width=1.0\textwidth]{basic_concurrency_drawback_compare}
   \caption{由图\ref{fig:basic_concurrency_drawback}改造得到的BPMN模型\label{fig:basic_concurrency_drawback_compare}}
 \end{figure}
 
@@ -68,7 +68,7 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{petri_net_example}
+  \includegraphics[width=1.0\textwidth]{petri_net_example}
   \caption{标识Petri网示例\label{fig:petri_net_example}}
 \end{figure}
 
@@ -86,13 +86,13 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{petri_net_example_fire1}
+  \includegraphics[width=1.0\textwidth]{petri_net_example_fire1}
   \caption{变迁$A$发生后的标识Petri网\label{fig:petri_net_example_fire1}}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{petri_net_example_fire2}
+  \includegraphics[width=1.0\textwidth]{petri_net_example_fire2}
   \caption{变迁$AND$-$split$发生后的标识Petri网\label{fig:petri_net_example_fire2}}
 \end{figure}
 
@@ -198,6 +198,7 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
   	\caption{\label{fig:process_run_example_1}}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
+  	\vspace{1em}
   	\centering
   	\includegraphics[width=1\textwidth]{process_run_example_2}
   	\caption{\label{fig:process_run_example_2}}
@@ -246,11 +247,13 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
   	\caption{\label{fig:branching_process_example_1}}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
+  	\vspace{1em}
   	\centering
   	\includegraphics[width=1\textwidth]{branching_process_example_2}
   	\caption{\label{fig:branching_process_example_2}}
   \end{subfigure}
   \caption{图\ref{fig:petri_net_example}中模型的两个分支过程}
+  \label{fig:branching_process_example}
 \end{figure}
 
 图\ref{fig:branching_process_example_1}和图\ref{fig:branching_process_example_2}展示了图\ref{fig:petri_net_example}中模型的两个分支过程。分支过程的差别在于它们展开的程度，展开少的分支过程是那些展开的多的分支过程的前缀。

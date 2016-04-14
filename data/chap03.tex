@@ -93,7 +93,7 @@ ExRORU计算步骤如下：
 
 \begin{figure}[htbp]
   \centering
-  \begin{subfigure}{0.45\textwidth}
+  \begin{subfigure}{0.55\textwidth}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
   	  \centering
@@ -107,8 +107,7 @@ ExRORU计算步骤如下：
   	\caption{}
   	\label{fig:causal_case_a}
   \end{subfigure}
-  \hspace{2em}
-  \begin{subfigure}{0.45\textwidth}
+  \begin{subfigure}{0.55\textwidth}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
   	  \centering
@@ -122,7 +121,7 @@ ExRORU计算步骤如下：
   	\caption{}
   	\label{fig:causal_case_b}
   \end{subfigure}
-  \begin{subfigure}{0.6\textwidth}
+  \begin{subfigure}{0.7\textwidth}
   	\vspace{1em}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
@@ -137,7 +136,7 @@ ExRORU计算步骤如下：
   	\caption{}
   	\label{fig:causal_case_c}
   \end{subfigure}
-  \begin{subfigure}{0.7\textwidth}
+  \begin{subfigure}{0.85\textwidth}
   	\vspace{1em}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
@@ -184,7 +183,7 @@ ExRORU计算步骤如下：
 
 \begin{figure}[htbp]
   \centering
-  \begin{subfigure}{0.45\textwidth}
+  \begin{subfigure}{0.48\textwidth}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
   	  \centering
@@ -198,8 +197,8 @@ ExRORU计算步骤如下：
   	\caption{}
   	\label{fig:concurrent_case_a}
   \end{subfigure}
-  \hspace{2em}
-  \begin{subfigure}{0.45\textwidth}
+  % \hspace{2em}
+  \begin{subfigure}{0.48\textwidth}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
   	  \centering
@@ -213,21 +212,21 @@ ExRORU计算步骤如下：
   	\caption{}
   	\label{fig:concurrent_case_b}
   \end{subfigure}
-  \begin{subfigure}{0.45\textwidth}
+  \begin{subfigure}{0.48\textwidth}
   	\vspace{1em}
   	\centering
   	\includegraphics[width=1\textwidth]{concurrent_case_c}
   	\caption{}
   	\label{fig:concurrent_case_c}
   \end{subfigure}
-  \begin{subfigure}{0.45\textwidth}
+  \begin{subfigure}{0.48\textwidth}
   	\vspace{1em}
   	\centering
   	\includegraphics[width=1\textwidth]{concurrent_case_d}
   	\caption{}
   	\label{fig:concurrent_case_d}
   \end{subfigure}
-  \begin{subfigure}{0.45\textwidth}
+  \begin{subfigure}{0.48\textwidth}
   	\vspace{1em}
   	\centering
   	\includegraphics[width=1\textwidth]{concurrent_case_e}
@@ -238,6 +237,8 @@ ExRORU计算步骤如下：
   \label{fig:concurrent_case_formulas}
 \end{figure}
 
-图\ref{fig:concurrent_case_a}中，上方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*A*\rangle$等形式的轨迹，下方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*A*A*B*\rangle$、$\langle I*A*A*A*B*\rangle$等形式的轨迹，根据定义\ref{def:exroru_concurrent}。当考查事件$A$和事件$B$的并行关系时，轨迹不符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$；然而，当考查事件$B$和事件$A$的并行关系时，轨迹符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$B$和事件$A$满足“总是并行关系”，即$B\Updownarrow A$。
+图\ref{fig:concurrent_case_a}中，上方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*A*\rangle$等形式的轨迹，下方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*A*A*B*\rangle$、$\langle I*A*A*A*B*\rangle$等形式的轨迹。当考察事件$A$和事件$B$的并行关系时，轨迹不符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$；然而，当考察事件$B$和事件$A$的并行关系时，轨迹符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$B$和事件$A$满足“总是并行关系”，即$B\Updownarrow A$。
+
+图\ref{fig:concurrent_case_b}中，上方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*B*\rangle$等形式的轨迹，下方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*A*B*B*\rangle$、$\langle I*A*B*B*B*\rangle$等形式的轨迹。当考察事件$A$和事件$B$的并行关系时，轨迹符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“总是并行关系”，即$A\Updownarrow B$；然而，当考察事件$B$和事件$A$的并行关系时，轨迹不符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$B$和事件$A$满足“有时并行关系”，即$B\Uparrow A$。
 
 \section{本章小结}
