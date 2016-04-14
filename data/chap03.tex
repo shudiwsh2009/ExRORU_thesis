@@ -63,13 +63,13 @@ ExRORU计算步骤如下：
 进一步，如果$x$和$y$满足直接因果关系，则$x\overset{\text{\tiny{DA}}}{\rightarrow}y$或者$x\overset{\text{\tiny{DS}}}{\rightarrow}y$（“$D$”表示“direct”）；否则$x\overset{\text{\tiny{IA}}}{\rightarrow}y$或者$x\overset{\text{\tiny{IS}}}{\rightarrow}y$（“$I$”表示“indirect”）。
 \end{definition}
 
-定义\ref{def:exroru_causal}中的关系统称扩展不确定性精炼因果关系（extened refined causal relation with uncertainty），用$\rightarrow$表示。显然，满足“从不因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
+定义\ref{def:exroru_causal}中的关系统称扩展不确定性精炼因果关系（extened refined causal relations with uncertainty），用$\rightarrow$表示，本文在不引起歧义的情况下将其简称为因果关系。显然，满足“从不因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
 
 \begin{example}\label{ex:exroru_causal}
 在图\ref{fig:case_study_cpu}的CPU中，事件$A$和事件$C$满足“直接总是因果关系”（direct always causal relation），即$A\overset{\text{\tiny{DA}}}{\rightarrow}C$，因为在所有含有事件$A$的轨迹中两者都满足定义\ref{def:exroru_causal}中的条件，且它们可以被紧邻执行；事件$E$和事件$O$满足“间接有时因果关系”（indirect sometimes causal relation），即$E\overset{\text{\tiny{IS}}}{\rightarrow}O$，因为在第一次$E$被执行和$O$被执行之间可能有更多的$E$，且两者的执行之间事件$D$至少会被执行一次（不能被紧邻执行）；事件$A$和事件$B$满足“从不因果关系”（never causal relation），即$A\overset{\text{\tiny{N}}}{\rightarrow}B$，因为两者不会同时在一条轨迹中被执行。
 \end{example}
 
-根据定义\ref{def:exroru_causal}，两个事件之间的扩展不确定性精炼因果关系共有五种，分别用$\overset{\text{\tiny{DA}}}{\rightarrow}$，$\overset{\text{\tiny{DS}}}{\rightarrow}$，$\overset{\text{\tiny{IA}}}{\rightarrow}$，$\overset{\text{\tiny{IS}}}{\rightarrow}$，$\overset{\text{\tiny{N}}}{\rightarrow}$表示。在实际应用中，只有正向的因果关系往往无法完整表达过程模型的行为语义，因为两个事件的正向因果关系不确定性和逆向因果关系不确定性常常是不一样的。为了更为准确地刻画过程模型的行为语义，本文进一步引入了扩展不确定性精炼逆因果关系（extened refined inverse causal relation with uncertainty）。
+根据定义\ref{def:exroru_causal}，两个事件之间的扩展不确定性精炼因果关系共有五种，分别用$\overset{\text{\tiny{DA}}}{\rightarrow}$，$\overset{\text{\tiny{DS}}}{\rightarrow}$，$\overset{\text{\tiny{IA}}}{\rightarrow}$，$\overset{\text{\tiny{IS}}}{\rightarrow}$，$\overset{\text{\tiny{N}}}{\rightarrow}$表示。在实际应用中，只有正向的因果关系往往无法完整表达过程模型的行为语义，因为两个事件的正向因果关系不确定性和逆向因果关系不确定性常常是不一样的。为了更为准确地刻画过程模型的行为语义，本文进一步引入了扩展不确定性精炼逆因果关系（extened refined inverse causal relations with uncertainty）。
 
 \begin{definition}[事件间扩展不确定性精炼逆因果关系]\label{def:exroru_inverse_causal}
 事件$y$和$x$满足：
@@ -81,11 +81,15 @@ ExRORU计算步骤如下：
 进一步，如果$y$和$x$满足直接因果关系，则$y\overset{\text{\tiny{DA}}}{\leftarrow}x$或者$y\overset{\text{\tiny{DS}}}{\leftarrow}x$；否则$y\overset{\text{\tiny{IA}}}{\leftarrow}x$或者$y\overset{\text{\tiny{IS}}}{\leftarrow}x$。
 \end{definition}
 
-定义\ref{def:exroru_inverse_causal}中的关系统称扩展不确定性精炼逆因果关系，用$\leftarrow$表示。显然，满足“从不逆因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
+定义\ref{def:exroru_inverse_causal}中的关系统称扩展不确定性精炼逆因果关系，用$\leftarrow$表示，本文在不引起歧义的情况下将其简称为逆因果关系。显然，满足“从不逆因果关系”的两个事件是无需区分其是否满足“直接因果关系”的。
 
 \begin{example}\label{ex:exroru_inverse_causal}
 在图\ref{fig:case_study_cpu}的CPU中，事件$O$和事件$D$满足“直接总是逆因果关系”（direct always inverse causal relation），即$O\overset{\text{\tiny{DA}}}{\leftarrow}D$，因为在所有含有事件$O$的轨迹中两者都满足定义\ref{def:exroru_inverse_causal}中的条件，且它们可以被紧邻执行；事件$O$和事件$A$满足“间接有时逆因果关系”（indirect sometimes inverse causal relation），即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$，因为在部分含有事件$O$的轨迹中$A$可能不被执行，且两者的执行之间事件$C$一定会被执行（不能被紧邻执行）；事件$A$和事件$B$满足“从不逆因果关系”（never inverse causal relation），即$A\overset{\text{\tiny{N}}}{\leftarrow}B$，因为两者不会同时在一条轨迹中被执行。
 \end{example}
+
+根据定义\ref{def:exroru_inverse_causal}，两个事件之间的扩展不确定性精炼逆因果关系共有五种，分别用$\overset{\text{\tiny{DA}}}{\leftarrow}$，$\overset{\text{\tiny{DS}}}{\leftarrow}$，$\overset{\text{\tiny{IA}}}{\leftarrow}$，$\overset{\text{\tiny{IS}}}{\leftarrow}$，$\overset{\text{\tiny{N}}}{\leftarrow}$表示。
+
+图\ref{fig:causal_case_formulas}给出了因果关系和逆因果关系的图形化抽象形式。为了节省空间，这些抽象形式用局部CPU代替了大量的过程流来展示。在图\ref{fig:causal_case_formulas}的局部CPU中，$A$和$B$都是事件。标记了“Loop $X$”的边表示存在一条路径从事件$X$之后的某个条件可达事件$X$之前的某个条件，从而事件$X$在部分轨迹中被执行多次。标记了“Skip $X$”的边表示存在一条路径从事件$X$之前的某个条件可达事件$X$之后的某个条件，从而事件$X$在部分轨迹中不被执行。由于在图\ref{fig:causal_case_formulas}的局部CPU中无法准确判定事件间的直接因果关系和间接因果关系，所以在分析事件间关系时将其省略。另外，为了展示方便，本文使用符号$*$表示不含$A$和$B$的任意长度连续事件序列。
 
 \begin{figure}[htbp]
   \centering
@@ -151,5 +155,89 @@ ExRORU计算步骤如下：
   \caption{因果关系和逆因果关系的图形化抽象形式。\subref{fig:causal_case_a} $A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；\subref{fig:causal_case_b} $A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$；\subref{fig:causal_case_c} $A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；\subref{fig:causal_case_d} $A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$。}
   \label{fig:causal_case_formulas}
 \end{figure}
+
+图\ref{fig:causal_case_a}中，上方的局部CPU有诸如$[A*B]$、$[A*A*B]$、$[A*A*A*B]$等形式的过程流，下方的局部CPU有诸如$[A*B]$、$[A*]$形式的过程流，根据定义\ref{def:exroru_causal}和定义\ref{def:exroru_inverse_causal}，事件$A$和事件$B$满足“有时因果关系”和“总是逆因果关系”，即$A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；同理，\ref{fig:causal_case_b}中，事件$A$和事件$B$满足“总是因果关系”和“有时逆因果关系”，即$A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$。
+
+图\ref{fig:causal_case_c}中，局部CPU中间部分的循环结构和互斥结构显然不会影响事件$A$和事件$B$之间的因果关系和逆因果关系，两个局部CPU中的事件$A$和事件$B$都满足“总是因果关系”和“总是逆因果关系”，即$A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；然而，如果事件$A$和事件$B$都有与之相关的互斥结构，如图\ref{fig:causal_case_d}上方局部CPU所示，其过程流有诸如$[A*B]$、$[A*]$、$[*B]$、$[*]$等形式，则事件$A$和事件$B$满足“有时因果关系”和“有时逆因果关系”，即$A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$；同理，图\ref{fig:causal_case_d}下方的局部CPU中事件$A$和事件$B$都有与之相关的循环结构，故事件$A$和事件$B$满足“有时因果关系”和“有时逆因果关系”，即$A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$。
+
+\subsection{事件间扩展不确定性精炼并行关系}\label{subsec:exroru_concurrent}
+本文用形如$\langle abc\rangle$的表达式来描述轨迹。括号内的字母表示事件，其出现顺序和轨迹内对应事件的发生顺序相同。例如在图\ref{fig:case_study_cpu}的CPU中，$\langle I,A,C,D,O\rangle$、$\langle I,B,C,D,O\rangle$和$\langle I,D,E,D,A,C,O\rangle$都是一些轨迹示例。
+
+令$\Omega_{x}$表示含有事件$x$的轨迹集合，即$\Omega_{x}=\{\sigma\in\Omega|x\in\sigma\}$。本文用$\sigma\uparrow X$表示轨迹$\sigma$到某些事件的集合$X\subseteq E$上的投影，即$\sigma$的子轨迹$\sigma'\subseteq\sigma$，其中$\sigma'$只含有集合$X$中的事件且其出现顺序保持和$\sigma$中一致。令$P(\sigma,x,y)=\sigma\uparrow\{x,y\}$表示轨迹$\sigma$到事件$x$和事件$y$上的投影。
+
+\begin{definition}[事件间扩展不确定性精炼并行关系]\label{def:exroru_concurrent}
+事件$x$和事件$y$满足：
+  \begin{itemize}
+  	\item[-] 总是并行关系（always concurrent relation），记作$x\Updownarrow y$，当且仅当：$\forall\sigma_{x}\in\Omega_{x}$，$x~co~y$且$P(\sigma,x,y)$满足正则表达式$[xy|yx|yy]*y?$\footnote{\url{https://en.wikipedia.org/wiki/Regular\_expression}，正则表达式不是本文重点，对其详细的介绍可参见\onlinecite{mitkov2005oxford,lawson2003finite}}。
+  	\item[-] 从不并行关系（never concurrent relation），记作$x\nparallel y$，当且仅当：$\forall\sigma_{x}\in\Omega_{x}$，$x$和$y$不满足定义\ref{def:ordering_relations}中的并行关系。
+  	\item[-] 有时并行关系（sometimes concurrent relation），记作$x\Uparrow y$，当且仅当$x$和$y$不满足上述两种关系。
+  \end{itemize}
+\end{definition}
+
+定义\ref{def:exroru_concurrent}中的关系统称扩展不确定性精炼并行关系（extended refined concurrent relations with uncertainty），用$\parallel$表示，本文在不引起歧义的情况下将其简称为并行关系。与因果关系和逆因果关系不同，ExRORU并不区分并行关系的直接并行关系和间接并行关系。
+
+\begin{example}\label{ex:exroru_concurrent}
+在图\ref{fig:case_study_cpu}的CPU中，事件$C$和事件$D$满足“总是并行关系”，即$C\Updownarrow D$，因为所有含有事件$C$的轨迹都满足定义\ref{def:exroru_concurrent}中的正则表达式；事件$D$和事件$C$满足“有时并行关系”，即$D\Uparrow C$，因为存在轨迹$\langle IDEDACO\rangle$，其在事件$D$和事件$C$上的投影为$\langle DDC\rangle$，该投影不满足定义\ref{def:exroru_concurrent}中的正则表达式；事件$I$和事件$O$满足“从不并行关系”，即$I\nparallel O$。
+\end{example}
+
+图\ref{fig:concurrent_case_formulas}给出了并行关系的图形化抽象形式。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}{0.45\textwidth}
+  	\centering
+  	\begin{minipage}[b]{1\textwidth}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{concurrent_case_a_1}
+  	\end{minipage}
+  	\begin{minipage}[b]{1\textwidth}
+  	  \vspace{1em}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{concurrent_case_a_2}
+  	\end{minipage}
+  	\caption{}
+  	\label{fig:concurrent_case_a}
+  \end{subfigure}
+  \hspace{2em}
+  \begin{subfigure}{0.45\textwidth}
+  	\centering
+  	\begin{minipage}[b]{1\textwidth}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{concurrent_case_b_1}
+  	\end{minipage}
+  	\begin{minipage}[b]{1\textwidth}
+  	  \vspace{1em}
+  	  \centering
+  	  \includegraphics[width=1\textwidth]{concurrent_case_b_2}
+  	\end{minipage}
+  	\caption{}
+  	\label{fig:concurrent_case_b}
+  \end{subfigure}
+  \begin{subfigure}{0.45\textwidth}
+  	\vspace{1em}
+  	\centering
+  	\includegraphics[width=1\textwidth]{concurrent_case_c}
+  	\caption{}
+  	\label{fig:concurrent_case_c}
+  \end{subfigure}
+  \begin{subfigure}{0.45\textwidth}
+  	\vspace{1em}
+  	\centering
+  	\includegraphics[width=1\textwidth]{concurrent_case_d}
+  	\caption{}
+  	\label{fig:concurrent_case_d}
+  \end{subfigure}
+  \begin{subfigure}{0.45\textwidth}
+  	\vspace{1em}
+  	\centering
+  	\includegraphics[width=1\textwidth]{concurrent_case_e}
+  	\caption{}
+  	\label{fig:concurrent_case_e}
+  \end{subfigure}
+  \caption{并行关系的图形化抽象形式。\subref{fig:concurrent_case_a} $A\Uparrow B$，$B\Updownarrow A$；\subref{fig:concurrent_case_b} $A\Updownarrow B$，$B\Uparrow A$；\subref{fig:concurrent_case_c} $A\Updownarrow B$，$B\Updownarrow A$；\subref{fig:concurrent_case_d} $A\Updownarrow B$，$B\Updownarrow A$；\subref{fig:concurrent_case_e} $A\Uparrow B$，$B\Updownarrow A$}
+  \label{fig:concurrent_case_formulas}
+\end{figure}
+
+图\ref{fig:concurrent_case_a}中，上方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*A*\rangle$等形式的轨迹，下方的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*A*A*B*\rangle$、$\langle I*A*A*A*B*\rangle$等形式的轨迹，根据定义\ref{def:exroru_concurrent}。当考查事件$A$和事件$B$的并行关系时，轨迹不符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$；然而，当考查事件$B$和事件$A$的并行关系时，轨迹符合定义\ref{def:exroru_concurrent}中的正则表达式，因此事件$B$和事件$A$满足“总是并行关系”，即$B\Updownarrow A$。
 
 \section{本章小结}
