@@ -378,4 +378,44 @@ ExRORU计算步骤如下：
 在图\ref{fig:nfc_petri}所示的WF-net中，变迁$C$对应图\ref{fig:nfc_cpu}所示CPU中的事件$C_{1}$和事件$C_{2}$。根据定义\ref{def:exroru_causal}，$C_{1}\overset{\text{\tiny{DA}}}{\rightarrow}D$、$C_{2}\overset{\text{\tiny{N}}}{\rightarrow}D$，经定义\ref{def:exroru_causal_transition}折叠得到变迁$C$和变迁$D$满足“直接有时因果关系”，即$C\overset{\text{\tiny{DS}}}{\rightarrow}D$。根据定义\ref{def:exroru_inverse_causal}，$C_{1}\overset{\text{\tiny{N}}}{\leftarrow}B$、$C_{2}\overset{\text{\tiny{DA}}}{\leftarrow}B$，经定义\ref{def:exroru_inverse_causal_transition}折叠得到变迁$C$和变迁$B$满足“直接有时逆因果关系”，即$C\overset{\text{\tiny{DS}}}{\leftarrow}B$。根据定义\ref{def:exroru_concurrent}，$C_{1}\Updownarrow X$、$C_{2}\nparallel X$，经定义\ref{def:exroru_concurrent_transition}折叠得到变迁$C$和变迁$X$满足“有时并行关系”，即$C\Uparrow X$。值得注意的是，$X\Updownarrow C_{1}$、$X\nparallel C_{2}$，经定义\ref{def:exroru_concurrent_transition}折叠得到变迁$X$和变迁$C$满足“总是并行关系”，即$X\Updownarrow C$。
 \end{example}
 
+\section{ExRORU的计算}\label{sec:exroru_computation}
+本节主要介绍ExRORU的计算，首先给出基于CPU计算事件间ExRORU的方法，随后重点介绍计算WF-net中变迁间ExRORU关系的算法。
+
+\subsection{基于CPU计算事件间ExRORU关系}\label{subsec:exroru_event_computation}
+一个直观方法是依据定义\ref{def:exroru_causal}、\ref{def:exroru_inverse_causal}、\ref{def:exroru_concurrent}计算事件间ExRORU关系，然而由于循环结构的存在，一个CPU可能有无穷多个过程流和轨迹，无法应用上述定义计算关系。另一方面，在一个含有多并发分支结构的CPU中，计算其轨迹集合会导致状态爆炸问题。因此，直接利用过程流和轨迹计算ExRORU关系是不合适的，本文使用定义\ref{def:cpu}中提出的完全前缀展开计算事件间ExRORU关系。
+
+在计算事件$A$和事件$B$之间的因果关系时，可以借助图\ref{fig:causal_case_formulas}中的因果关系抽象形式，从CPU中抽取一条从$A$到$B$的路径，并依次遍历其中的条件以判断是否存在符合抽象形式中的“Skip”或者“Loop”结构，从而得到事件$A$和事件$B$之间的因果关系。
+
+\begin{algorithm}[htbp]
+  \LinesNumbered
+  \caption{计算事件间因果关系}
+  \label{algo:exroru_event_causal}
+  \KwIn{完全前缀展开$U$，事件$A$和事件$B$}
+  \KwOut{事件$A$和事件$B$之间的因果关系}
+  \uIf{$A=B$} {
+  	\uIf{\textnormal{There exists a path from $A$ to $B$}} {
+  	  \Return{$A\overset{\text{\tiny{S}}}{\rightarrow}B$\textnormal{;}}
+  	} \Else {
+  	  \Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$\textnormal{;}}
+  	}
+  } \Else {
+  	\uIf{\textnormal{There exists a path $s$ from $A$ to $B$}} {
+  	  \For{\textnormal{XOR-split condition $X$ in $s$}} {
+  	  	\If{\textnormal{There exists another path from $X$ to $A$ (``loop $A$'') or from $X$ to sink condition without $B$ (``skip $B$'')}} {
+  	  	  \Return{$A\overset{\text{\tiny{S}}}{\rightarrow}B$\textnormal{;}}
+  	  	}
+  	  }
+  	  \Return{$A\overset{\text{\tiny{A}}}{\rightarrow}B$\textnormal{;}}
+  	} \Else {
+  	  \Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$\textnormal{;}}
+  	}
+  }
+\end{algorithm}
+
+算法\ref{algo:exroru_event_causal}给出了计算事件间因果关系的伪代码。算法接受完全有限前缀$U$和两个事件$A$、$B$作为输入，输出事件$A$和事件$B$之间的因果关系。算法分两种情况抽取因果关系：若事件$A$和事件$B$是相同事件（第1行），则尝试在$U$中找一条从事件$A$到自身的自循环路径，若该路径存在说明事件$A$与自身满足“有时因果关系”（第2-3行），否则满足“从不因果关系”（第4-5行）；若事件$A$和事件$B$是不同事件（第6行），则尝试在$U$中找一条从事件$A$到事件$B$的路径，若该路径存在（第7行），则依次遍历路径上的XOR-split条件并寻找图\ref{fig:causal_case_formulas}中的“Loop”和“Skip”结构（第8-9行），若该类结构存在说明事件$A$和事件$B$满足“有时因果关系”（第10行），否则说明事件$A$和事件$B$满足“总是因果关系”（第11行），若从$A$到$B$的路径不存在，说明事件$A$和事件$B$满足“从不因果关系”（第12-13行）。
+
+\textcolor{red}{证明任意一条路径都能抽取正确的关系}
+
+\subsection{基于WF-net计算变迁间ExRORU关系}\label{subsec:exroru_transition_computation}
+
 \section{本章小结}
