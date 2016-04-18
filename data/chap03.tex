@@ -394,20 +394,20 @@ ExRORU计算步骤如下：
   \KwOut{事件$A$和事件$B$之间的因果关系}
   \uIf{$A=B$} {
   	\uIf{\textnormal{There exists a path from $A$ to $B$}} {
-  	  \Return{$A\overset{\text{\tiny{S}}}{\rightarrow}B$\textnormal{;}}
+  	  \Return{$A\overset{\text{\tiny{S}}}{\rightarrow}B$}
   	} \Else {
-  	  \Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$\textnormal{;}}
+  	  \Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$}
   	}
   } \Else {
   	\uIf{\textnormal{There exists a path $s$ from $A$ to $B$}} {
   	  \For{\textnormal{XOR-split condition $X$ in $s$}} {
   	  	\If{\textnormal{There exists another path from $X$ to $A$ (``loop $A$'') or from $X$ to sink condition without $B$ (``skip $B$'')}} {
-  	  	  \Return{$A\overset{\text{\tiny{S}}}{\rightarrow}B$\textnormal{;}}
+  	  	  \Return{$A\overset{\text{\tiny{S}}}{\rightarrow}B$}
   	  	}
   	  }
-  	  \Return{$A\overset{\text{\tiny{A}}}{\rightarrow}B$\textnormal{;}}
+  	  \Return{$A\overset{\text{\tiny{A}}}{\rightarrow}B$}
   	} \Else {
-  	  \Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$\textnormal{;}}
+  	  \Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$}
   	}
   }
 \end{algorithm}
@@ -415,6 +415,23 @@ ExRORU计算步骤如下：
 算法\ref{algo:exroru_event_causal}给出了计算事件间因果关系的伪代码。算法接受完全有限前缀$U$和两个事件$A$、$B$作为输入，输出事件$A$和事件$B$之间的因果关系。算法分两种情况抽取因果关系：若事件$A$和事件$B$是相同事件（第1行），则尝试在$U$中找一条从事件$A$到自身的自循环路径，若该路径存在说明事件$A$与自身满足“有时因果关系”（第2-3行），否则满足“从不因果关系”（第4-5行）；若事件$A$和事件$B$是不同事件（第6行），则尝试在$U$中找一条从事件$A$到事件$B$的路径，若该路径存在（第7行），则依次遍历路径上的XOR-split条件并寻找图\ref{fig:causal_case_formulas}中的“Loop”和“Skip”结构（第8-9行），若该类结构存在说明事件$A$和事件$B$满足“有时因果关系”（第10行），否则说明事件$A$和事件$B$满足“总是因果关系”（第11行），若从$A$到$B$的路径不存在，说明事件$A$和事件$B$满足“从不因果关系”（第12-13行）。
 
 \textcolor{red}{证明任意一条路径都能抽取正确的关系}
+
+类似的，在计算事件$B$和事件$A$的逆因果关系时，同样可以借助图\ref{fig:causal_case_formulas}中的因果关系抽象形式，从CPU中抽取一条从$A$到$B$的路径，并逆向遍历其中的条件以判断是否存在符合抽象形式中的“Skip”或者“Loop”结构，从而得到事件$B$和事件$A$之间的逆因果关系。与算法\ref{algo:exroru_event_causal}不同的是，在计算事件$B$和事件$A$的逆因果关系时，需要关注的是路径中的XOR-join条件而不是XOR-split条件。
+
+\textcolor{red}{计算直接因果关系的算法}
+
+需要注意的是，对于一对事件$A$和$B$，其因果关系$A\rightarrow B$和逆因果关系$B\leftarrow A$可能有着不同的不确定性。例如，在图\ref{fig:case_study_cpu}所示的模型中，事件$A$和事件$O$满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}O$；而事件$O$和事件$A$满足“间接有时逆因果关系”，即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$。另外，事件$D$和事件$E$满足“直接有时因果关系”，即$D\overset{\text{\tiny{DS}}}{\rightarrow}E$；而事件$E$和事件$D$满足“直接总是逆因果关系”，即$E\overset{\text{\tiny{DA}}}{\leftarrow}D$。由于循环结构的存在，事件$D$和事件$E$之间的因果关系不能被RORU算法正确识别。
+
+在计算事件$A$和事件$B$之间的并行关系时，实际上需要考虑两个方向并行关系的不确定性，即$A\parallel B$和$B\parallel A$。类似的，可以借助图\ref{fig:concurrent_case_formulas}中的并行关系抽象形式，首先找到两个事件的并行结构入口，并依次遍历从入口分别到事件$A$、事件$B$的路径以判断是否存在符合抽象形式中的“Skip”或者“Loop”结构，从而得到事件$A$和事件$B$之间的并行关系。
+
+% \begin{algorithm}[htbp]
+%   \LinesNumbered
+%   \caption{计算事件间并行关系}
+%   \label{algo:exroru_event_concurrent}
+%   \KwIn{完全有限前缀$U$，事件$A$和事件$B$}
+%   \KwOut{事件$A$和事件$B$之间的并行关系}
+%   \uIf
+% \end{algorithm}
 
 \subsection{基于WF-net计算变迁间ExRORU关系}\label{subsec:exroru_transition_computation}
 
