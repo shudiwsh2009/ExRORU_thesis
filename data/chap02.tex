@@ -4,12 +4,14 @@
 \section{过程模型行为语义刻画方法}\label{sec:related_algorithms}
 国内外学者提出了诸多刻画过程模型行为语义的方法与工具，它们的适用场景和刻画能力各有不同。对过程模型行为语义的刻画可以应用到过程模型相似性度量方法及过程模型差异性检测中，本节重点介绍部分主流过程模型行为语义刻画方法和基于过程模型行为特征的相似性度量算法。
 
+\subsection{变迁紧邻关系TAR}\label{subsec:tar}
 Zha等人基于两个模型的变迁发生序列集提出了一种简单的相似性度量方法，即参考相似性算法（reference similarity）\cite{zha2010workflow}。作者同时给出了此方法的两个严重问题：首先，该方法不适用于带环模型，因为带环模型的变迁发生序列是无穷多的；其次，该方法过于严格，现实中存在发生序列相似但无完全相同序列的模型对，该类模型对会被认为完全不相似。
 
 基于上述原因，Zha等人又提出了另一种相似性算法，即TAR算法（Trasition adjacency relation，变迁紧邻关系）。一对变迁$A,B$被认为是$TAR$集合中的元素当且仅当模型存在一条形如$\langle ...,A,B,...\rangle$的变迁发生序列，即变迁$A$后面紧跟着变迁$B$。令模型$M_{0}$和模型$M_{1}$的$TAR$关系集合分别是$TAR_{0}$和$TAR_{1}$，则两个模型间的$TAR$相似度被定义为$sim(M_{0},M_{1})=(\#(TAR_{0}\cap TAR_{1})/\#(TAR_{0}\cup TAR_{1}))$。因为模型$M_{0}$和$M_{1}$中的变迁数量是有限的，所以$TAR_{0}$和$TAR_{1}$是有穷的。作者同时证明了该算法对应的距离度量是度量空间中的距离函数。
 
 TAR相似性算法解决了带环WF-net的相似性度量问题，是一种基于过程模型行为特征的相似性算法。但是TAR算法只考虑了变迁之间的直接紧邻关系，而忽略了变迁紧邻关系之间的传递闭包。该算法只考虑了“变迁$A$后可以被变迁$B$直接跟随”，而没有考虑“变迁$A$发生后，变迁$B$可以在之后某个时候发生”。该缺陷导致算法不能对循环结构与顺序结构对应的紧邻关系进行区分，影响度量结果。此外，TAR算法也不能正确处理带有非自由选择结构的过程模型。
 
+\subsection{因果行为轮廓CBP}\label{subsec:cbp}
 Weidlich等人通过抽取两个变迁执行之间的依赖关系刻画一个过程模型的行为语义\cite{weidlich2011efficient,weidlich2010efficient}。变迁之间的依赖关系被分成四类：
 \begin{itemize}
   \item[-] 变迁$A$和变迁$B$满足严格顺序关系（strict order relation），当且仅当变迁$A$可能在变迁$B$之前被执行，而变迁$B$不可能在变迁$A$之前被执行，即存在形如$\langle ...A...B...\rangle$的变迁发生序列而不存在形如$\langle ...B...A...\rangle$的变迁发生序列。
@@ -32,6 +34,7 @@ Weidlich等人基于如下思想定义了一种相似性度量方法（\onlineci
 
 CBP可以被应用于模型检索和一致性检测。作者给出了一个高效计算过程模型因果行为轮廓的算法\cite{weidlich2010efficient}，但该算法只适用于合理的自由选择WF-net。此外，在部分模型中，CBP不能区分循环结构和并行结构，所以拥有相同CBP的两个模型可能有着不同的行为。
 
+\subsection{因果足迹CF}\label{subsec:cf}
 Dijkman等人提出了因果足迹（causal footprints，简称CF）算法来抽取过程模型变迁之间的前驱关系\cite{dijkman2011similarity}。假定过程模型的变迁集合为$T$，它的因果足迹是一个二元组$(L_{lb},L_{la})$。该二元组的第一个元素$L_{lb}\subseteq (\wp(T)\times T)$被称为后向链接集合，$(S,a)\in L_{lb}$当且仅当在某个变迁发生序列中每次变迁$a$的发生都有变迁集合$S$中某个变迁的发生作为其前驱。同理，$L_{la}$被称为前向链接集合，$(T\times\wp(T))\supseteq(a,S)\in L_{la}$当且仅当在某个变迁发生序列中每次变迁$a$的发生都有变迁集合$S$中某个变迁的发生作为其后继。
 
 为了度量两个模型间的相似性，需要计算它们的因果足迹之间的相似性。CF被当作文档向量空间中的文档，这是在信息过滤和信息检索领域中被广泛使用的一个概念\cite{salton1975vector}。因果足迹（“文档”）被表示成索引项的向量。假定模型$M_{0}=(N_{0},E_{0})$和$M_{1}=(N_{1},E_{1})$的前向链接集合分别为$L_{la}^{M_{0}}$和$L_{la}^{M_{1}}$，后向链接集合分别为$L_{lb}^{M_{0}}$和$L_{lb}^{M_{1}}$。索引项集合$\Uptheta=N_{0}\cup N_{1}\cup L_{la}^{M_{0}}\cup L_{la}^{M_{1}}\cup L_{lb}^{M_{0}}\cup L_{lb}^{M_{1}}$，即$\Uptheta$包含了两个模型的所有节点及所有的前向链接和后向链接。令$\lambda:\Uptheta\rightarrow\mathbb{N}$是一个索引函数，它给每个索引项赋予一个递增数字。
@@ -52,6 +55,7 @@ Dijkman等人提出了因果足迹（causal footprints，简称CF）算法来抽
 
 CF的最大缺点在于$L_{la}$和$L_{lb}$含有大量的无用元素\cite{dijkman2011similarity,van2008measuring}。由于该方法使用的向量空间维度很高，因此向量的计算效率很低。另外，CF算法不区分$OR$连接和$XOR$连接，从而影响计算结果的合理性。
 
+\subsection{主变迁序列PTS}\label{subsec:pts}
 为了解决带环模型变迁发生序列集合无穷大的问题，Wang等人通过限制子序列来度量相似性：一条不含重复变迁的发生序列被看作一个整体来处理\cite{wang2010behavioral}。该算法被称为主变迁序列（principle transition sequences，简称PTS）。含有重复变迁$x$的序列$\sigma$被表达为$\sigma=\langle\sigma_{prefix},x,\sigma_{repeatable},x,...\rangle$，其中$\sigma_{prefix}$和$\sigma_{repeatable}$是$\sigma$的子序列。如此，在计算过程中，子序列$\sigma_{prefix}$和$\sigma_{repeatable}$会替代$\sigma$来参与计算。作者证明了对于每个过程模型，子序列的数量是有限的。
 
 基于最长公共子序列可以定义两个子序列之间的相似性：
@@ -65,6 +69,7 @@ CF的最大缺点在于$L_{la}$和$L_{lb}$含有大量的无用元素\cite{dijkm
 
 PTS算法对变迁发生序列集合的相似性计算较为粗糙，未考虑子序列基数差异的影响，且其只使用最大相似度来衡量集合间的相似性，计算结果不够精确。另一方面，当处理含有高并发结构的过程模型时，PTS算法存在状态空间爆炸的问题。
 
+\subsection{完全触发序列集合CFS}\label{subsec:cfs}
 作为对PTS算法的改进，Dong等人提出了基于触发序列集合的过程模型相似性算法，即CFS（全称complete firing sequences）\cite{dong2014cfs}。相比于PTS，CFS算法引入了循环计数的概念从而避免计算所有触发序列。CFS算法使用过程模型的覆盖树来计算触发序列集合，通过比较两个过程模型的触发序列集合来衡量两者的相似性。与PTS类似，作者首先定义了触发序列之间的相似性：
 \begin{displaymath}
   sims(\sigma,\sigma')=\frac{length(lcs(L(\sigma),L(\sigma')))}{max(length(L(\sigma)),length(L(\sigma')))}
@@ -75,6 +80,7 @@ PTS算法对变迁发生序列集合的相似性计算较为粗糙，未考虑�
 \end{displaymath}
 并将此作为两个过程模型间的相似度。作者同时给出了利用贪心算法和$A^{*}$算法求解完整触发序列集合间最优映射的方法。与PTS类似，基于覆盖树的CFS算法也存在状态空间爆炸的问题。
 
+\subsection{4C频谱}\label{subsec:4c}
 Artem Polyvyanyy等人定义了Petri网的4C频谱（共现co-occurrence、冲突conflict、因果causality和并行concurrency）并据此刻画模型的行为语义\cite{polyvyanyy20144c}。作者首先探讨了冲突和共现关系，任意一种刻画变迁的发生之间关联情况的关系都可以被归纳成以下两种情况之一：两个变迁是否能在同一个发生序列中同时出现；一个变迁是否可以在某个其他变迁不发生的情况发生。基于此作者给出基本冲突和基本共现的定义：
 \begin{definition}[基本冲突和基本共现]
 令$S=(N=(P,T,F),M)$是一个标识Petri网，$x,y\in T$是其两个变迁。
