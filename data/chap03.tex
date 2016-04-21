@@ -327,6 +327,7 @@
 算法\ref{algo:exroru_event_causal}给出了计算事件间因果关系的伪代码。算法接收完全前缀展开$U$和两个事件$A$、$B$作为输入，输出事件$A$和事件$B$之间的因果关系。算法分两种情况抽取因果关系：若事件$A$和事件$B$是相同事件（第1行），则尝试在$U$中找一条从事件$A$到自身的自循环路径，若该路径存在说明事件$A$与自身满足“有时因果关系”（第2-3行），否则满足“从不因果关系”（第4-5行）；若事件$A$和事件$B$是不同事件（第6行），则尝试在$U$中找一条从事件$A$到事件$B$的路径，若该路径存在（第7行），则依次遍历路径上的XOR-split条件并寻找图\ref{fig:event_causal_formulas}中的“Loop”和“Skip”结构（第8-9行），若该类结构存在说明事件$A$和事件$B$满足“有时因果关系”（第10行），否则说明事件$A$和事件$B$满足“总是因果关系”（第11行），若从$A$到$B$的路径不存在，说明事件$A$和事件$B$满足“从不因果关系”（第12-13行）。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.85}
   \LinesNumbered
   \caption{计算事件间因果关系}
   \label{algo:exroru_event_causal}
@@ -365,6 +366,7 @@
 算法\ref{algo:exroru_event_concurrent}给出了计算事件间并行关系的伪代码。算法接收完全前缀展开$U$和两个事件$A$、$B$作为输入，输出事件$A$和事件$B$之间的双向并行关系。算法首先判断事件$A$和事件$B$是否满足并行关系（第1行）：若不满足，则事件$A$和事件$B$满足“从不并行关系”，即$A\nparallel B$，且事件$B$和事件$A$也满足“从不并行关系”，即$B\nparallel A$（第2行）；否则，分别寻找从并行结构入口到事件$A$的路径$s_{1}$和从并行结构入口到事件$B$的路径$s_{2}$（第3-5行），然后依次检查$s_{1}$和$s_{2}$上的XOR-split和XOR-join条件节点（第6-7行），并依据上述检查结果判定事件$A$和事件$B$的并行关系不确定性（第8-9行）。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.85}
   \LinesNumbered
   \caption{计算事件间并行关系}
   \label{algo:exroru_event_concurrent}
@@ -386,6 +388,7 @@
 算法\ref{algo:exroru_event_concurrent}中对于XOR-split节点的处理（第6行）如算法\ref{algo:exroru_event_concurrent_xorsplit}所示。函数\texttt{CheckXORSplit}接收并行结构入口$lcp$、事件$A$、事件$B$和从并行结构入口到事件$A$和$B$的路径$s_{1}$和$s_{2}$作为参数，返回两条路径XOR-split节点作用下的事件$A$和事件$B$之间的双向并行关系。函数首先初始化双向并行关系不确定性为“Always”（第1行），然后遍历两条路径找到所有满足抽象形式的XOR-split节点（第2-3行）。接下来，函数执行两重循环处理未被访问过的XOR-split节点（第4-5行），若满足图\ref{fig:concurrent_formula_c}的抽象形式（$lcs(a_{i},b_{j})$表示两个节点的最近公共后继，即抽象形式中的变迁$X$），则将这两个节点标记为“已访问”（第6-7行）；否则事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$，且事件$B$和事件$A$也满足“有时并行关系”，即$B\Uparrow A$（第8-9行）。最后函数依据未访问过的XOR-split节点返回XOR-split作用下的事件$A$和事件$B$之间的双向并行关系（第10-14行）。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.85}
   \LinesNumbered
   \caption{检查XOR-split节点}
   \label{algo:exroru_event_concurrent_xorsplit}
@@ -416,6 +419,7 @@
 算法\ref{algo:exroru_event_concurrent}中对于XOR-join节点的处理（第7行）如算法\ref{algo:exroru_event_concurrent_xorjoin}所示。函数\texttt{CheckXORJoin}接收并行结构入口$lcp$、事件$A$、事件$B$和从并行结构入口到事件$A$和事件$B$的路径$s_{1}$和$s_{2}$作为参数，返回两条路径XOR-join节点作用下的事件$A$和事件$B$之间的双向并行关系。函数首先初始化双向并行关系不确定性为“Always”（第1行），然后遍历两条路径找到所有满足抽象形式的XOR-join节点（第2-3行）。接下来，函数执行两重循环处理未被访问过的XOR-join节点（第4-5行），若满足图\ref{fig:concurrent_formula_d}的抽象形式（$lcp(a_{i},b_{j})$表示两个节点的最近公共前驱，即抽象形式中的变迁$X$），则将这两个节点标记为“已访问”（第6-7行）；否则事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$，且事件$B$和事件$A$也满足“有时并行关系”，即$B\Uparrow A$（第8-9行）。最后函数依据未访问过的XOR-join节点返回XOR-join作用下的事件$A$和事件$B$之间的双向并行关系（第10-14行）。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.85}
   \LinesNumbered
   \caption{检查XOR-join节点}
   \label{algo:exroru_event_concurrent_xorjoin}
@@ -547,6 +551,7 @@
 计算变迁间逆因果关系的伪代码与算法\ref{algo:exroru_transition_causal}类似，不再赘述。需要注意的是，与事件间因果关系类似，对于一对变迁$A$和$B$，其因果关系$A\rightarrow B$和逆因果关系$B\leftarrow A$可能有着不同的不确定性。例如，在图\ref{fig:case_study_petri}所示的WF-net中，变迁$A$和变迁$O$满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}O$；而变迁$O$和变迁$A$满足“间接有时逆因果关系”，即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.85}
   \LinesNumbered
   \caption{计算变迁间并行关系}
   \label{algo:exroru_transition_concurrent}
