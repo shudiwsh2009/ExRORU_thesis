@@ -580,7 +580,7 @@
 
 计算变迁$A$和变迁$B$的反向并行关系的方法与正向类似，只需将算法\ref{algo:exroru_transition_concurrent}中的变迁$A$和变迁$B$对调，在此不再赘述。显然，对于一对变迁$A$和$B$，其正向并行关系$A\parallel B$和反向并行关系$B\parallel A$可能有着不同的不确定性。例如，在图\ref{fig:case_study_petri}所示的WF-net中，变迁$A$和变迁$D$满足“总是并行关系”，即$A\Updownarrow D$；而变迁$D$和变迁$A$满足“有时并行关系”，即$D\Uparrow A$。
 
-\section{\textcolor{red}{CASE STUDY}}
+% \section{\textcolor{red}{CASE STUDY}}
 
 \section{ExRORU的重要性质}\label{sec:exroru_properties}
 本节重点介绍ExRORU算法的重要性质，包括其在刻画过程模型行为语义时的唯一性、ExRORU集合的充分性和必要性等。
@@ -1282,4 +1282,16 @@
 给定原始过程模型$P$，改变$P$中一对节点的结构（例如：从顺序结构改为互斥结构、并行结构或者循环结构等）得到新的过程模型$Q$，模型$P$的ExRORU矩阵与模型$Q$的ExRORU矩阵一定不相同。
 \end{corollary}
 
+下面的定理描述了为了保证唯一性，所有ExRORU关系是充分且必要的。
+
+\begin{theorem}[充分性和必要性]\label{theo:necessity_sufficiency}
+为了保证唯一性，ExRORU关系集合$\mathbb{R}=\{\overset{\text{\tiny{DA}}}{\rightarrow},\overset{\text{\tiny{IA}}}{\rightarrow},\overset{\text{\tiny{DS}}}{\rightarrow},\overset{\text{\tiny{IS}}}{\rightarrow},\overset{\text{\tiny{N}}}{\rightarrow},\overset{\text{\tiny{DA}}}{\leftarrow},\overset{\text{\tiny{IA}}}{\leftarrow},\overset{\text{\tiny{DS}}}{\leftarrow},\overset{\text{\tiny{IS}}}{\leftarrow},\overset{\text{\tiny{N}}}{\leftarrow},\Updownarrow,\Uparrow,\nparallel\}$是充分且必要的。
+\end{theorem}
+
+\begin{proof}
+定理\ref{theo:uniqueness}证明了唯一性，可以直接推导出$\mathbb{R}$是充分的。接下来通过证明$\mathbb{R}$中的每个关系都不可缺少以推导必要性。观察图\ref{fig:sda_example}中的一对模型，ExRORU之所以能区分两者是因为变迁$I$和变迁$O$在上方模型中满足“间接总是因果关系”，即$I\overset{\text{\tiny{IA}}}{\rightarrow}O$；而在下方模型中满足“直接总是因果关系”，即$I\overset{\text{\tiny{DA}}}{\rightarrow}O$。观察图\ref{fig:nfc_example}中的一对模型，ExRORU之所以能区分两者是因为变迁$A$和变迁$D$（或者变迁$B$和变迁$E$）在上方模型中满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}D$；而在下方模型中满足“间接有时因果关系”，即$A\overset{\text{\tiny{IS}}}{\rightarrow}D$。以上可推导出5种因果关系的必要性，同理可推导5种逆因果关系的必要性。类似的，观察图\ref{fig:uniqueness_3_e}和\ref{fig:uniqueness_3_f}的两个局部模型，ExRORU之所以能区分两者是因为变迁$A$和变迁$B$在前者中满足“总是并行关系”，即$A\Updownarrow B$；而在后者中满足“有时并行关系”，即$A\Uparrow B$。以上可推导3中并行关系的必要性。因此，关系集合$\mathbb{R}$中的关系都是必要的。
+\qed
+\end{proof}
+
 \section{本章小结}
+本章介绍了扩展不确定性精炼有序关系的定义和计算方法。首先介绍了事件间ExRORU关系并给出了依据图形化抽象形式基于CPU高效计算的方法；然后探讨了将事件间ExRORU折叠回变迁间ExRORU关系的动机，继而给出变迁间ExRORU关系的定义和折叠算法。本章最后形式化证明了ExRORU算法的唯一性和充分必要性等重要性质。
