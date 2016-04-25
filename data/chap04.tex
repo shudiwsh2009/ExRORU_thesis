@@ -132,34 +132,33 @@
   \item[-] 在实际执行轨迹中会出现任务被漏记等缺失情况；
   \item[-] 过程模型中允许跳过或重做当前任务、跳回到之前某个任务的情形，但该类执行逻辑并未在过程模型的控制逻辑中表达出来。
 \end{itemize}
-不可见变迁不含有意义的标签，它不会在变迁执行序列中显式出现。本文使用带斜线的阴影方框表示不可见变迁。根据不可见变迁的功能，图\ref{fig:invisible_transition_types}将其分为四类。图\ref{fig:invisible_transition_side}中的模型含有SIDE类型的不可见变迁，该类不可见变迁与源库所或者汇库所直接相连；图\ref{fig:invisible_transition_skip}中的模型含有SKIP类型的不可见变迁，该类不可见变迁被用于跳过某些任务（该例中跳过了变迁$B$）；图\ref{fig:invisible_transition_redo}中的模型含有REDO类型的不可见变迁，该类不可见变迁被用于重复执行某些任务（该例中重复执行变迁$B$）；图\ref{fig:invisible_transition_switch}中的模型含有SWITCH类型的不可见变迁，该类不可见变迁被用于在不同分支之间切换执行权（该例中从含有变迁$A$和$C$的分支切换到含有变迁$B$和$D$的分支）。
+不可见变迁不含有意义的标签，它不会在变迁执行序列中显式出现。本文使用带斜线的阴影方框表示不可见变迁。根据不可见变迁的功能，图\ref{fig:invisible_transition_types}将其分为四类。图\ref{fig:invisible_transition_skip}中的模型含有SKIP类型的不可见变迁，该类不可见变迁被用于跳过某些任务（该例中跳过了变迁$B$）；图\ref{fig:invisible_transition_redo}中的模型含有REDO类型的不可见变迁，该类不可见变迁被用于重复执行某些任务（该例中重复执行变迁$B$）；图\ref{fig:invisible_transition_side}中的模型含有SIDE类型的不可见变迁，该类不可见变迁与源库所或者汇库所直接相连；图\ref{fig:invisible_transition_switch}中的模型含有SWITCH类型的不可见变迁，该类不可见变迁被用于在不同分支之间切换执行权（该例中从含有变迁$A$和$C$的分支切换到含有变迁$B$和$D$的分支）。
 
 \begin{figure}[htbp]
   \centering
-  \begin{subfigure}{1\textwidth}
+  \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{invisible_transition_side}
-    \caption{SIDE类型的不可见变迁}
-    \label{fig:invisible_transition_side}
-  \end{subfigure}
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \includegraphics[width=0.7\textwidth]{invisible_transition_skip}
+    \includegraphics[width=0.98\textwidth]{invisible_transition_skip}
     \caption{SKIP类型的不可见变迁}
     \label{fig:invisible_transition_skip}
   \end{subfigure}
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
+  \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{invisible_transition_redo}
+    \includegraphics[width=0.98\textwidth]{invisible_transition_redo}
     \caption{REDO类型的不可见变迁}
     \label{fig:invisible_transition_redo}
   \end{subfigure}
-  \begin{subfigure}{1\textwidth}
+  \begin{subfigure}[b]{0.48\textwidth}
     \vspace{1em}
     \centering
-    \includegraphics[width=0.5\textwidth]{invisible_transition_switch}
+    \includegraphics[width=0.98\textwidth]{invisible_transition_side}
+    \caption{SIDE类型的不可见变迁}
+    \label{fig:invisible_transition_side}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \vspace{1em}
+    \centering
+    \includegraphics[width=0.7\textwidth]{invisible_transition_switch}
     \caption{SWITCH类型的不可见变迁}
     \label{fig:invisible_transition_switch}
   \end{subfigure}
@@ -252,5 +251,61 @@
     \end{minipage}
   \end{subtable}
 \end{table}
+
+图\ref{fig:invisible_transition_examples}给出了更多的含有不可见变迁的过程模型对。本文的ExRORU算法可以检测到其中各组模型之间的行为差异。在图\ref{fig:invisible_transition_a}的上方模型中，变迁$A$和变迁$B$满足“直接总是因果关系”，即$A\overset{\text{\tiny{DA}}}{\rightarrow}B$，变迁$A$和变迁$C$满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}C$；而在下方模型中，变迁$A$和变迁$B$满足“直接有时因果关系”，即$A\overset{\text{\tiny{DS}}}{\rightarrow}B$，变迁$A$和变迁$C$满足“直接总是因果关系”，即$A\overset{\text{\tiny{DA}}}{\rightarrow}C$。
+
+在图\ref{fig:invisible_transition_b}和图\ref{fig:invisible_transition_c}的上方模型中，变迁$B$和变迁$C$都满足“有时并行关系”，即$B\Uparrow C$，而在两幅图的下方模型中，变迁$B$和变迁$C$都满足“总是并行关系”，即$B\Updownarrow C$。
+
+BP等算法不考虑任务间紧邻关系也不区分并行关系的不确定性，所以无法区分图中的三组模型。TAR算法虽然考虑了任务间紧邻关系，但是对于并行关系刻画的不准确导致了它无法区分图\ref{fig:invisible_transition_b}和图\ref{fig:invisible_transition_c}中的两对模型。类似的，RORU算法无法处理这些含有不可见变迁的模型，且它不能计算图\ref{fig:invisible_transition_c}中这样带环的模型。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}{1\textwidth}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.7\textwidth]{invisible_transition_a_1}
+    \end{minipage}
+    \begin{minipage}[b]{1\textwidth}
+      \vspace{1em}
+      \centering
+      \includegraphics[width=0.7\textwidth]{invisible_transition_a_2}
+    \end{minipage}
+    \caption{}
+    \label{fig:invisible_transition_a}
+  \end{subfigure}
+  \begin{subfigure}{1\textwidth}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \vspace{1em}
+      \centering
+      \includegraphics[width=0.7\textwidth]{invisible_transition_b_1}
+    \end{minipage}
+    \begin{minipage}[b]{1\textwidth}
+      \vspace{1em}
+      \centering
+      \includegraphics[width=0.7\textwidth]{invisible_transition_b_2}
+    \end{minipage}
+    \caption{}
+    \label{fig:invisible_transition_b}
+  \end{subfigure}
+  \begin{subfigure}{1\textwidth}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \vspace{1em}
+      \centering
+      \includegraphics[width=0.7\textwidth]{invisible_transition_c_1}
+    \end{minipage}
+    \begin{minipage}[b]{1\textwidth}
+      \vspace{1em}
+      \centering
+      \includegraphics[width=0.7\textwidth]{invisible_transition_c_2}
+    \end{minipage}
+    \caption{}
+    \label{fig:invisible_transition_c}
+  \end{subfigure}
+  \caption{含有不可见变迁的WF-net示例}
+  \label{fig:invisible_transition_examples}
+\end{figure}
 
 \section{本章小结}
