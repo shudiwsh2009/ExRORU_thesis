@@ -249,20 +249,18 @@
 
 \begin{table}[htbp]
   \centering
-  \begin{minipage}[t]{0.8\textwidth}
-  	\caption{事件间ExRORU关系概览}
-  	\label{tab:exroru_event}
-  	\begin{tabularx}{\textwidth}{clclcl}
-  	  \toprule[1.5pt]
-  	  关系 & 描述 & 关系 & 描述 & 关系 & 描述 \\\midrule[1pt]
-  	  $\overset{\text{\tiny{DA}}}{\rightarrow}$ & 直接总是因果 & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & 直接总是逆因果 & $\Updownarrow$ & 总是并行\\
-  	  $\overset{\text{\tiny{IA}}}{\rightarrow}$ & 间接总是因果 & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & 间接总是逆因果 & $\Uparrow$ & 有时并行\\
-  	  $\overset{\text{\tiny{DS}}}{\rightarrow}$ & 直接有时因果 & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & 直接有时逆因果 & $\nparallel$ & 从不并行\\
-  	  $\overset{\text{\tiny{IS}}}{\rightarrow}$ & 间接有时因果 & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & 间接有时逆因果 & & \\
-  	  $\overset{\text{\tiny{N}}}{\rightarrow}$ & 从不因果 & $\overset{\text{\tiny{N}}}{\leftarrow}$ & 从不逆因果 & & \\
-  	  \bottomrule[1.5pt]
-  	\end{tabularx}
-  \end{minipage}
+	\caption{事件间ExRORU关系概览}
+	\label{tab:exroru_event}
+	\begin{tabular}{clclcl}
+	  \toprule[1.5pt]
+	  关系 & 描述 & 关系 & 描述 & 关系 & 描述 \\\midrule[1pt]
+	  $\overset{\text{\tiny{DA}}}{\rightarrow}$ & 直接总是因果 & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & 直接总是逆因果 & $\Updownarrow$ & 总是并行\\
+	  $\overset{\text{\tiny{IA}}}{\rightarrow}$ & 间接总是因果 & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & 间接总是逆因果 & $\Uparrow$ & 有时并行\\
+	  $\overset{\text{\tiny{DS}}}{\rightarrow}$ & 直接有时因果 & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & 直接有时逆因果 & $\nparallel$ & 从不并行\\
+	  $\overset{\text{\tiny{IS}}}{\rightarrow}$ & 间接有时因果 & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & 间接有时逆因果 & & \\
+	  $\overset{\text{\tiny{N}}}{\rightarrow}$ & 从不因果 & $\overset{\text{\tiny{N}}}{\leftarrow}$ & 从不逆因果 & & \\
+	  \bottomrule[1.5pt]
+	\end{tabular}
 \end{table}
 
 \begin{example}\label{ex:case_study_exroru_event_matrix}

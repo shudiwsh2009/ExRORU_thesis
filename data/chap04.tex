@@ -304,8 +304,57 @@ BP等算法不考虑任务间紧邻关系也不区分并行关系的不确定性
     \caption{}
     \label{fig:invisible_transition_c}
   \end{subfigure}
+  \vspace{6pt}
   \caption{含有不可见变迁的WF-net示例}
   \label{fig:invisible_transition_examples}
 \end{figure}
+
+\subsection{性能实验}\label{subsec:efficiency}
+本文使用企业中的实际模型作为数据集测试ExRORU算法的性能，表\ref{tab:efficiency_dataset}给出了这些数据集的基本结构特征。将ExRORU算法分别应用到这些数据集上，表格的最后一列是ExRORU算法在抽取每个过程模型行为特征的平均耗时。
+\begin{itemize}
+  \item[-] SAP数据集来自于世界著名ERP（Enterprise Resource Planning，企业资源计划）服务提供商SAP公司。原始的SAP数据集中包含604个SAP参考模型，本文删除了其中不满足定义\ref{def:sound}所述合理性的模型。最终筛选后的数据集包含389个模型。
+  \item[-] DG数据集来自于东方锅炉股份有限公司，包含94个模型。东方锅炉股份有限公司是中国一流的火力发电设备、核电站设备、电机辅机、环保设备、化工容器、煤气化设备等的制造商和服务提供商。
+  \item[-] TC数据集来自于唐山轨道客车有限责任公司，包含89个模型。始建于1881年的唐山轨道客车有限责任公司是中国第一家轨道装备制造企业。
+\end{itemize}
+
+\begin{table}[htbp]
+  \centering
+  \caption{各企业实际业务过程模型集的结构特征及ExRORU算法的性能表现}
+  \label{tab:efficiency_dataset}
+  \begin{tabular}{lrrrrrrrr}
+    \toprule[1.5pt]
+    数据集 & 规模 & \tabincell{r}{平均\\变迁数} & \tabincell{r}{平均\\库所数} & \tabincell{r}{平均\\边数} & \tabincell{r}{最大\\变迁数} & \tabincell{r}{最大\\库所数} & \tabincell{r}{最大\\边数} & \tabincell{r}{平均耗时\\（毫秒）}\\ \midrule[1pt]
+    SAP & 389 & 4.47 & 7.51 & 11.51 & 21 & 31 & 56 & 1.43\\
+    DG & 94 & 8.56 & 8.89 & 17.78 & 34 & 33 & 70 & 10.89\\
+    TC & 89 & 11.47 & 10.28 & 22.93 & 28 & 29 & 58 & 15.34\\
+    \bottomrule[1.5pt]
+  \end{tabular}
+\end{table}
+
+\textcolor{red}{结果分析}
+
+\subsection{扩展性实验}\label{subsec:scalability}
+诸多过程模型行为语义刻画和相似性度量算法都会面临状态爆炸问题，即含有高并发分支的模型有巨大数量的状态，从而无法被相应算法快速处理。为了测试ExRORU在含有高并发分支的模型中的性能，本文设计了两组模型用于扩展性实验。第一组模型包含11个过程模型，依次含有$5,10,15,...,55$个并发分支，每个并发分支仅含有一个可见变迁，该组模型被用于进行宽度扩展性实验；第二组模型也包含11个过程模型，不同的是，该组中的每个模型都有5个并发分支，但分支上的变迁数依次递增，11个模型的分支上分别含有$1,2,3,...,11$个可见变迁，该组模型被用于进行深度扩展性实验。使用ExRORU算法分别抽取两组过程模型的行为特征的时间消耗如图\ref{fig:scalability}所示。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{scalability_breadth}
+    \caption{宽度扩展性实验}
+    \label{fig:scalability_breadth}
+  \end{subfigure}
+  \begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{scalability_depth}
+    \caption{深度扩展性实验}
+    \label{fig:scalability_depth}
+  \end{subfigure}
+  \vspace{6pt}
+  \caption{ExRORU算法的扩展性事件结果}
+  \label{fig:scalability}
+\end{figure}
+
+考虑到ExRORU算法包含任务间关系的诸多细节，扩展性实验的结果是完全可接受的。ExRORU是目前唯一可以同时处理多种复杂结构——如不可见变迁、非自由选择结构、多关系、循环结构——的算法，这显示了其杰出的性能。
 
 \section{本章小结}
