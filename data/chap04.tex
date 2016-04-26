@@ -109,14 +109,14 @@
   \centering
   \begin{subfigure}{1\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{multi_relation_petri}
+    \includegraphics[width=0.9\textwidth]{multi_relation_petri}
     \caption{含有多关系变迁对的WF-net}
     \label{fig:multi_relation_petri}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
     \vspace{1em}
     \centering
-    \includegraphics[width=0.7\textwidth]{multi_relation_cpu}
+    \includegraphics[width=0.9\textwidth]{multi_relation_cpu}
     \caption{图\subref{fig:multi_relation_petri}中WF-net对应的CPU}
     \label{fig:multi_relation_cpu}
   \end{subfigure}
@@ -262,44 +262,44 @@ BP等算法不考虑任务间紧邻关系也不区分并行关系的不确定性
   \centering
   \begin{subfigure}{1\textwidth}
     \centering
-    \begin{minipage}[b]{1\textwidth}
+    \begin{minipage}[b]{0.45\textwidth}
       \centering
-      \includegraphics[width=0.7\textwidth]{invisible_transition_a_1}
+      \includegraphics[width=1\textwidth]{invisible_transition_a_1}
     \end{minipage}
-    \begin{minipage}[b]{1\textwidth}
-      \vspace{1em}
+    \hspace{1em}
+    \begin{minipage}[b]{0.45\textwidth}
       \centering
-      \includegraphics[width=0.7\textwidth]{invisible_transition_a_2}
+      \includegraphics[width=1\textwidth]{invisible_transition_a_2}
     \end{minipage}
     \caption{}
     \label{fig:invisible_transition_a}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
+    \vspace{1em}
     \centering
-    \begin{minipage}[b]{1\textwidth}
-      \vspace{1em}
+    \begin{minipage}[]{0.45\textwidth}
       \centering
-      \includegraphics[width=0.7\textwidth]{invisible_transition_b_1}
+      \includegraphics[width=1\textwidth]{invisible_transition_b_1}
     \end{minipage}
-    \begin{minipage}[b]{1\textwidth}
-      \vspace{1em}
+    \hspace{1em}
+    \begin{minipage}[]{0.45\textwidth}
       \centering
-      \includegraphics[width=0.7\textwidth]{invisible_transition_b_2}
+      \includegraphics[width=1\textwidth]{invisible_transition_b_2}
     \end{minipage}
     \caption{}
     \label{fig:invisible_transition_b}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
+    \vspace{1em}
     \centering
-    \begin{minipage}[b]{1\textwidth}
-      \vspace{1em}
+    \begin{minipage}[]{0.45\textwidth}
       \centering
-      \includegraphics[width=0.7\textwidth]{invisible_transition_c_1}
+      \includegraphics[width=1\textwidth]{invisible_transition_c_1}
     \end{minipage}
-    \begin{minipage}[b]{1\textwidth}
-      \vspace{1em}
+    \hspace{1em}
+    \begin{minipage}[]{0.45\textwidth}
       \centering
-      \includegraphics[width=0.7\textwidth]{invisible_transition_c_2}
+      \includegraphics[width=1\textwidth]{invisible_transition_c_2}
     \end{minipage}
     \caption{}
     \label{fig:invisible_transition_c}
@@ -331,7 +331,7 @@ BP等算法不考虑任务间紧邻关系也不区分并行关系的不确定性
   \end{tabular}
 \end{table}
 
-\textcolor{red}{结果分析}
+从表\ref{tab:efficiency_dataset}中可以看出，ExRORU算法在来自企业的实际过程模型数据集中表现良好，能够在几毫秒至几十毫秒的时间范围内抽取过程模型的ExRORU关系矩阵，该耗时规模在实际应用中完全满足业务需求。
 
 \subsection{扩展性实验}\label{subsec:scalability}
 诸多过程模型行为语义刻画和相似性度量算法都会面临状态爆炸问题，即含有高并发分支的模型有巨大数量的状态，从而无法被相应算法快速处理。为了测试ExRORU在含有高并发分支的模型中的性能，本文设计了两组模型用于扩展性实验。第一组模型包含11个过程模型，依次含有$5,10,15,...,55$个并发分支，每个并发分支仅含有一个可见变迁，该组模型被用于进行宽度扩展性实验；第二组模型也包含11个过程模型，不同的是，该组中的每个模型都有5个并发分支，但分支上的变迁数依次递增，11个模型的分支上分别含有$1,2,3,...,11$个可见变迁，该组模型被用于进行深度扩展性实验。使用ExRORU算法分别抽取两组过程模型的行为特征的时间消耗如图\ref{fig:scalability}所示。
@@ -358,3 +358,4 @@ BP等算法不考虑任务间紧邻关系也不区分并行关系的不确定性
 考虑到ExRORU算法包含任务间关系的诸多细节，扩展性实验的结果是完全可接受的。ExRORU是目前唯一可以同时处理多种复杂结构——如不可见变迁、非自由选择结构、多关系、循环结构——的算法，这显示了其杰出的性能。
 
 \section{本章小结}
+本章介绍了ExRORU算法的实现方案和实验结果。通过与其他过程模型行为语义刻画算法和相似性度量算法的比较，ExRORU拥有更为精细的刻画粒度，在含有各种复杂结构的过程模型中表现优异。同时，本文使用来自企业的实际业务过程模型数据集验证ExRORU算法的效率并使用人工创建的含高并发分支结构的过程模型数据集验证ExRORU算法的扩展性，两项实验均表明了ExRORU算法兼顾了性能和效率。
