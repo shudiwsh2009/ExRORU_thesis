@@ -1296,5 +1296,63 @@
 \qed
 \end{proof}
 
+\section{与RORU算法的对比}
+本文提出的ExRORU算法与RORU算法的本质是相似的，都是基于两种基本任务间关系，即因果和并行，并对其进行精炼。不同的是，RORU算法中的每种关系都是带有不确定性的双向关系，而ExRORU算法都是独立单向的。然而，如第\ref{sec:roru}节所述，通过深入研究发现RORU不能唯一地刻画所有过程模型的行为语义，也不能检测出含有不同行为语义的所有过程模型对。RORU算法最严重的问题在于它不能处理带有循环结构的模型。分析第\ref{subsec:efficiency}小节中所用的企业实际模型数据集，发现SAP数据集、DG数据集和TC数据集分别有大约5\%、20\%和60\%的过程模型包含循环结构\footnote{SAP模型集中带环模型较少的原因是该数据集主要包含实际业务的参考模型，而该类参考模型通常不考虑REDO（“重做”）结构，即循环结构。}。
+
+\begin{table}[htbp]
+  \centering
+  \begin{minipage}[t]{0.9\textwidth}
+    \setlength\tabcolsep{4pt}
+    \caption{无环模型中RORU关系与ExRORU关系的对应}
+    \label{tab:corr_roru_exroru}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}\hline
+      \multicolumn{1}{|c|}{\multirow{2}{*}{RORU}} & \multicolumn{4}{c|}{因果关系} & \multicolumn{4}{c|}{并行关系} & \multicolumn{1}{c|}{\multirow{2}{*}{}} & \multicolumn{1}{c|}{\multirow{2}{*}{}} \\ \cline{2-9}
+      \multicolumn{1}{|c|}{} & C-C & C-U & U-C & U-U & C-C & C-U & U-C & U-U & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{}\\ \hline
+      ExRORU\footnote{由于RORU算法中没有考虑任务间紧邻关系，所以对比时忽略了定义\ref{def:exroru_event_causal_direct}中的直接和间接因果关系。} & \tabincell{c}{$x\overset{\text{\tiny{A}}}{\rightarrow} y$\\$x\overset{\text{\tiny{A}}}{\leftarrow} y$} & \tabincell{c}{$x\overset{\text{\tiny{S}}}{\rightarrow} y$\\$x\overset{\text{\tiny{A}}}{\leftarrow} y$} & \tabincell{c}{$x\overset{\text{\tiny{A}}}{\rightarrow} y$\\$x\overset{\text{\tiny{S}}}{\leftarrow} y$} & \tabincell{c}{$x\overset{\text{\tiny{S}}}{\rightarrow} y$\\$x\overset{\text{\tiny{S}}}{\leftarrow} y$} & \tabincell{c}{$x\Updownarrow y$\\$y\Updownarrow x$} & \tabincell{c}{$x\Uparrow y$\\$y\Updownarrow x$} & \tabincell{c}{$x\Updownarrow y$\\$y\Uparrow x$} & \tabincell{c}{$x\Uparrow y$\\$y\Uparrow x$} & \tabincell{c}{$x\overset{\text{\tiny{N}}}{\rightarrow} y$\\$x\overset{\text{\tiny{N}}}{\leftarrow} y$} & \tabincell{c}{$x\nparallel y$\\$y\nparallel x$}\\ \hline
+    \end{tabular}
+  \end{minipage}
+\end{table}
+
+表\ref{tab:corr_roru_exroru}给出了RORU中8种关系到ExRORU中13种关系的大致映射。ExRORU算法引入了逆因果关系从而保证表\ref{tab:exroru_event}中的关系都是单向的，并引入了直接和间接因果关系从而加强唯一刻画过程模型行为语义的能力。在CPU中计算ExRORU关系，本文算法可以处理带有循环结构的过程模型。此外，ExRORU算法使用“从不”的修饰词描述一对满足冲突关系的变迁之间的关系（即$x\#y$，$x$和$y$满足“从不因果关系”，“从不逆因果关系”和“从不并行关系”）。由于缺少类似“从不”的修饰词，RORU算法无法区分两个都只包含满足冲突关系变迁对的过程模型。如图\ref{fig:only_conflict}所示，RORU算法无法描述任意一对变迁之间的关系，即图中三个模型的RORU关系集合都为空，它们之间的差异无法被RORU算法检测。显然，图中三个模型的ExRORU关系矩阵维度都不相同（因为三者的变迁数量不同），ExRORU能够轻易检测出他们之间的行为差异。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[]{0.3\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{only_conflict_1}
+  \end{minipage}
+  \hspace{1em}
+  \begin{minipage}[]{0.3\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{only_conflict_2}
+  \end{minipage}
+  \hspace{1em}
+  \begin{minipage}[]{0.3\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{only_conflict_3}
+  \end{minipage}
+  \caption{RORU无法区分的只包含满足冲突关系变迁对的过程模型}
+  \label{fig:only_conflict}
+\end{figure}
+
+表\ref{tab:qualitative_comparison_roru_exroru}给出了RORU算法和ExRORU算法的定性比较。如前文所述，ExRORU可以确保唯一性而RORU不能。ExRORU算法拥有更多类型的关系，因此它的刻画粒度更为精细，同时可以保证任意一对变迁之间都存在关系。最后，含有非自由选择结构或者循环结构的模型都需要一个像ExRORU这样提供精细粒度任务间关系的刻画算法。
+
+\begin{table}[htbp]
+  \centering
+  \caption{RORU与ExRORU的定性比较}
+  \label{tab:qualitative_comparison_roru_exroru}
+  \begin{tabular}{lll} \toprule[1.5pt]
+    属性 & RORU & ExRORU\\ \midrule[1pt]
+    唯一性 & 不满足 & 满足\\ 
+    处理带环模型 & 不能 & 能\\ 
+    处理含非自由选择结构模型 & 不能 & 能\\ 
+    基本关系数量 & 2 & 3\\ 
+    关系总数 & 8 & 13\\ 
+    关系类型 & \tabincell{l}{$\{\twoheadrightarrow,\rightharpoonup,\mapsto,\rightleftharpoons,$\\$~\equiv,\Downarrow,\Uparrow,\Updownarrow\}$} & \tabincell{l}{$\{\overset{\text{\tiny{DA}}}{\rightarrow},\overset{\text{\tiny{IA}}}{\rightarrow},\overset{\text{\tiny{DS}}}{\rightarrow},\overset{\text{\tiny{IS}}}{\rightarrow},\overset{\text{\tiny{N}}}{\rightarrow},\overset{\text{\tiny{DA}}}{\leftarrow},\overset{\text{\tiny{IA}}}{\leftarrow},$\\$~\overset{\text{\tiny{DS}}}{\leftarrow},\overset{\text{\tiny{IS}}}{\leftarrow},\overset{\text{\tiny{N}}}{\leftarrow},\Updownarrow,\Uparrow,\nparallel\}$}\\ 
+    每对变迁间总有关系 & 否 & 是\\ 
+    区别直接和间接因果变迁 & 不能 & 能\\ \bottomrule[1.5pt]
+  \end{tabular}
+\end{table}
+
 \section{本章小结}
 本章介绍了扩展不确定性精炼有序关系的定义和计算方法。首先介绍了事件间ExRORU关系并给出了依据图形化抽象形式基于CPU高效计算的方法；然后探讨了将事件间ExRORU折叠回变迁间ExRORU关系的动机，继而给出变迁间ExRORU关系的定义和折叠算法。本章最后形式化证明了ExRORU算法的唯一性和充分必要性等重要性质。
