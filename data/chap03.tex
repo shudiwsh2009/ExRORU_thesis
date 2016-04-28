@@ -34,6 +34,7 @@
   	\caption{图\subref{fig:case_study_petri}的CPU}
   	\label{fig:case_study_cpu}
   \end{subfigure}
+  \vspace{6pt}
   \caption{一个合理WF-net及其CPU示例}
   \label{fig:case_study}
 \end{figure}
@@ -89,7 +90,7 @@
 
 根据定义\ref{def:exroru_event_inverse_causal}，两个事件之间的扩展不确定性精炼逆因果关系共有五种，分别用$\overset{\text{\tiny{DA}}}{\leftarrow}$，$\overset{\text{\tiny{DS}}}{\leftarrow}$，$\overset{\text{\tiny{IA}}}{\leftarrow}$，$\overset{\text{\tiny{IS}}}{\leftarrow}$，$\overset{\text{\tiny{N}}}{\leftarrow}$表示。
 
-图\ref{fig:event_causal_formulas}给出了因果关系和逆因果关系的图形化抽象形式。为了节省空间，这些抽象形式用局部CPU代替了大量的过程流来展示。在图\ref{fig:event_causal_formulas}的局部CPU中，$A$和$B$都是事件。标记了“Loop $X$”的边表示存在一条路径从事件$X$之后的某个条件可达事件$X$之前的某个条件，从而事件$X$在部分轨迹中被执行多次。标记了“Skip $X$”的边表示存在一条路径从事件$X$之前的某个条件可达事件$X$之后的某个条件，从而事件$X$在部分轨迹中不被执行。由于在图\ref{fig:event_causal_formulas}的局部CPU中无法准确判定事件间的直接因果关系和间接因果关系，所以在分析事件间关系时将其省略。另外，为了展示方便，本文使用符号$*$表示不含$A$和$B$的任意长度连续事件序列。
+图\ref{fig:event_causal_formulas}给出了因果关系和逆因果关系的图形化抽象形式。为了节省空间，这些抽象形式用局部CPU代替了大量的过程流来展示。在图\ref{fig:event_causal_formulas}的局部CPU中，$A$和$B$都是事件。标记了“Loop $X$”的边表示存在一条路径从事件$X$之后的某个条件可达事件$X$之前的某个条件，从而事件$X$在部分轨迹中被执行多次。标记了“Skip $X$”的边表示存在一条路径从事件$X$之前的某个条件可达事件$X$之后的某个条件，从而事件$X$在部分轨迹中不被执行。没有标签的事件表示除了事件$A$和事件$B$之外的任意事件。值得注意的是，CPU当中没有XOR-join节点的存在并不意味着该CPU的事件发生序列会在截断事件后停止，而是会跳转到其关联事件后的结构继续执行。例如在图\ref{fig:causal_formula_a}上方的局部CPU中，若“Loop A”结构被执行且条件$P_{1}'$之前的截断事件被触发后，该事件发生序列会跳转到条件$P_{1}$之后继续执行。由于在图\ref{fig:event_causal_formulas}的局部CPU中无法准确判定事件间的直接因果关系和间接因果关系，所以在分析事件间关系时将其省略。另外，为了展示方便，本文使用符号$*$表示不含$A$和$B$的任意长度连续事件序列。
 
 \begin{figure}[htbp]
   \centering
@@ -108,6 +109,7 @@
   	\label{fig:causal_formula_a}
   \end{subfigure}
   \begin{subfigure}{0.55\textwidth}
+    \vspace{1em}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
   	  \centering
@@ -151,6 +153,7 @@
   	\caption{}
   	\label{fig:causal_formula_d}
   \end{subfigure}
+  \vspace{6pt}
   \caption{因果关系和逆因果关系的图形化抽象形式。\subref{fig:causal_formula_a} $A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；\subref{fig:causal_formula_b} $A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$；\subref{fig:causal_formula_c} $A\overset{\text{\tiny{A}}}{\rightarrow}B$，$B\overset{\text{\tiny{A}}}{\leftarrow}A$；\subref{fig:causal_formula_d} $A\overset{\text{\tiny{S}}}{\rightarrow}B$，$B\overset{\text{\tiny{S}}}{\leftarrow}A$。}
   \label{fig:event_causal_formulas}
 \end{figure}
@@ -183,7 +186,7 @@
 
 \begin{figure}[htbp]
   \centering
-  \begin{subfigure}{0.48\textwidth}
+  \begin{subfigure}[b]{0.45\textwidth}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
   	  \centering
@@ -197,8 +200,8 @@
   	\caption{}
   	\label{fig:concurrent_formula_a}
   \end{subfigure}
-  % \hspace{2em}
-  \begin{subfigure}{0.48\textwidth}
+  \hspace{1em}
+  \begin{subfigure}[b]{0.45\textwidth}
   	\centering
   	\begin{minipage}[b]{1\textwidth}
   	  \centering
@@ -212,27 +215,29 @@
   	\caption{}
   	\label{fig:concurrent_formula_b}
   \end{subfigure}
-  \begin{subfigure}{0.48\textwidth}
-  	\vspace{1em}
+  \begin{subfigure}[b]{0.45\textwidth}
+  	\vspace{2em}
   	\centering
   	\includegraphics[width=1\textwidth]{concurrent_formula_c}
   	\caption{}
   	\label{fig:concurrent_formula_c}
   \end{subfigure}
-  \begin{subfigure}{0.48\textwidth}
-  	\vspace{1em}
+  \hspace{1em}
+  \begin{subfigure}[b]{0.45\textwidth}
+  	\vspace{2em}
   	\centering
   	\includegraphics[width=1\textwidth]{concurrent_formula_d}
   	\caption{}
   	\label{fig:concurrent_formula_d}
   \end{subfigure}
-  \begin{subfigure}{0.48\textwidth}
-  	\vspace{1em}
+  \begin{subfigure}[b]{0.45\textwidth}
+  	\vspace{2em}
   	\centering
   	\includegraphics[width=1\textwidth]{concurrent_formula_e}
   	\caption{}
   	\label{fig:concurrent_formula_e}
   \end{subfigure}
+  \vspace{6pt}
   \caption{并行关系的图形化抽象形式。\subref{fig:concurrent_formula_a} $A\Uparrow B$，$B\Updownarrow A$；\subref{fig:concurrent_formula_b} $A\Updownarrow B$，$B\Uparrow A$；\subref{fig:concurrent_formula_c} $A\Updownarrow B$，$B\Updownarrow A$；\subref{fig:concurrent_formula_d} $A\Updownarrow B$，$B\Updownarrow A$；\subref{fig:concurrent_formula_e} $A\Uparrow B$，$B\Updownarrow A$。}
   \label{fig:event_concurrent_formulas}
 \end{figure}
@@ -271,6 +276,7 @@
   \centering
   \caption{图\ref{fig:case_study_cpu}中CPU的事件间ExRORU关系}
   \label{tab:case_study_exroru_event_matrix}
+  \vspace{6pt}
   \begin{subtable}{0.45\textwidth}
     \centering
     \caption{因果关系（5种）}
@@ -351,11 +357,11 @@
   }
 \end{algorithm}
 
-\textcolor{red}{证明任意一条路径都能抽取正确的关系}
+% \textcolor{red}{证明任意一条路径都能抽取正确的关系}
 
 类似的，在计算事件$B$和事件$A$的逆因果关系时，同样可以借助图\ref{fig:event_causal_formulas}中的因果关系抽象形式，从CPU中抽取一条从$A$到$B$的路径，并逆向遍历其中的条件以判断是否存在符合抽象形式中的“Skip”或者“Loop”结构，从而得到事件$B$和事件$A$之间的逆因果关系。与算法\ref{algo:exroru_event_causal}不同的是，在计算事件$B$和事件$A$的逆因果关系时，需要关注的是路径中的XOR-join条件而不是XOR-split条件。
 
-\textcolor{red}{计算直接因果关系的算法}
+% \textcolor{red}{计算直接因果关系的算法}
 
 需要注意的是，对于一对事件$A$和$B$，其因果关系$A\rightarrow B$和逆因果关系$B\leftarrow A$可能有着不同的不确定性。例如，在图\ref{fig:case_study_cpu}所示的CPU中，事件$A$和事件$O$满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}O$；而事件$O$和事件$A$满足“间接有时逆因果关系”，即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$。另外，事件$D$和事件$E$满足“直接有时因果关系”，即$D\overset{\text{\tiny{DS}}}{\rightarrow}E$；而事件$E$和事件$D$满足“直接总是逆因果关系”，即$E\overset{\text{\tiny{DA}}}{\leftarrow}D$。由于循环结构的存在，事件$D$和事件$E$之间的因果关系不能被RORU算法正确识别。
 
@@ -465,6 +471,7 @@
     \caption{图\subref{fig:nfc_petri}中WF-net对应的CPU}
     \label{fig:nfc_cpu}
   \end{subfigure}
+  \vspace{6pt}
   \caption{RORU无法区分的一对含有不可见变迁的模型}
   \label{fig:nfc_exroru}
 \end{figure}
@@ -602,673 +609,6 @@
 \textbf{（2）增加/删除一个可见变迁：}一个新的可见变迁可以被添加在过程模型中，且其必然会与一个已有的变迁（更一般化地，与一个包含多个变迁和库所的子过程）同处一个顺序结构、或并行结构、或互斥结构、或循环结构，如图\ref{fig:uniqueness_2}所示。从图中可以看出，上述所有变化都会导致对应的ExRORU矩阵发生变化。因为一个新的过程模型是通过将上述单步变化连续应用在原始过程模型中产生的，归纳可知新的过程模型和原始模型拥有不同的ExRORU矩阵。类似的证明可应用于“删除一个可见变迁”中。
 
 \textbf{（3）增加/删除一个不可见变迁：}一个新的不可见变迁也可以被添加在过程模型中，与情形（2）中的结构类似，如图\ref{fig:uniqueness_3}所示。任意单步变化都会导致对应的ExRORU矩阵发生变化，根据归纳法可知将上述单步变化连续应用在原始过程模型中产生的新过程模型拥有与原始模型不同的ExRORU矩阵。类似的证明可应用于“删除一个不可见变迁”中。\qed
-
-\begin{figure}[htbp]
-  \centering
-
-  \begin{subfigure}{1\textwidth}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_2_a}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{原始部分模型}
-    \label{fig:uniqueness_2_a}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.5\textwidth]{uniqueness_2_b}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_2_a}中的变迁$A$之后增加一个变迁$B$，与$A$同处顺序结构}
-    \label{fig:uniqueness_2_b}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.5\textwidth]{uniqueness_2_c}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_2_a}中的变迁$A$之前增加一个变迁$B$，与$A$同处顺序结构}
-    \label{fig:uniqueness_2_c}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_2_d}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_2_a}中增加一个变迁$B$，与$A$同处互斥结构}
-    \label{fig:uniqueness_2_d}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_2_e}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_2_a}中增加一个变迁$B$，与$A$同处循环结构}
-    \label{fig:uniqueness_2_e}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_2_f}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_2_a}中增加一个变迁$B$，与$A$同处并行结构}
-    \label{fig:uniqueness_2_f}
-  \end{subfigure}
-%     \caption{向原始模型增加一个可见变迁}
-% \end{figure}
-
-% \begin{figure}[htbp]\ContinuedFloat
-%   \centering
-
-  \caption{向原始模型增加一个可见变迁（续）}
-  \label{fig:uniqueness_2}
-\end{figure}
-
-\begin{figure}[htbp]
-  \centering
-
-  \begin{subfigure}{1\textwidth}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_a}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{原始部分模型}
-    \label{fig:uniqueness_3_a}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.1\textwidth]{uniqueness_3_b}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{将\subref{fig:uniqueness_3_a}中的两个库所合并成一个库所}
-    \label{fig:uniqueness_3_b}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_c}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_3_a}中增加一个不可见变迁，与$A$同处互斥结构}
-    \label{fig:uniqueness_3_c}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_d}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_3_a}中增加一个不可见变迁，与$A$同处循环结构}
-    \label{fig:uniqueness_3_d}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_e}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{另一个原始部分模型}
-    \label{fig:uniqueness_3_e}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_f}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\Uparrow$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$B$同处互斥结构}
-    \label{fig:uniqueness_3_f}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_g}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\Uparrow$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$A$同处互斥结构}
-    \label{fig:uniqueness_3_g}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_h}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\Uparrow$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$B$同处循环结构}
-    \label{fig:uniqueness_3_h}
-  \end{subfigure}
-
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \begin{minipage}[b]{1\textwidth}
-      \centering
-      \includegraphics[width=0.3\textwidth]{uniqueness_3_i}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \begin{minipage}[b]{0.3\textwidth}
-      \vspace{1em}
-      \centering
-      \begin{tabular}{|c|c|c|c|c|} \hline
-        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
-        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-        $A$ & $\nparallel$ & $\nparallel$ & $\Uparrow$ & $\nparallel$\\ \hline
-        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
-        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
-      \end{tabular}
-    \end{minipage}
-    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$A$同处循环结构}
-    \label{fig:uniqueness_3_i}
-  \end{subfigure}
-  %     \caption{向原始模型增加一个不可见变迁}
-% \end{figure}
-
-% \begin{figure}[htbp]\ContinuedFloat
-%   \centering
-
-  \caption{向原始模型增加一个不可见变迁（续）}
-  \label{fig:uniqueness_3}
-\end{figure}
 \end{proof}
 
 由定理\ref{theo:uniqueness}可引出下述推论。
@@ -1331,6 +671,7 @@
     \centering
     \includegraphics[width=1\textwidth]{only_conflict_3}
   \end{minipage}
+  \vspace{6pt}
   \caption{RORU无法区分的只包含满足冲突关系变迁对的过程模型}
   \label{fig:only_conflict}
 \end{figure}
@@ -1356,3 +697,685 @@
 
 \section{本章小结}
 本章介绍了扩展不确定性精炼有序关系的定义和计算方法。首先介绍了事件间ExRORU关系并给出了依据图形化抽象形式基于CPU高效计算的方法；然后探讨了将事件间ExRORU折叠回变迁间ExRORU关系的动机，继而给出变迁间ExRORU关系的定义和折叠算法。本章最后形式化证明了ExRORU算法的唯一性和充分必要性等重要性质。
+
+\begin{figure}[htbp]
+  \centering
+
+  \begin{subfigure}{1\textwidth}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_2_a}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{原始部分模型}
+    \label{fig:uniqueness_2_a}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.33\textwidth]{uniqueness_2_b}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_2_a}中的变迁$A$之后增加一个变迁$B$，与$A$同处顺序结构}
+    \label{fig:uniqueness_2_b}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.33\textwidth]{uniqueness_2_c}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_2_a}中的变迁$A$之前增加一个变迁$B$，与$A$同处顺序结构}
+    \label{fig:uniqueness_2_c}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_2_d}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_2_a}中增加一个变迁$B$，与$A$同处互斥结构}
+    \label{fig:uniqueness_2_d}
+  \end{subfigure}
+  \vspace{6pt}
+  \caption{向原始模型增加一个可见变迁}
+\end{figure}
+
+\begin{figure}[htbp]\ContinuedFloat
+  \centering
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_2_e}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$ & $\overset{\text{\tiny{IS}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{IS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_2_a}中增加一个变迁$B$，与$A$同处循环结构}
+    \label{fig:uniqueness_2_e}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_2_f}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_2_a}中增加一个变迁$B$，与$A$同处并行结构}
+    \label{fig:uniqueness_2_f}
+  \end{subfigure}
+%     \caption{向原始模型增加一个可见变迁}
+% \end{figure}
+
+% \begin{figure}[htbp]\ContinuedFloat
+%   \centering
+  \vspace{6pt}
+  \caption{向原始模型增加一个可见变迁（续）}
+  \label{fig:uniqueness_2}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+
+  \begin{subfigure}{1\textwidth}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_a}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{原始部分模型}
+    \label{fig:uniqueness_3_a}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.11\textwidth]{uniqueness_3_b}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{将\subref{fig:uniqueness_3_a}中的两个库所合并成一个库所}
+    \label{fig:uniqueness_3_b}
+  \end{subfigure}
+  \vspace{6pt}
+  \caption{向原始模型增加一个不可见变迁}
+\end{figure}
+
+\begin{figure}[htbp]\ContinuedFloat
+  \centering
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_c}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_3_a}中增加一个不可见变迁，与$A$同处互斥结构}
+    \label{fig:uniqueness_3_c}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_d}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_3_a}中增加一个不可见变迁，与$A$同处循环结构}
+    \label{fig:uniqueness_3_d}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_e}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{另一个原始部分模型}
+    \label{fig:uniqueness_3_e}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_f}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\Uparrow$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$B$同处互斥结构}
+    \label{fig:uniqueness_3_f}
+  \end{subfigure}
+  \vspace{6pt}
+  \caption{向原始模型增加一个不可见变迁}
+\end{figure}
+
+\begin{figure}[htbp]\ContinuedFloat
+  \centering
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_g}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\Uparrow$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$A$同处互斥结构}
+    \label{fig:uniqueness_3_g}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_h}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\Uparrow$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$B$同处循环结构}
+    \label{fig:uniqueness_3_h}
+  \end{subfigure}
+
+  \begin{subfigure}{1\textwidth}
+    \vspace{1em}
+    \centering
+    \begin{minipage}[b]{1\textwidth}
+      \centering
+      \includegraphics[width=0.2\textwidth]{uniqueness_3_i}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\rightarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & $\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\leftarrow$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $\bm{E}$ & $\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \begin{minipage}[b]{0.3\textwidth}
+      \vspace{1em}
+      \centering
+      \begin{tabular}{|c|c|c|c|c|} \hline
+        $\parallel$ & $\bm{S}$ & $A$ & $B$ & $\bm{E}$\\ \hline
+        $\bm{S}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+        $A$ & $\nparallel$ & $\nparallel$ & $\Uparrow$ & $\nparallel$\\ \hline
+        $B$ & $\nparallel$ & $\Updownarrow$ & $\nparallel$ & $\nparallel$\\ \hline
+        $\bm{E}$ & $\nparallel$ & $\nparallel$ & $\nparallel$ & $\nparallel$\\ \hline
+      \end{tabular}
+    \end{minipage}
+    \caption{在\subref{fig:uniqueness_3_e}中增加一个不可见变迁，与$A$同处循环结构}
+    \label{fig:uniqueness_3_i}
+  \end{subfigure}
+  %     \caption{向原始模型增加一个不可见变迁}
+% \end{figure}
+
+% \begin{figure}[htbp]\ContinuedFloat
+%   \centering
+  \vspace{6pt}
+  \caption{向原始模型增加一个不可见变迁（续）}
+  \label{fig:uniqueness_3}
+\end{figure}

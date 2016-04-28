@@ -183,7 +183,7 @@ Artem Polyvyanyy等人定义了Petri网的4C频谱（共现co-occurrence、冲�
 基于一个任务是否总是和另一个任务在同一个执行实例中被执行，因果关系可以被精炼成以下四种。其中C是Certain的简写，U是Uncertain的简写。
 
 \begin{definition}[确定-确定因果，简称C-C因果]\label{def:c_c_causal}
-$x$和$y$满足CC因果关系，记作$x\twoheadrightarrow y$，当且仅当：
+$x$和$y$满足C-C因果关系，记作$x\twoheadrightarrow y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足因果关系，即$x<y$；
     \item[-] 如果$x$出现在一条路径上，$y$必须之后也出现在这条路径上；
@@ -192,7 +192,7 @@ $x$和$y$满足CC因果关系，记作$x\twoheadrightarrow y$，当且仅当：
 \end{definition}
 
 \begin{definition}[确定-不确定因果，简称C-U因果]\label{def:c_u_causal}
-$x$和$y$满足CU因果关系，记作$x\rightharpoonup y$，当且仅当：
+$x$和$y$满足C-U因果关系，记作$x\rightharpoonup y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足因果关系，即$x<y$；
     \item[-] 如果$x$出现在一条路径上，$y$可能之后不出现在这条路径上；
@@ -201,7 +201,7 @@ $x$和$y$满足CU因果关系，记作$x\rightharpoonup y$，当且仅当：
 \end{definition}
 
 \begin{definition}[不确定-确定因果，简称U-C因果]\label{def:u_c_causal}
-$x$和$y$满足UC因果关系，记作$x\mapsto y$，当且仅当：
+$x$和$y$满足U-C因果关系，记作$x\mapsto y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足因果关系，即$x<y$；
     \item[-] 如果$x$出现在一条路径上，$y$必须之后也出现在这条路径上；
@@ -210,7 +210,7 @@ $x$和$y$满足UC因果关系，记作$x\mapsto y$，当且仅当：
 \end{definition}
 
 \begin{definition}[不确定-不确定因果，简称U-U因果]\label{def:u_u_causal}
-$x$和$y$满足UU因果关系，记作$x\rightleftharpoons y$，当且仅当：
+$x$和$y$满足U-U因果关系，记作$x\rightleftharpoons y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足因果关系，即$x<y$；
     \item[-] 如果$x$出现在一条路径上，$y$可能之后不出现在这条路径上；
@@ -221,7 +221,7 @@ $x$和$y$满足UU因果关系，记作$x\rightleftharpoons y$，当且仅当：
 类似地，可以将并行关系也精炼为以下四种。
 
 \begin{definition}[确定-确定并行，简称C-C并行]\label{def:c_c_concurrency}
-$x$和$y$满足CC并行关系，记作$x\equiv y$，当且仅当：
+$x$和$y$满足C-C并行关系，记作$x\equiv y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足并行关系，即$x~co~y$；
     \item[-] 如果$x$被执行，$y$必须也在同一个实例中被执行；
@@ -230,7 +230,7 @@ $x$和$y$满足CC并行关系，记作$x\equiv y$，当且仅当：
 \end{definition}
 
 \begin{definition}[确定-不确定并行，简称C-U并行]\label{def:c_u_concurrency}
-$x$和$y$满足CU并行关系，记作$x\Downarrow y$，当且仅当：
+$x$和$y$满足C-U并行关系，记作$x\Downarrow y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足并行关系，即$x~co~y$；
     \item[-] 如果$x$被执行，$y$必须也在同一个实例中被执行；
@@ -239,7 +239,7 @@ $x$和$y$满足CU并行关系，记作$x\Downarrow y$，当且仅当：
 \end{definition}
 
 \begin{definition}[不确定-确定并行，简称U-C并行]\label{def:u_c_concurrency}
-$x$和$y$满足UC并行关系，记作$x\Uparrow y$，当且仅当：
+$x$和$y$满足U-C并行关系，记作$x\Uparrow y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足并行关系，即$x~co~y$；
     \item[-] 如果$x$被执行，$y$可能不在同一个实例中被执行；
@@ -248,7 +248,7 @@ $x$和$y$满足UC并行关系，记作$x\Uparrow y$，当且仅当：
 \end{definition}
 
 \begin{definition}[不确定-不确定并行，简称U-U并行]\label{def:u_u_concurrency}
-$x$和$y$满足UU并行关系，记作$x\Updownarrow y$，当且仅当：
+$x$和$y$满足U-U并行关系，记作$x\Updownarrow y$，当且仅当：
   \begin{itemize}
     \item[-] $x$和$y$满足并行关系，即$x~co~y$；
     \item[-] 如果$x$被执行，$y$可能不在同一个实例中被执行；
@@ -258,43 +258,45 @@ $x$和$y$满足UU并行关系，记作$x\Updownarrow y$，当且仅当：
 
 之后，作者提出一些用于紧邻任务计算的基本规则和用于非紧邻任务计算的传递性规则，并基于此给出了一个基于CPU计算无环过程模型RORU的算法。RORU有着一些明显的缺点，不能被应用于实际企业中。
 
-\begin{figure}[htbp]
-  \centering
-  \begin{subfigure}{1\textwidth}
-    \centering
-    \includegraphics[width=0.6\textwidth]{sda_example_1}
-    \caption{\label{fig:sda_example_1}}
-  \end{subfigure}
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
-    \centering
-    \includegraphics[width=0.6\textwidth]{sda_example_2}
-    \caption{\label{fig:sda_example_2}}
-  \end{subfigure}
-  \caption{RORU无法区分的一对含有不可见变迁的模型}
-  \label{fig:sda_example}
-\end{figure}
-
 首先，RORU不能被应用于带环的WF-net，这已经在\onlinecite{jin2014computing}的标题中明确指出。其次，由于RORU没有考虑不可见变迁，变迁发生序列中的发生顺序紧邻但模型结构上不紧邻的变迁无法被区分，所以两个有着不同行为语义的WF-net可能会被混淆。例如，图\ref{fig:sda_example_1}中WF-net的变迁发生序列集合是$\{\langle I,A,B,O\rangle,\langle I,B,A,O\rangle,\langle I,A,O\rangle,\langle I,B,O\rangle\}$而图\ref{fig:sda_example_2}中WF-net的变迁发生序列集合是$\{\langle I,A,B,O\rangle,\langle I,B,A,O\rangle,\langle I,A,O\rangle,\langle I,B,O\rangle,\langle I,O\rangle\}$。显然，这两个WF-net的行为是不一致的，但是RORU不能区分它们。
 
 \begin{figure}[htbp]
   \centering
-  \begin{subfigure}{1\textwidth}
+  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    \includegraphics[width=0.6\textwidth]{nfc_example_1}
-    \caption{\label{fig:nfc_example_1}}
+    \includegraphics[width=1\textwidth]{sda_example_1}
+    \caption{\label{fig:sda_example_1}}
   \end{subfigure}
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
+  \hspace{1em}
+  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    \includegraphics[width=0.6\textwidth]{nfc_example_2}
-    \caption{\label{fig:nfc_example_2}}
+    \includegraphics[width=1\textwidth]{sda_example_2}
+    \caption{\label{fig:sda_example_2}}
   \end{subfigure}
-  \caption{RORU无法区分的一对含有非自由选择结构的模型}
-  \label{fig:nfc_example}
+  \vspace{6pt}
+  \caption{RORU无法区分的一对含有不可见变迁的模型}
+  \label{fig:sda_example}
 \end{figure}
 
 在一个含有非自由选择结构\cite{de2003workflow}的WF-net中，变迁之间的因果关系不一定满足传递性。以图\ref{fig:nfc_example_1}和图\ref{fig:nfc_example_2}中的模型为例，变迁$A$和变迁$C$满足因果关系，变迁$C$和变迁$E$亦满足因果关系。根据RORU的传递性规则，变迁$A$和变迁$E$应满足因果关系。然而，这在图\ref{fig:nfc_example_1}含有非自由选择结构的WF-net中是不正确的，因为当变迁$A$首先被执行后，只有变迁$C$和变迁$D$（而不是变迁$E$）可以被执行。因此，变迁$A$和变迁$E$永远不会满足因果关系。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{nfc_example_1}
+    \caption{\label{fig:nfc_example_1}}
+  \end{subfigure}
+  \hspace{1em}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{nfc_example_2}
+    \caption{\label{fig:nfc_example_2}}
+  \end{subfigure}
+  \vspace{6pt}
+  \caption{RORU无法区分的一对含有非自由选择结构的模型}
+  \label{fig:nfc_example}
+\end{figure}
 
 为了解决上述RORU存在的问题，本文将RORU中的有序关系进一步扩展，从而得到一个更为精细的方法去区分任意两个过程模型的行为语义。除了细化原算法的不确定性概念之外，本文引入了任务间多关系的概念，即一对任务之间可能含有不止一种关系。多关系概念的引入可以检测两个过程模型间更为细微的差异。
 
