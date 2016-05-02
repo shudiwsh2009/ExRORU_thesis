@@ -52,7 +52,7 @@
 在图\ref{fig:case_study_cpu}的CPU中，事件$A$和$C$、事件$C$和$O$都满足直接因果关系而事件$A$和$O$满足间接因果关系。
 \end{example}
 
-令$\Uptheta$是经$U$展开得到的所有过程流集合，$\Uptheta_{x}$是$\Uptheta$中含有$x$的过程流子集，即$\Uptheta_{x}=\{\beta\in\Uptheta|x\in\beta\}$。$TS(\beta)$表示过程流$\beta$所有轨迹的集合。
+令$\Uptheta$是经$U$展开得到的所有过程流集合，$\Uptheta_{x}$是$\Uptheta$中含有事件$x$的过程流子集，即$\Uptheta_{x}=\{\beta\in\Uptheta|x\in\beta\}$。$TS(\beta)$表示过程流$\beta$所有轨迹的集合。
 
 \begin{definition}[事件间扩展不确定性精炼因果关系]\label{def:exroru_event_causal}
 事件$x$和$y$满足：
@@ -454,21 +454,21 @@
 
 \begin{figure}[htbp]
   \centering
-  \begin{subfigure}{1\textwidth}
+  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{nfc_petri}
+    \includegraphics[width=1\textwidth]{nfc_petri}
     \caption{含有非自由选择结构的WF-net}
     \label{fig:nfc_petri}
   \end{subfigure}
-  \begin{subfigure}{1\textwidth}
-    \vspace{1em}
+  \hspace{1em}
+  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{nfc_cpu}
+    \includegraphics[width=1\textwidth]{nfc_cpu}
     \caption{图\subref{fig:nfc_petri}中WF-net对应的CPU}
     \label{fig:nfc_cpu}
   \end{subfigure}
   \vspace{6pt}
-  \caption{RORU无法区分的一对含有不可见变迁的模型}
+  \caption{含有非自由选择结构的WF-net及其CPU}
   \label{fig:nfc_exroru}
 \end{figure}
 
@@ -512,7 +512,7 @@
 依据定义\ref{def:exroru_transition_causal}的折叠方法，算法\ref{algo:exroru_transition_causal}给出了计算变迁间因果关系的伪代码。算法接收WF-net $\Sigma$和两个变迁$A$、$B$作为输入，输出变迁$A$和变迁$B$之间的因果关系。算法首先初始化“Always”计数、“Never”计数和“Direct”标识（第1行），接下来利用双重循环判断变迁$A$和变迁$B$的对应事件之间的关系（第2-12行）。对于变迁$A$的每一个对应事件$a$，初始化局部因果标识和局部“Always”标识（第2-3行）：若存在变迁$B$的对应事件$b$使得两者满足因果关系，则改变局部因果标识（第5-6行）；若存在变迁$B$的对应事件$b$使得两者满足“总是因果关系”，则增加“Always”计数（第7-8行）；若存在变迁$B$的对应事件$b$使得两者满足“直接因果关系”，则改变“Direct”标识（第9-10行）。在遍历完变迁$B$的对应事件后，若局部因果标识未被改变，则增加“Never”计数（第11-12行）。最后，算法依据“Always”计数、“Never”计数和“Direct”标识判断变迁$A$和变迁$B$的因果关系（第13-22行）。
 
 \begin{algorithm}[htbp]
-  \setstretch{0.85}
+  \setstretch{0.9}
   \LinesNumbered
   \caption{计算变迁间因果关系}
   \label{algo:exroru_transition_causal}
@@ -552,6 +552,7 @@
 计算变迁间逆因果关系的伪代码与算法\ref{algo:exroru_transition_causal}类似，不再赘述。需要注意的是，与事件间因果关系类似，对于一对变迁$A$和$B$，其因果关系$A\rightarrow B$和逆因果关系$B\leftarrow A$可能有着不同的不确定性。例如，在图\ref{fig:case_study_petri}所示的WF-net中，变迁$A$和变迁$O$满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}O$；而变迁$O$和变迁$A$满足“间接有时逆因果关系”，即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.9}
   \LinesNumbered
   \caption{计算变迁间并行关系}
   \label{algo:exroru_transition_concurrent}
@@ -646,18 +647,18 @@
 \begin{figure}[htbp]
   \centering
   \begin{minipage}[]{0.3\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{only_conflict_1}
+    \raggedleft
+    \includegraphics[width=0.6\textwidth]{only_conflict_1}
   \end{minipage}
   \hspace{1em}
   \begin{minipage}[]{0.3\textwidth}
     \centering
-    \includegraphics[width=1\textwidth]{only_conflict_2}
+    \includegraphics[width=0.6\textwidth]{only_conflict_2}
   \end{minipage}
   \hspace{1em}
   \begin{minipage}[]{0.3\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{only_conflict_3}
+    \raggedright
+    \includegraphics[width=0.6\textwidth]{only_conflict_3}
   \end{minipage}
   \vspace{6pt}
   \caption{RORU无法区分的只包含满足冲突关系变迁对的过程模型}

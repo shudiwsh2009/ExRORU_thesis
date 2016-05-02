@@ -1,5 +1,5 @@
 \chapter{绪论}\label{cha:intro}
-本章首先阐述论文的选题背景和意义（\ref{sec:background}节）；随后介绍与工作流网相关的预备知识（\ref{sec:preliminaries}节）；\ref{sec:challenge}重点讨论当前算法所面临的挑战；\ref{sec:contribution}节给出论文的主要贡献；最后\ref{sec:structure}节介绍论文的章节安排。
+本章首先阐述论文的选题背景和意义（\ref{sec:background}节）；随后介绍与工作流网相关的预备知识（\ref{sec:preliminaries}节）；\ref{sec:challenge}节重点讨论当前算法所面临的挑战；\ref{sec:contribution}节给出论文的主要贡献；最后\ref{sec:structure}节介绍论文的章节安排。
 
 \section{选题背景和意义}\label{sec:background}
 如今信息系统需要支持业务过程的执行，而不是像以往一样仅仅关注于独立的任务。信息系统需要控制、监控并且支持一个业务过程逻辑层面的全部内容，即它应该能管理组织内的工作流。很多拥有大量业务过程的组织和企业对工作流的管理有着极为迫切的需求，这正是工作流管理兴起的原因\cite{van1998application}。在工作流管理技术的帮助下，企业可以快速建立或者更新自身的过程感知信息系统\cite{dumas2005process}。企业可以根据市场变化或者政府政策变更等外部因素随时调整自己的业务过程从而及时地改善自身的服务以提高企业的市场竞争力。
@@ -21,7 +21,8 @@
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=1.0\textwidth]{basic_concurrency_drawback}
-  \caption{含有不同并行关系的BPMN模型\label{fig:basic_concurrency_drawback}}
+  \caption{含有不同并行关系的BPMN模型}
+  \label{fig:basic_concurrency_drawback}
 \end{figure}
 
 \begin{example}\label{ex:basic_concurrency_drawback}
@@ -188,7 +189,7 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
   \end{itemize}
 \end{definition}
 
-给定一个过程流$\pi$，事件集合$E$和映射函数$\rho$经常被记作$E_{\pi}$和$\rho_{\pi}$。一个标识Petri网$S$所有过程流的集合记作$\Pi_{S}$。前文提到的因果关系和并行关系同样可以定义在$\pi$的因果网节点上，分别记作$\rightarrowtail_{\pi}$和$\parallel{\pi}$，在含义明确的情况下脚标常被省略。
+给定一个过程流$\pi$，事件集合$E$和映射函数$\rho$经常被记作$E_{\pi}$和$\rho_{\pi}$。一个标识Petri网$S$所有过程流的集合记作$\Pi_{S}$。前文提到的因果关系和并行关系同样可以定义在$\pi$的因果网节点上，分别记作$\rightarrowtail_{\pi}$和$\parallel_{\pi}$，在含义明确的情况下脚标常被省略。
 
 \begin{figure}[htbp]
   \centering
