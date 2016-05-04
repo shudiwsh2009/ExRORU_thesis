@@ -8,13 +8,13 @@
   %=====
   % 秘级
   %=====
-  secretlevel={秘密},
-  secretyear={10},
+  % secretlevel={秘密},
+  % secretyear={10},
   %
   %=========
   % 中文信息
   %=========
-  ctitle={基于精炼有序关系的流程模型行为语义刻画方法},
+  ctitle={基于扩展不确定性精炼有序关系的过程模型行为语义刻画方法},
   cdegree={工程硕士专业},
   cdepartment={软件学院},
   cmajor={软件工程},
@@ -26,12 +26,12 @@
   % cdate={超新星纪元},
   %
   % 博士后专有部分
-  cfirstdiscipline={计算机科学与技术},
-  cseconddiscipline={系统结构},
-  postdoctordate={2009年7月——2011年7月},
-  id={编号}, % 可以留空： id={},
-  udc={UDC}, % 可以留空
-  catalognumber={分类号}, % 可以留空
+  % cfirstdiscipline={计算机科学与技术},
+  % cseconddiscipline={系统结构},
+  % postdoctordate={2009年7月——2011年7月},
+  % id={编号}, % 可以留空： id={},
+  % udc={UDC}, % 可以留空
+  % catalognumber={分类号}, % 可以留空
   %
   %=========
   % 英文信息
@@ -61,20 +61,38 @@
   % edate={December, 2005}
   %
   % 关键词用“英文逗号”分割
-  ckeywords={流程模型, 不确定性精炼有序关系, 完全前缀展开, 行为语义},
+  ckeywords={过程模型, 不确定性精炼有序关系, 完全前缀展开, 行为语义},
   ekeywords={Process Model, Refined Ordering Relations with Uncertainty, Complete Prefix Unfolding, Behavioral Semantics}
 }
 
 % 定义中英文摘要和关键字
 \begin{cabstract}
-  TODO：这里是中文摘要
+如今信息系统需要支持业务过程的执行，它应该能管理组织内的工作流。很多拥有大量业务过程的组织和企业对工作流的管理有着极为迫切的需求。大型过程模型库的管理往往需要有效的模型检索机制，抽取过程模型的特征是其先决条件之一。业务过程的行为语义是刻画该过程的本质特征，而任务间有序关系常常被用来描述业务过程的行为。近期有论文提出了无环过程模型中的任务间不确定性有序关系，并给出了基于完全前缀展开计算任务对之间新关系的算法。然而该算法有严重的局限。它不能处理带环过程模型和含有不可见变迁及非自由选择结构的过程模型。实际上大部分过程模型都含有环，大约10\%-20\%的过程模型含有非自由选择结构。
+
+本文提出了一种精炼有序关系来解决上述问题，即ExRORU（\textbf{Ex}tended \textbf{R}efined \textbf{O}rdering \textbf{R}ealtions with \textbf{U}ncertainty）。本文提出的ExRORU关系可以检测任意过程模型对之间的行为差异，且可以基于过程模型的完全前缀展开高效计算。本文主要工作包括：
+\begin{enumerate}[1.]
+  \item 研究已有的过程模型行为语义刻画方法，深入分析其优缺点。同时对本文算法的扩展基础进行详细探讨，指出其局限性。
+  \item 提出扩展不确定性精炼任务间有序关系，包括三大类（因果、逆因果、并行）11种关系，能够处理各种类型的合理过程模型，包括含有环、不可见任务及非自由选择结构的模型。
+  \item 设计算法基于完全前缀展开高效计算过程模型的ExRORU关系矩阵，解决了因循环结构和高并发分支结构带来的无穷执行序列和状态爆炸问题。
+  \item 探讨并证明ExRORU如何识别任意一对过程模型之间的行为差异，即给出一个过程模型行为语义的唯一刻画。
+  \item 设计实验在有效性、性能、可扩展性等方面与现有的过程模型行为语义刻画算法进行比较。
+\end{enumerate}
 \end{cabstract}
 
 % 如果习惯关键字跟在摘要文字后面，可以用直接命令来设置，如下：
 % \ckeywords{\TeX, \LaTeX, CJK, 模板, 论文}
 
 \begin{eabstract}
-A recent paper has proposed new ordering relations with uncertainty between the executions of tasks in acyclic process models. This work also gave an algorithm to compute the relations between pairs of tasks based on complete prefix unfolding. However, this algorithm has serious limitations. It cannot work for cyclic process models and those with silent transitions and non-free-choice constructs. In practice most non-trivial process models contain cycles and about 10\% to 20\% have also non-free choice constructs. In this paper, we show how to overcome these problems by a refinement of the relations (i.e., extended refined ordering relations with uncertainty, ExRORU for short). All these relations can uniquely detect the behavioral difference between any pair of process models and can also be computed efficiently based on the complete prefix unfolding of a process. Experiments on real-life and synthesized models show that ExRORU is both effective and scalable.
+Today's information systems need to support the execution of business process and they should manage the workflow in organizations. Many organizations and enterprises with massive business processes have urgent needs for workflow management. The management of a large process model repository requires an effective retrieval mechanism and extracting the features of process models is one of the prerequisites. The behavioral semantics of a process model are the basic features to characterize it and the ordering relations between the executions of tasks are often used to describe the behaviors of a  process model. A recent paper has proposed new ordering relations with uncertainty between the executions of tasks in acyclic process models. This work also gave an algorithm to compute the relations between pairs of tasks based on complete prefix unfolding. However, this algorithm has serious limitations. It cannot work for cyclic process models and those with silent transitions and non-free-choice constructs. In practice most non-trivial process models contain cycles and about 10\% to 20\% have also non-free choice constructs. 
+
+In this paper, we show how to overcome these problems by a refinement of the relations (i.e., extended refined ordering relations with uncertainty, ExRORU for short). All these relations can uniquely detect the behavioral difference between any pair of process models and can also be computed efficiently based on the complete prefix unfolding of a process. The main contributions of our work are as follows:
+\begin{enumerate}[1.]
+  \item We investigate the existing characterization methods of process model behavioral semantics and analyse the pros and cons of them. We also give a detailed discussion of the basis work of our paper and point out its limitations.
+  \item We propose the ExRORU relations with three categories (i.e., causal, inverse causal and concurrent) and 11 types in total, which can be used to handle all kinds of sound process models, including models with cycles, silent transitions and non-free-choice constructs.
+  \item We design an algorithm to efficiently compute the ExRORU matrix of a process model based on its complete prefix unfolding, which overcomes the problems of infinite executing sequences and state explosion caused by loop structure and high parallel branching constructs.
+  \item We discuss and prove that ExRORU can detect behavioral differences between any pair of process models uniquely.
+  \item We conduct experiments on real-life and synthesized models and compare ExRORU with other mainstream methods.
+\end{enumerate}
 \end{eabstract}
 
 % \ekeywords{\TeX, \LaTeX, CJK, template, thesis}
