@@ -553,7 +553,7 @@
 计算变迁间逆因果关系的伪代码与算法\ref{algo:exroru_transition_causal}类似，不再赘述。需要注意的是，与事件间因果关系类似，对于一对变迁$A$和$B$，其因果关系$A\rightarrow B$和逆因果关系$B\leftarrow A$可能有着不同的不确定性。例如，在图\ref{fig:case_study_petri}所示的WF-net中，变迁$A$和变迁$O$满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}O$；而变迁$O$和变迁$A$满足“间接有时逆因果关系”，即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$。
 
 \begin{algorithm}[htbp]
-  \setstretch{0.9}
+  % \setstretch{0.9}
   \LinesNumbered
   \caption{计算变迁间并行关系}
   \label{algo:exroru_transition_concurrent}
@@ -666,8 +666,6 @@
   \label{fig:only_conflict}
 \end{figure}
 
-表\ref{tab:qualitative_comparison_roru_exroru}给出了RORU算法和ExRORU算法的定性比较。如前文所述，ExRORU可以确保唯一性而RORU不能。ExRORU算法拥有更多类型的关系，因此它的刻画粒度更为精细，同时可以保证任意一对变迁之间都存在关系。最后，含有非自由选择结构或者循环结构的模型都需要一个像ExRORU这样提供精细粒度任务间关系的刻画算法。
-
 \begin{table}[htbp]
   \centering
   \caption{RORU与ExRORU的定性比较}
@@ -684,6 +682,8 @@
     区别直接和间接因果变迁 & 不能 & 能\\ \bottomrule[1.5pt]
   \end{tabular}
 \end{table}
+
+表\ref{tab:qualitative_comparison_roru_exroru}给出了RORU算法和ExRORU算法的定性比较。如前文所述，ExRORU可以确保唯一性而RORU不能。ExRORU算法拥有更多类型的关系，因此它的刻画粒度更为精细，同时可以保证任意一对变迁之间都存在关系。最后，含有非自由选择结构或者循环结构的模型都需要一个像ExRORU这样提供精细粒度任务间关系的刻画算法。
 
 \section{本章小结}\label{sec:exroru_conclusion}
 本章介绍了扩展不确定性精炼有序关系的定义和计算方法。首先介绍了事件间ExRORU关系并给出了依据图形化抽象形式基于CPU高效计算的方法；然后探讨了将事件间ExRORU折叠回变迁间ExRORU关系的动机，继而给出变迁间ExRORU关系的定义和折叠算法。本章随后形式化证明了ExRORU算法的唯一性和充分必要性等重要性质，最后定性比较了ExRORU算法与RORU算法的不同。
