@@ -109,6 +109,8 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 令$(N=(P,T,F),s_{0})$是一个标识Petri网。序列$\sigma\in T^{*}$是$(N,s_{0})$的一条发生序列当且仅当对于某个自然数$n\in\mathbb{N}$，存在标识$s_{1},...,s_{n}$和变迁$t_{1},...,t_{n}\in T$，使得$\sigma=t_{1}...t_{n}$，且对于所有满足$0\leq i\leq n$的$i$，$(N,s_{i})[t_{i+1}\rangle$且$s_{i+1}=s_{i}-\bullet t_{i+1}+t_{i+1}\bullet$。（$n=0$隐含$\sigma=\varepsilon$，$\varepsilon$是$(N,s_{0})$的发生序列。）序列$\sigma$在标识$s_{0}$下可发生，记作$(N,s_{0})[\sigma\rangle$。序列$\sigma$发生后得到标识$s_{n}$，记作$(N,s_{0})[\sigma\rangle(N,s_{n})$。
 \end{definition}
 
+本文用形如$\langle A,B,C\rangle$的表达式来描述发生序列。括号内的字母表示变迁，其出现顺序和执行序列中对应变迁的发生顺序相同。
+
 \begin{definition}[连通性]\label{def:connectedness}
 网$N=(P,T,F)$是弱连通的，或者简称连通的，当且仅当对于任意两个节点$x,y\in P\cup T$，$x(F\cup F^{-1})y$，其中$R^{-1}$是关系$R$的逆，$R^{*}$是关系$R$的自反传递闭包。网$N$是强联通的，当且仅当对于任意两个节点$x,y\in P\cup T$，$xF^{*}y$。
 \end{definition}

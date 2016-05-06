@@ -13,11 +13,11 @@
   \label{fig:class_diagram}
 \end{figure}
 
-ExRORUMatrix是算法主类，主要功能是读入Petri网文件，并调用下层类抽取该Petri网的ExRORU矩阵。该类首先调用jbpt项目中的CPU计算方法构造给定Petri网对应的CPU，其后基于CPU抽取事件间ExRORU关系并依据前文算法折叠得到变迁间ExRORU关系。其中关键成员变量包括三个矩阵，分别对应变迁间的因果关系、逆因果关系和并行关系，每种关系都由ExRORU类记录。ExRORU类中包含标识不确定性的枚举性变量Relation和标记直接因果关系的布尔值变量（仅用于因果关系和逆因果关系）。
+ExRORUMatrix是算法主类，主要功能是读入Petri网文件，并调用下层类抽取该Petri网的ExRORU矩阵。该类首先调用jbpt项目中的CPU计算方法构造给定Petri网对应的CPU，其后基于CPU抽取事件间ExRORU关系并依据前文算法折叠得到变迁间ExRORU关系。其中关键成员变量包括三个矩阵，分别对应变迁间的因果关系、逆因果关系和并行关系，每种关系都由ExRORU类记录。ExRORU类中包含标识不确定性的枚举型变量Relation和标记直接因果关系的布尔值变量（仅用于因果关系和逆因果关系）。
 
 PetriNet类和CompletePrefixUnfolding类是jbpt项目中的原有类，分别存储Petri网和对应的完全前缀展开。在CPU的构造过程中，变迁与事件之间的对应关系也被记录下来用于后期的折叠过程。
 
-ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不同的类分别抽取因果关系、逆因果关系和并行关系。这三个不同的类统一实现了ExRORUGeneratorInter接口，提供了compute(T t1, T t2)方法用于计算两个给定变迁之间的ExRORU关系，此外用于抽取因果关系和逆因果关系的CausalGenerator和InverseCausalGenerator还额外提供了isDirect(T t1, T t2)方法用于判定两个变迁是否满足直接因果关系。三个类使用第\ref{cha:exroru}章介绍的算法首先基于CPU计算事件间的ExRORU关系然后将其折叠得到变迁间的ExRORU关系。
+ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不同的类分别抽取因果关系、逆因果关系和并行关系。这三个不同的类统一实现了ExRORUGeneratorInter接口，提供了compute(T t1, T t2)方法用于计算两个给定变迁之间的ExRORU关系，此外用于抽取因果关系和逆因果关系的CausalGenerator和InverseCausalGenerator还额外提供了isDirect(T t1, T t2)方法用于判定两个变迁是否满足定义\ref{def:exroru_event_causal_direct}中的直接和间接因果关系。三个类使用第\ref{cha:exroru}章介绍的算法首先基于CPU计算事件间的ExRORU关系然后将其折叠得到变迁间的ExRORU关系。
 
 \section{实验设计与分析}\label{sec:experiment}
 本节介绍ExRORU的实验设计与分析，主要包括有效性实验（将ExRORU与其他算法比较区分过程模型的能力）、性能实验（使用实际模型数据集衡量ExRORU算法的效率）和扩展性实验（衡量ExRORU处理含多并发结构过程模型的能力）等。
@@ -191,7 +191,7 @@ ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不�
 
 与之相对应的是图\ref{fig:sda_example_2}中的WF-net，该模型中的变迁$A$和变迁$B$可以都被跳过而不被触发。当在源库所$P_{0}$中放置一个托肯时，变迁$I$被使能，当其被触发后，会在库所$P_{1}$和库所$P_{2}$中各产生一个托肯，此时变迁$A$和变迁$B$均被使能，上方和下方的两个不可见变迁也被使能了，且分别和变迁$A$、变迁$B$满足竞争关系；此时可以在上方的不可见变迁和变迁$A$中、下方的不可见变迁和变迁$B$中各选择一个触发，且触发过程满足并行关系。无论选择哪两个变迁触发，都会在库所$P_{3}$和库所$P_{4}$中各产生一个托肯，从而使得变迁$O$被使能；当变迁$O$被触发后，过程执行完毕。该模型的变迁发生序列有五条，分别是$\langle I,A,B,O\rangle$、$\langle I,B,A,O\rangle$、$\langle I,A,O\rangle$、$\langle I,B,O\rangle$和$\langle I,O\rangle$。
 
-两个模型的行为差异在于后者比前者多了一条变迁发生序列，即变迁$I$和变迁$O$可以紧邻发生。诸如BP、4C和RORU等以任务间关系为基础的过程模型行为语义刻画方法都没有考虑任务间紧邻关系，所以无法区分这组模型的行为语义。实际上，图\ref{fig:sda_example_1}的模型中的变迁$I$和变迁$O$满足“间接总是因果关系”，即$I\overset{\text{\tiny{IA}}}{\rightarrow}O$，而图\ref{fig:sda_example_2}的模型中的变迁$I$和变迁$O$满足“直接总是因果关系”，即$I\overset{\text{\tiny{DA}}}{\rightarrow}O$。两个模型的ExRORU关系矩阵如表\ref{tab:sda_example_matrix}所示，两个模型的行为差异主要体现在变迁$I$和变迁$O$之间的因果关系和逆因果关系上。因此，ExRORU算法可以检测该组模型之间的差异。
+两个模型的行为差异在于后者比前者多了一条变迁发生序列，即变迁$I$和变迁$O$可以紧邻发生。诸如CBP、4C和RORU等以任务间关系为基础的过程模型行为语义刻画方法都没有考虑任务间紧邻关系，所以无法区分这组模型的行为语义。实际上，图\ref{fig:sda_example_1}的模型中的变迁$I$和变迁$O$满足“间接总是因果关系”，即$I\overset{\text{\tiny{IA}}}{\rightarrow}O$，而图\ref{fig:sda_example_2}的模型中的变迁$I$和变迁$O$满足“直接总是因果关系”，即$I\overset{\text{\tiny{DA}}}{\rightarrow}O$。两个模型的ExRORU关系矩阵如表\ref{tab:sda_example_matrix}所示，两个模型的行为差异主要体现在变迁$I$和变迁$O$之间的因果关系和逆因果关系上。因此，ExRORU算法可以检测该组模型之间的差异。
 
 \begin{table}[htbp]
   \centering
@@ -276,7 +276,7 @@ ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不�
 
 在图\ref{fig:invisible_transition_b}和图\ref{fig:invisible_transition_c}的上方模型中，变迁$B$和变迁$C$都满足“有时并行关系”，即$B\Uparrow C$，而在两幅图的下方模型中，变迁$B$和变迁$C$都满足“总是并行关系”，即$B\Updownarrow C$。
 
-BP等算法不考虑任务间紧邻关系也不区分并行关系的不确定性，所以无法区分图中的三组模型。TAR算法虽然考虑了任务间紧邻关系，但是对于并行关系刻画的不准确导致了它无法区分图\ref{fig:invisible_transition_b}和图\ref{fig:invisible_transition_c}中的两对模型。类似的，RORU算法无法处理这些含有不可见变迁的模型，且它不能计算图\ref{fig:invisible_transition_c}中这样带环的模型。
+CBP等算法不考虑任务间紧邻关系也不区分并行关系的不确定性，所以无法区分图中的三组模型。TAR算法虽然考虑了任务间紧邻关系，但是对于并行关系刻画的不准确导致了它无法区分图\ref{fig:invisible_transition_b}和图\ref{fig:invisible_transition_c}中的两对模型。类似的，RORU算法无法处理这些含有不可见变迁的模型，且它不能计算图\ref{fig:invisible_transition_c}中这样带环的模型。
 
 \begin{figure}[htbp]
   \centering
