@@ -9,7 +9,7 @@
 
 过程感知信息系统是由实际业务过程模型驱动的，这些模型描述了企业中的业务执行过程，每个任务的负责人以及需要的资源和产生的数据等。由于同一个业务过程可以被不同拓扑结构的图形所表示，因此它的行为语义才是刻画该过程的本质特征。任务间有序关系\cite{esparza2002improvement}常常被用来描述业务过程的行为。业务过程的任务间有三种基本的有序关系：因果关系（causal relation）描述一个任务的完成导致了另一个任务被执行，并行关系（concurrency relation）表示两个任务可以同时执行互不影响，冲突关系（conflict relation）表示在业务过程的同一个执行实例中两个任务不能都被执行。
 
-两个有因果关系或者并行关系的任务可能在同一个过程执行实例中出现，但是在部分执行实例中一个任务被执行，另一个任务的执行却不是必然的。因此，本文对这两种有序关系进行精炼以体现这种不确定性。处于冲突关系的两个任务显然不能在同一个执行实例中出现，所以没有必要对冲突关系进行精炼。
+两个有因果关系或者并行关系的任务可能在同一个过程执行实例中出现，但是在部分执行实例中一个任务被执行，另一个任务的执行却不是必然的。因此，本文对这两种有序关系进行精炼以体现这种不确定性。处于冲突关系的两个任务可以通过精炼后的因果关系和并行关系体现，所以没有必要再对冲突关系进行精炼。
 
 \begin{figure}[htbp]
   \centering
@@ -18,7 +18,7 @@
 \end{figure}
 
 \begin{example}\label{ex:basic_causal_drawback}
-图\ref{fig:basic_causal_drawback}展示了一个在线购物的BPMN模型\footnote{BPMN是一种工作流建模语言，请参见：http://www.bpmn.org/}。在这个模型中，当任务“choose goods”被执行后，任务“submit order”可以被执行，然后任务“send goods by road”和任务“send goods by air”的其中之一可以被执行。显然，任务“choose goods”和任务“submit order”、任务“submit order”和任务“send goods by road”都满足因果关系。然而，这两组因果关系是不完全相同的。当任务“choose goods”被执行后，任务“submit order”一定会被执行而当任务“submit order”被执行后，任务“send goods by road”却不一定会被执行（因为任务“send goods by air”可能被选择执行）。前文提到的基本因果关系不能表达这类不同，所以需要对因果关系进行精炼。
+图\ref{fig:basic_causal_drawback}展示了一个在线购物的BPMN模型\footnote{BPMN是一种工作流建模语言，请参见：http://www.bpmn.org/}。在这个模型中，当任务\textit{choose good}被执行后，任务\textit{submit order}可以被执行，然后任务\textit{send goods by road}和任务\textit{send goods by air}的其中之一可以被执行。显然，任务\textit{choose good}和任务\textit{submit order}、任务\textit{submit order}和任务\textit{send goods by road}都满足因果关系。然而，这两组因果关系是不完全相同的。当任务\textit{choose good}被执行后，任务\textit{submit order}一定会被执行而当任务\textit{submit order}被执行后，任务\textit{send goods by road}却不一定会被执行（因为任务\textit{send goods by air}可能被选择执行）。前文提到的基本因果关系不能表达这类不同，所以需要对因果关系进行精炼。
 \end{example}
 
 \begin{figure}[htbp]
@@ -29,7 +29,7 @@
 \end{figure}
 
 \begin{example}\label{ex:basic_concurrency_drawback}
-图\ref{fig:basic_concurrency_drawback}展示了一个含有并行结构的BPMN模型。在这个模型中，任务“B”和任务“C”可以被并行地执行但当任务“B”被执行时，任务“C”不一定会在同一个执行实例中被执行（因为任务“D”可能被选择执行）。同时，任务“B”和任务“F”也可以被并行地执行而且当任务“B”被执行时，任务“F”一定会在同一个执行实例中被执行。前文提到的基本并行关系不能表达这类不同，所以需要对并行关系进行精炼。
+图\ref{fig:basic_concurrency_drawback}展示了一个含有并行结构的BPMN模型。在这个模型中，任务$B$和任务$C$可以被并行地执行但当任务$B$被执行时，任务$C$不一定会在同一个执行实例中被执行（因为任务$D$可能被选择执行）。同时，任务$B$和任务$F$也可以被并行地执行而且当任务$B$被执行时，任务$F$一定会在同一个执行实例中被执行。前文提到的基本并行关系不能表达这类不同，所以需要对并行关系进行精炼。
 \end{example}
 
 过程模型的任务间不确定性精炼有序关系（以下简称“精炼有序关系”）可以用来刻画过程的行为语义，从而被用于过程模型的检索，即提供一个查询模型$M$和一个过程模型集合$C$，从$C$中查找和$M$行为一致或者最相似的模型。由于本文的方法对过程模型进行了唯一的刻画，所以在检索过程中可以设置不同的粒度以检索符合实际要求的模型。除此之外，精炼有序关系还可以应用于过程模型的符合性检测、相似性度量等领域。
@@ -41,16 +41,16 @@
 \end{figure}
 
 \begin{example}\label{ex:basic_concurrency_drawback_compare}
-考虑图\ref{fig:basic_concurrency_drawback}和图\ref{fig:basic_concurrency_drawback_compare}中的模型，当检索满足条件“任务`F'和任务`C'满足因果关系且任务`B'和任务`C'满足并行关系”的模型时，两个模型都符合检索条件。另一方面，将检索条件更改为“任务`F'和任务`C'满足因果关系，且当任务`F'被执行时，任务`C'一定在同一个执行实例中被执行，同时当任务`C'被执行时，任务`F'一定在同一个执行实例中被执行；任务`B'和任务`C'满足并行关系，当任务`B'被执行时，任务`C'一定在同一个执行实例中被执行，同时当任务`C'被执行时，任务`B'一定在同一个执行实例中被执行”时，只有图\ref{fig:basic_concurrency_drawback_compare}中的模型符合条件。显然，精炼后的任务间有序关系能够更加精确地刻画过程模型的行为语义。类似的，这种精炼后的刻画方法可以被当作业务规则用于过程模型的符合性检测。
+考虑图\ref{fig:basic_concurrency_drawback}和图\ref{fig:basic_concurrency_drawback_compare}中的模型，当检索满足条件“任务$F$和任务$C$满足因果关系且任务$B$和任务$C$满足并行关系”的模型时，两个模型都符合检索条件。另一方面，将检索条件更改为“任务$F$和任务$C$满足因果关系，且当任务$F$被执行时，任务$C$一定在同一个执行实例中被执行，同时当任务$C$被执行时，任务$F$一定在同一个执行实例中被执行；任务$B$和任务$C$满足并行关系，当任务$B$被执行时，任务$C$一定在同一个执行实例中被执行，同时当任务$C$被执行时，任务$B$一定在同一个执行实例中被执行”时，只有图\ref{fig:basic_concurrency_drawback_compare}中的模型符合条件。显然，精炼后的任务间有序关系能够更加精确地刻画过程模型的行为语义。类似的，这种精炼后的刻画方法可以被当作业务规则用于过程模型的符合性检测。
 \end{example}
 
-Jin等人已经提出了一种精炼有序关系RORU及其计算方法\cite{jin2014computing}，本文重点对其进行了研究。针对该方法存在的问题，本文提出了改进方案，将新的方法命名为扩展的任务间不确定性精炼有序关系（Extended Refined Ordering Relations with Uncertainty，简称ExRORU）。由于ExRORU是一种刻画过程行为语义的方法，因此在实验过程中，本文将ExRORU与基于行为语义的过程特征刻画算法和过程相似性度量算法进行比较。
+Jin等人已经提出了一种带有不确定性的精炼有序关系RORU及其计算方法\cite{jin2014computing}，任务对之间的关系由于它们执行轨迹的实际情况产生了不确定性，“确定”（Certain，简写为“C”）表示一个任务总是和另一个任务在同一个执行实例中出现，而“不确定”刚好相反。这两种不确定性组合成4种双向关系，即C-C、C-U、U-C和U-U。用这些双向关系去修饰因果关系和并行关系后，RORU得到8种子关系。基于文中提出的紧邻任务间的一些规则和非紧邻任务间的传递性规则，\onlinecite{jin2014computing}给出了在无环过程模型中计算RORU关系的算法。RORU算法存在一些严重缺陷，如只能处理无环模型、无法处理不可见任务和非自由选择结构等。针对该方法存在的问题，本文提出了改进方案，将新的方法命名为扩展的任务间不确定性精炼有序关系（Extended Refined Ordering Relations with Uncertainty，简称ExRORU）。由于ExRORU是一种刻画过程行为语义的方法，因此在实验过程中，本文将ExRORU与基于行为语义的过程特征刻画算法和过程相似性度量算法进行比较。
 
 \section{预备知识}\label{sec:preliminaries}
 本节介绍论文中需要用到的预备知识，其中\ref{subsec:petrinet}介绍Petri网，\ref{subsec:workflow_net}介绍工作流网及相关概念，\ref{subsec:process_run}和\ref{subsec:cpu}分别介绍过程流和完全前缀展开。
 
 \subsection{Petri网}\label{subsec:petrinet}
-业务过程建模给业务过程分析人员提供了建立过程模型并分析它们的能力，有许多论著和建模工具对其进行详尽地描述和实现。建模语言是业务过程建模中的核心部分，目前的建模语言包括但不限于：Petri网、EPC（Event-driven process chain，事件驱动过程链）、BPMN（Business Process Model and Notation，业务过程建模符号）、BPEL（Business Process Execution Language，业务过程执行语言）、UML（Unified Modeling Language，统一建模语言）、APROMORE\cite{la2011apromore}。
+业务过程建模给业务过程分析人员提供了建立过程模型并分析它们的能力，有许多论著和建模工具对其进行详尽地描述和实现。建模语言是业务过程建模中的核心部分，目前的建模语言包括但不限于：Petri网、EPC（Event-driven process chain，事件驱动过程链）、BPMN（Business Process Model and Notation，业务过程建模符号）、BPEL（Business Process Execution Language，业务过程执行语言）、UML（Unified Modeling Language，统一建模语言）、YAWL（Yet Another Workflow Language，未来另一种工作流语言）、XPDL（XML Process Definition Language，XML过程定义语言）。
 
 Petri网是一种有向二分图，于1960年代由Carl Adam Petri发明\cite{petri1962kommunikation}，适合于描述含有异步、并发过程的系统。Petri网既有严格的数学表述方式，也有良好的图形化基础。本文使用Petri网作为建模语言，以下概念来自\onlinecite{van2004workflow}。有关Petri网及其性质的详细介绍，请参见\onlinecite{desel2005free,murata1989petri,reisig1998lectures,袁祟义2005petri}。
 
@@ -58,8 +58,7 @@ Petri网是一种有向二分图，于1960年代由Carl Adam Petri发明\cite{pe
 Petri网是一个三元组$N=(P,T,F)$，其中：
   \begin{itemize}
   	\item[-] $P$是库所的有限集合；
-  	\item[-] $T$是变迁的有限集合；
-  	\item[-] $P\cap T=\emptyset$且$T\cap P=\emptyset$；
+  	\item[-] $T$是变迁的有限集合且满足$P\cap T=\emptyset$；
   	\item[-] $F\subseteq(P\times T)\cup(T\times P)$是边的集合。
   \end{itemize}
 \end{definition}
@@ -76,7 +75,7 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
   \caption{标识Petri网示例\label{fig:petri_net_example}}
 \end{figure}
 
-图\ref{fig:petri_net_example}展示了一个由8个库所和8个变迁组成的Petri网。变迁$A$有一个输入库所$p_{1}$和一个输出库所$p_{2}$，变迁$AND$-$split$有一个输入库所$p_{2}$和两个输出库所$p_{3}$、$p_{4}$，变迁$AND$-$join$有两个输入库所$p_{5}$、$p_{6}$和一个输出库所$p_{7}$。变迁$A$的输入库所中的黑点表示一个托肯（token），这个托肯即为该Petri网的初始标识。该Petri网的行为由如下发生规则定义。
+图\ref{fig:petri_net_example}展示了一个由8个库所和8个变迁组成的Petri网。变迁$A$有一个输入库所$p_{1}$和一个输出库所$p_{2}$，变迁$And$-$split$有一个输入库所$p_{2}$和两个输出库所$p_{3}$、$p_{4}$，变迁$And$-$join$有两个输入库所$p_{5}$、$p_{6}$和一个输出库所$p_{7}$。变迁$A$的输入库所中的黑点表示一个托肯（token），这个托肯即为该Petri网的初始标识。该Petri网的行为由如下发生规则定义。
 
 \begin{definition}[发生规则]\label{def:firing_rule}
 令$\Sigma=(N=(P,T,F),s)$是一个标识Petri网：
@@ -86,7 +85,7 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
   \end{itemize}
 \end{definition}
 
-在图\ref{fig:petri_net_example}的标识Petri网（源库所有一个托肯）中，变迁$A$被使能。当变迁$A$发生后，会将其输入库所中的托肯移除，在其输出库所中加入一个托肯，如图\ref{fig:petri_net_example_fire1}所示。此时，变迁$E$和变迁$AND$-$split$都被使能。虽然两者都被使能，但是只有一个能够发生，因为变迁$E$和变迁$AND$-$split$此时会竞争唯一的托肯。如果变迁$AND$-$split$发生，会消耗其输入库所的托肯并在两个输出库所中各生成一个托肯，如图\ref{fig:petri_net_example_fire2}所示。
+在图\ref{fig:petri_net_example}的标识Petri网（源库所有一个托肯）中，变迁$A$被使能。当变迁$A$发生后，会将其输入库所中的托肯移除，在其输出库所中加入一个托肯，如图\ref{fig:petri_net_example_fire1}所示。此时，变迁$E$和变迁$And$-$split$都被使能。虽然两者都被使能，但是只有一个能够发生，因为变迁$E$和变迁$And$-$split$此时会竞争唯一的托肯。如果变迁$And$-$split$发生，会消耗其输入库所的托肯并在两个输出库所中各生成一个托肯，如图\ref{fig:petri_net_example_fire2}所示。
 
 \begin{figure}[htbp]
   \centering
@@ -97,33 +96,35 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=1.0\textwidth]{petri_net_example_fire2}
-  \caption{变迁$AND$-$split$发生后的标识Petri网\label{fig:petri_net_example_fire2}}
+  \caption{变迁$And$-$split$发生后的标识Petri网\label{fig:petri_net_example_fire2}}
 \end{figure}
 
 \begin{definition}[可达标识]\label{def:reachable_markings}
 令$(N,s_{0})\in\mathcal{N}$是一个标识Petri网。标识$s$从初始标识$s_{0}$可达，当且仅当存在一条变迁序列，其变迁依次发生使标识$s_{0}$变为$s$。$(N,s_{0})$所有可达标识的集合记作$[N,s_{0}\rangle$。
 \end{definition}
 
-图\ref{fig:petri_net_example}中的标识Petri网有八个可达标识。本文用如下方式描述到达某个可达标识的变迁发生序列。令$A$为标签集合。由$A$内元素组成的长度为$n\in\mathbb{N}$的序列是一个函数$\sigma:\{0,...,n-1\}\rightarrow A$。长度为0的序列称作空序列，记作$\varepsilon$。为了便于理解，一个长度大于0的序列通常简写为函数的值序列。例如，序列$\sigma=\{(0,a),(1,a),(2,b)\}$简写为$aab$。由$A$内元素组成的任意长度的所有序列集合记作$A^{*}$。
+图\ref{fig:petri_net_example}中的标识Petri网有8个可达标识。本文用如下方式描述到达某个可达标识的变迁发生序列。令$A$为标签集合。由$A$内元素组成的长度为$n\in\mathbb{N}$的序列是一个函数$\sigma:\{0,...,n-1\}\rightarrow A$。长度为0的序列称作空序列，记作$\varepsilon$。为了便于理解，一个长度大于0的序列通常简写为函数的值序列。例如，序列$\sigma=\{(0,a),(1,a),(2,b)\}$简写为$aab$。由$A$内元素组成的任意长度的所有序列集合记作$A^{*}$。
 
 \begin{definition}[发生序列]\label{def:firing_sequence}
 令$(N=(P,T,F),s_{0})$是一个标识Petri网。序列$\sigma\in T^{*}$是$(N,s_{0})$的一条发生序列当且仅当对于某个自然数$n\in\mathbb{N}$，存在标识$s_{1},...,s_{n}$和变迁$t_{1},...,t_{n}\in T$，使得$\sigma=t_{1}...t_{n}$，且对于所有满足$0\leq i\leq n$的$i$，$(N,s_{i})[t_{i+1}\rangle$且$s_{i+1}=s_{i}-\bullet t_{i+1}+t_{i+1}\bullet$。（$n=0$隐含$\sigma=\varepsilon$，$\varepsilon$是$(N,s_{0})$的发生序列。）序列$\sigma$在标识$s_{0}$下可发生，记作$(N,s_{0})[\sigma\rangle$。序列$\sigma$发生后得到标识$s_{n}$，记作$(N,s_{0})[\sigma\rangle(N,s_{n})$。
 \end{definition}
 
+本文用形如$\langle A,B,C\rangle$的表达式来描述发生序列。括号内的字母表示变迁，其出现顺序和执行序列中对应变迁的发生顺序相同。
+
 \begin{definition}[连通性]\label{def:connectedness}
 网$N=(P,T,F)$是弱连通的，或者简称连通的，当且仅当对于任意两个节点$x,y\in P\cup T$，$x(F\cup F^{-1})y$，其中$R^{-1}$是关系$R$的逆，$R^{*}$是关系$R$的自反传递闭包。网$N$是强联通的，当且仅当对于任意两个节点$x,y\in P\cup T$，$xF^{*}y$。
 \end{definition}
 
-图\ref{fig:petri_net_example}中的标识Petri网是连通的，但不是强连通的，例如没有从汇库所到源库所的有向路径，也没有从变迁$D$到变迁$A$的有向路径。
+图\ref{fig:petri_net_example}中的标识Petri网是连通的，但不是强连通的，例如没有从终结库所$p_{8}$到初始库所$p_{1}$的有向路径，也没有从变迁$D$到变迁$A$的有向路径。
 
 \begin{definition}[有界性、安全性]\label{def:boundedness_safeness}
 标识Petri网$(N=(P,T,F),s)$是有界的，当且仅当可达标识集合$[N,s\rangle$是有穷的。$(N,s)$是安全的，当且仅当$\forall s'\in[N,s\rangle,\forall p\in P,s.t.~s'(p)\leq 1$。显然，安全性隐含了有界性。
 \end{definition}
 
-图\ref{fig:petri_net_example}中的标识Petri网是安全的（也是有界的），因为它的八个可达标识中没有库所会包含超过一个托肯。
+图\ref{fig:petri_net_example}中的标识Petri网是安全的（也是有界的），因为它的8个可达标识中没有库所会包含超过一个托肯。
 
 \begin{definition}[死变迁，活性]\label{def:dead_transition}
-令$(N=(P,T,F),s)$是一个标识Petri网。变迁$t\in T$是死变迁当且仅当$\nexists s'\in[N,s\rangle,s.t.~(N,s')[t\rangle$。$(N,s)$是活的，当且仅当$\forall s'\in[N,s\rangle,\forall t\in T,s.t.~\exists s'\in[N,s'\rangle,(N,s')[t\rangle$。显然，活性隐含不存在死变迁。
+令$(N=(P,T,F),s)$是一个标识Petri网。变迁$t\in T$是死变迁当且仅当$\nexists s'\in[N,s\rangle,s.t.~(N,s')[t\rangle$。$(N,s)$是活的，当且仅当$\forall s'\in[N,s\rangle,\forall t\in T,s.t.~\exists s'\in[N,s''\rangle,(N,s'')[t\rangle$。显然，活性隐含不存在死变迁。
 \end{definition}
 
 图\ref{fig:petri_net_example}中的标识Petri网的所有变迁都不是死变迁。但是它不是活的，因为它无法使每个变迁不断地发生。
@@ -136,8 +137,8 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 \begin{definition}[工作流网]\label{def:workflow_net}
 令$N=(P,T,F)$是一个Petri网，$\overline{t}$是不属于$P\cup T$的新节点。$N$是工作流网（WF-net）当且仅当：
   \begin{itemize}
-  	\item[-] 对象创建：$P$含有一个输入库所$i$满足：$\bullet i=\emptyset$；
-  	\item[-] 对象完成：$P$含有一个输出库所$o$满足：$o\bullet=\emptyset$；
+  	\item[-] 对象创建：$P$含有一个输入库所$i$（源库所）满足：$\bullet i=\emptyset$；
+  	\item[-] 对象完成：$P$含有一个输出库所$o$（汇库所）满足：$o\bullet=\emptyset$；
   	\item[-] 连通性：$\overline{N}=(P,T\cup\{\overline{t}\},F\cup\{(o,\overline{t}),(\overline{t},i)\})$是强连通的。
   \end{itemize}
 \end{definition}
@@ -161,7 +162,7 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 本文针对过程模型的任务间有序关系进行精炼，首先给出有序关系的标准定义。
 
 \begin{definition}[任务间有序关系\cite{esparza2002improvement}]\label{def:ordering_relations}
-Petri网的任意一对节点$x,y$之间有三种基本有序关系：
+网的任意一对节点$x,y$之间有三种基本有序关系：
   \begin{itemize}
   	\item[-] $x$和$y$满足因果关系，当且仅当该网存在一条至少包含一条边、从$x$到$y$的路径，记作$x<y$；
   	\item[-] $x$和$y$满足冲突关系，当且仅当该网存在两条开始于同一个库所$s$的路径$st_{1}...x$和$st_{2}...y$，且$t_{1}...x$和$t_{2}...y$不相交，记作$x\#y$；
@@ -216,7 +217,7 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
 每个事件$e\in E_{\pi}$都代表着对应变迁$\rho_{\pi}(e)$的一次发生。J{\"o}rg Desel等人给出了一个网系统的过程流与其变迁发生序列对应的方法\cite{desel2000validation}。给定一个Petri网，对其过程流加标识得到$(N_{\pi},s)$，其中$N_{\pi}$是该网过程流$(N_{\pi},\rho)$的因果网且标识$s$仅在每个源条件中放置一个托肯。通过映射函数$\rho$可以将该过程流的事件发生序列与原网的变迁发生序列对应起来。例如，图\ref{fig:process_run_example_1}中的过程流的事件发生序列可以对应图\ref{fig:petri_net_example}中模型的变迁发生序列$t_{1}t_{2}t_{3}t_{4}t_{5}t_{6}$。
 
 \subsection{完全前缀展开}\label{subsec:cpu}
-在一个模型的所有过程流中，只有因果关系和并行关系被抽取出来。因此，在一个过程流中只存在顺序和并发结构，而不存在循环和互斥结构。然而，由于过程模型中循环结构的存在，一个模型可能有无穷多个过程流，区别在于循环结构展开的程度。显然，使用这无穷多个过程流去抽取ExRORU是不现实的。Javier Esparza等人提出了完全前缀展开（Complete Prefix Unfolding，简称CPU）的概念来避免此问题\cite{esparza2002improvement}。
+在一个模型的所有过程流中，只有因果关系和并行关系被抽取出来。因此，在一个过程流中只存在顺序和并发结构，而不存在循环和互斥结构。然而，由于过程模型中循环结构的存在，一个模型可能有无穷多个过程流，区别在于循环结构展开的程度。另外，一个含有大量互斥结构的过程模型可能非常多的过程流，这些过程流包含大量重复信息。显然，使用这无穷多个过程流去抽取ExRORU是不现实的。Javier Esparza等人提出了完全前缀展开（Complete Prefix Unfolding，简称CPU）的概念来避免此问题\cite{esparza2002improvement}。
 
 考虑一个含有根节点的有向图$G$。众所周知该图可以被展开成一棵带有标签的树（树的节点正好是图$G$中从根节点开始的所有路径上的点）。树上的节点标签由图中的节点决定。上述展开过程可以在任意时间停止，从而得到不同的树。显然，如果尽可能多地将图展开，总会得到一棵唯一的标签树，通常是无穷大的。这棵最大的树称为该图的展开（unfolding）。
 
@@ -283,7 +284,7 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
   \begin{itemize}
   	\item[-] 事件$e$的局部配置$\lceil e\rceil$是在$e$之前可达$e$的事件集合；
   	\item[-] 局部配置$\lceil e\rceil$的终结标识$Mark(\lceil e\rceil)$是在$\lceil e\rceil$中事件都被触发后被标识的事件集合；
-  	\item[-] 充分顺序$\prec$是定义在局部配置上的严格有根据的偏序关系，满足$\lceil e\rceil\subset\lceil e'\rceil\Rightarrow\lceil e\rceil\prec\lceil e'\rceil\Rightarrow$\footnote{这里使用了\onlinecite{esparza2002improvement}中在1-安全Petri网上定义的完全顺序关系。}；
+  	\item[-] 充分顺序$\prec$是定义在局部配置上的严格有根据的偏序关系，满足$\lceil e\rceil\subset\lceil e'\rceil\Rightarrow\lceil e\rceil\prec\lceil e'\rceil$\footnote{这里使用了\onlinecite{esparza2002improvement}中在1-安全Petri网上定义的完全顺序关系。}；
   	\item[-] 事件$e$被称为截断事件，当且仅当存在一个关联事件$e'$满足$Mark(\lceil e\rceil)=Mark(\lceil e'\rceil)$且$\lceil e'\rceil\prec\lceil e\rceil$；
   	\item[-] 完全前缀展开是一个发生网的最大后向闭包子图，且在截断事件后没有任何事件。
   \end{itemize}
@@ -304,11 +305,11 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
 
 {\heiti 循环结构。}正如\onlinecite{jin2014computing}所述，RORU算法针对无环过程模型。然而实际生活中，大约10\%-20\%都是含有循环结构的。所以RORU对于环处理的缺失会大大降低其能力。
 
-{\heiti 不可见任务。}不可见任务是指过程模型中存在，但是实际执行日志中并不存在的任务。RORU将不可见任务也作为普通可见任务处理，然而过程模型中可能存在充当路由功能的无意义任务。另外，在变迁发生序列中信息的缺失和噪声的存在都可能导致挖掘过程产生不可见任务。目前，RORU并没有考虑不可见任务对过程模型行为的影响，所以无法正确处理含有不可见任务的模型。
+{\heiti 不可见任务\cite{wen2007mining}。}不可见任务是指过程模型中存在，但是实际执行日志中并不存在的任务。RORU将不可见任务也作为普通可见任务处理，然而过程模型中可能存在充当路由功能的无意义任务。另外，在变迁发生序列中信息的缺失和噪声的存在都可能导致挖掘过程产生不可见任务。目前，RORU并没有考虑不可见任务对过程模型行为的影响，所以无法正确处理含有不可见任务的模型。
 
-{\heiti 非自由选择结构。}为了还原过程模型两个变迁之间的关系，需要将其CPU中对应事件的关系进行映射。在含有非自由选择结构的过程模型的CPU中会出现重名事件，导致事件间的关系不唯一。RORU并未考虑重名事件的影响。
+{\heiti 非自由选择结构\cite{wen2007miningnfc}。}为了还原过程模型两个变迁之间的关系，需要将其CPU中对应事件的关系进行映射。在含有非自由选择结构的过程模型的CPU中会出现重名事件，导致事件间的关系不唯一。RORU并未考虑重名事件的影响。
 
-{\heiti 紧邻关系。}上述两种结构的存在会使得一些结构上并不紧邻的事件在事件发生序列中紧邻发生，从而影响其行为语义。RORU未考虑事件间紧邻关系的存在，故对一些行为相似但不一致的模型无法区分。
+{\heiti 紧邻关系\cite{zha2010workflow}。}上述两种结构的存在会使得一些结构上并不紧邻的事件在事件发生序列中紧邻发生，从而影响其行为语义。RORU未考虑事件间紧邻关系的存在，故对一些行为相似但不一致的模型无法区分。
 
 本文重点对以上不足之处进行改进，探讨如何应对这些挑战。
 
