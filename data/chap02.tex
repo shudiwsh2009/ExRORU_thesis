@@ -5,7 +5,7 @@
 本章将重点介绍现有的刻画过程模型行为语义的算法（\ref{sec:related_algorithms}节），同时对本文改进的RORU算法进行介绍和分析（\ref{sec:roru}节）。
 
 \section{过程模型行为语义刻画方法}\label{sec:related_algorithms}
-国内外学者提出了诸多刻画过程模型行为语义的方法与工具，它们的适用场景和刻画能力各有不同。对过程模型行为语义的刻画可以应用到过程模型相似性度量方法及过程模型差异性检测中，本节重点介绍部分主流过程模型行为语义刻画方法和基于过程模型行为特征的相似性度量算法。
+国内外学者提出了诸多刻画过程模型行为语义的方法与工具，它们的适用场景和刻画能力各有不同。对过程模型行为语义的刻画可以应用到过程模型相似性度量及差异性检测中，本节重点介绍主流过程模型行为语义刻画方法和基于过程模型行为特征的相似性度量算法。
 
 \subsection{变迁紧邻关系TAR}\label{subsec:tar}
 Zha等人基于两个模型的变迁发生序列集提出了一种简单的相似性度量方法，即参考相似性算法（reference similarity）\cite{zha2010workflow}。作者同时给出了此方法的两个严重问题：首先，该方法不适用于带环模型，因为带环模型的变迁发生序列是无穷多的；其次，该方法过于严格，现实中存在发生序列相似但无完全相同序列的模型对，该类模型对会被认为完全不相似。
@@ -19,7 +19,7 @@ Weidlich等人通过抽取两个变迁执行之间的依赖关系刻画一个过
 \begin{itemize}
   \item[-] 变迁$A$和变迁$B$满足严格顺序关系（strict order relation），当且仅当变迁$A$可能在变迁$B$之前被执行，而变迁$B$不可能在变迁$A$之前被执行，即存在形如$\langle ...A...B...\rangle$的变迁发生序列而不存在形如$\langle ...B...A...\rangle$的变迁发生序列。
   \item[-] 变迁$A$和变迁$B$满足互斥关系（exclusiveness relation），当且仅当变迁$A$和变迁$B$不可能在同一个变迁发生序列中同时出现。
-  \item[-] 变迁$A$和变迁$B$满足观察并行关系（observation concurrency relation）（\onlinecite{weidlich2011efficient}中称之为交错顺序关系（interleaving order relation）），当且仅当变迁$A$可能在变迁$B$之前被执行，变迁$B$也可能在变迁$A$之前被执行。
+  \item[-] 变迁$A$和变迁$B$满足观察并行关系（observation concurrency relation），或交错顺序关系\cite{weidlich2011efficient}（interleaving order relation），当且仅当变迁$A$可能在变迁$B$之前被执行，变迁$B$也可能在变迁$A$之前被执行。
   \item[-] 变迁$A$和变迁$B$满足共现关系（co-occurrence relation），当且仅当在每个变迁$A$出现的变迁发生序列中，变迁$B$也被执行。
 \end{itemize}
 上述四种关系被称为因果行为轮廓（causal behavioural profile，简称CBP）。
@@ -46,9 +46,9 @@ Dijkman等人提出了因果足迹（causal footprints，简称CF）算法来抽
 \begin{displaymath}
   g{_{\lambda(t)}^i}=
     \begin{cases}
-        0& if\quad t\notin N_i\cup L{_{la}^{M_i}}\cup L{_{lb}^{M_i}}\\
-        1& if\quad t\in N_i\\
-        \frac{1}{2^{len(t)}-1}& if\quad t\in L{_{la}^{M_i}}\cup L{_{lb}^{M_i}}
+        0& \textnormal{if\quad} t\notin N_i\cup L{_{la}^{M_i}}\cup L{_{lb}^{M_i}}\\
+        1& \textnormal{if\quad} t\in N_i\\
+        \frac{1}{2^{len(t)}-1}& \textnormal{if\quad} t\in L{_{la}^{M_i}}\cup L{_{lb}^{M_i}}
     \end{cases}
 \end{displaymath}
 其中$len(t)$是前向链接集合或者后向链接集合中元素的个数。模型$M_{0}$和模型$M_{1}$的相似度用两个模型的向量夹角余弦值表示：
@@ -301,7 +301,7 @@ $x$和$y$满足U-U并行关系，记作$x\Updownarrow y$，当且仅当：
   \label{fig:nfc_example}
 \end{figure}
 
-为了解决上述RORU存在的问题，本文将RORU中的有序关系进一步扩展，从而得到一个更为精细的方法去区分任意两个过程模型的行为语义。除了细化原算法的不确定性概念之外，本文引入了任务间多关系的概念，即一对任务之间可能含有不止一种关系。多关系概念的引入可以检测两个过程模型间更为细微的差异。
+为了解决上述RORU存在的问题，本文将RORU中的有序关系进一步扩展，从而得到一个更为精细的方法去区分任意两个过程模型的行为语义。除了细化原算法的“不确定”概念之外，本文引入了任务间多关系的概念，即一对任务之间可能含有不止一种关系。多关系概念的引入可以检测两个过程模型间更为细微的差异。
 
 \section{本章小结}
 本章首先对过程模型行为语义刻画算法的国内外研究现状进行了简要介绍和分析，选取了TAR、BP、CF、PTS、CFS、4C等算法为例并分析了它们的优缺点。本章随后对本文工作的基础RORU算法进行了详细的介绍并探讨了其缺陷。

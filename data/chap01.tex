@@ -7,7 +7,7 @@
 \section{选题背景和意义}\label{sec:background}
 如今信息系统需要支持业务过程的执行，而不是像以往一样仅仅关注于独立的任务。信息系统需要控制、监控并且支持一个业务过程逻辑层面的全部内容，即它应该能管理组织内的工作流。很多拥有大量业务过程的组织和企业对工作流的管理有着极为迫切的需求，这正是工作流管理兴起的原因\cite{van1998application}。在工作流管理技术的帮助下，企业可以快速建立或者更新自身的过程感知信息系统\cite{dumas2005process}。企业可以根据市场变化或者政府政策变更等外部因素随时调整自己的业务过程从而及时地改善自身的服务以提高企业的市场竞争力。
 
-过程感知信息系统是由实际业务过程模型驱动的，这些模型描述了企业中的业务执行过程，每个任务的负责人以及需要的资源和产生的数据等。由于同一个业务过程可以被不同拓扑结构的图形所表示，因此它的行为语义才是刻画该过程的本质特征。任务间有序关系\cite{esparza2002improvement}常常被用来描述业务过程的行为。业务过程的任务间有三种基本的有序关系：因果关系（causal relation）描述一个任务的完成导致了另一个任务被执行，并行关系（concurrency relation）表示两个任务可以同时执行互不影响，冲突关系（conflict relation）表示在业务过程的同一个执行实例中两个任务不能都被执行。
+过程感知信息系统是由实际业务过程模型驱动的，这些模型描述了企业中的业务执行过程，每个任务的负责人以及需要的资源和产生的数据等。由于同一个业务过程可以被不同拓扑结构的图形所表示，因此它的行为语义才是刻画该过程的本质特征。任务间有序关系\cite{esparza2002improvement}常常被用来描述业务过程的行为。业务过程有三种基本的任务间有序关系：因果关系（causal relation）描述一个任务的完成导致了另一个任务被执行，并行关系（concurrency relation）表示两个任务可以同时执行互不影响，冲突关系（conflict relation）表示在业务过程的同一个执行实例中两个任务不能都被执行。
 
 两个有因果关系或者并行关系的任务可能在同一个过程执行实例中出现，但是在部分执行实例中一个任务被执行，另一个任务的执行却不是必然的。因此，本文对这两种有序关系进行精炼以体现这种不确定性。处于冲突关系的两个任务可以通过精炼后的因果关系和并行关系体现，所以没有必要再对冲突关系进行精炼。
 
@@ -18,7 +18,7 @@
 \end{figure}
 
 \begin{example}\label{ex:basic_causal_drawback}
-图\ref{fig:basic_causal_drawback}展示了一个在线购物的BPMN模型\footnote{BPMN是一种工作流建模语言，请参见：http://www.bpmn.org/}。在这个模型中，当任务\textit{choose good}被执行后，任务\textit{submit order}可以被执行，然后任务\textit{send goods by road}和任务\textit{send goods by air}的其中之一可以被执行。显然，任务\textit{choose good}和任务\textit{submit order}、任务\textit{submit order}和任务\textit{send goods by road}都满足因果关系。然而，这两组因果关系是不完全相同的。当任务\textit{choose good}被执行后，任务\textit{submit order}一定会被执行而当任务\textit{submit order}被执行后，任务\textit{send goods by road}却不一定会被执行（因为任务\textit{send goods by air}可能被选择执行）。前文提到的基本因果关系不能表达这类不同，所以需要对因果关系进行精炼。
+图\ref{fig:basic_causal_drawback}展示了一个在线购物的BPMN模型\footnote{BPMN是一种工作流建模语言，请参见：http://www.bpmn.org/}。在这个模型中，当任务\textit{choose goods}被执行后，任务\textit{submit order}可以被执行，然后任务\textit{send goods by road}和任务\textit{send goods by air}的其中之一可以被执行。显然，任务\textit{choose goods}和任务\textit{submit order}、任务\textit{submit order}和任务\textit{send goods by road}都满足因果关系。然而，这两组因果关系是不完全相同的。当任务\textit{choose goods}被执行后，任务\textit{submit order}一定会被执行而当任务\textit{submit order}被执行后，任务\textit{send goods by road}却不一定会被执行（因为任务\textit{send goods by air}可能被选择执行）。前文提到的基本因果关系不能表达这类不同，所以需要对因果关系进行精炼。
 \end{example}
 
 \begin{figure}[htbp]
@@ -32,7 +32,7 @@
 图\ref{fig:basic_concurrency_drawback}展示了一个含有并行结构的BPMN模型。在这个模型中，任务$B$和任务$C$可以被并行地执行但当任务$B$被执行时，任务$C$不一定会在同一个执行实例中被执行（因为任务$D$可能被选择执行）。同时，任务$B$和任务$F$也可以被并行地执行而且当任务$B$被执行时，任务$F$一定会在同一个执行实例中被执行。前文提到的基本并行关系不能表达这类不同，所以需要对并行关系进行精炼。
 \end{example}
 
-过程模型的任务间不确定性精炼有序关系（以下简称“精炼有序关系”）可以用来刻画过程的行为语义，从而被用于过程模型的检索，即提供一个查询模型$M$和一个过程模型集合$C$，从$C$中查找和$M$行为一致或者最相似的模型。由于本文的方法对过程模型进行了唯一的刻画，所以在检索过程中可以设置不同的粒度以检索符合实际要求的模型。除此之外，精炼有序关系还可以应用于过程模型的符合性检测、相似性度量等领域。
+过程模型的任务间不确定精炼有序关系（以下简称“精炼有序关系”）可以用来刻画过程的行为语义，从而被用于过程模型的检索，即提供一个查询模型$M$和一个过程模型集合$C$，从$C$中查找和$M$行为一致或者最相似的模型。由于本文的方法对过程模型进行了唯一的刻画，所以在检索过程中可以设置不同的粒度以检索符合实际要求的模型。除此之外，精炼有序关系还可以应用于过程模型的符合性检测、相似性度量等领域。
 
 \begin{figure}[htbp]
   \centering
@@ -44,7 +44,7 @@
 考虑图\ref{fig:basic_concurrency_drawback}和图\ref{fig:basic_concurrency_drawback_compare}中的模型，当检索满足条件“任务$F$和任务$C$满足因果关系且任务$B$和任务$C$满足并行关系”的模型时，两个模型都符合检索条件。另一方面，将检索条件更改为“任务$F$和任务$C$满足因果关系，且当任务$F$被执行时，任务$C$一定在同一个执行实例中被执行，同时当任务$C$被执行时，任务$F$一定在同一个执行实例中被执行；任务$B$和任务$C$满足并行关系，当任务$B$被执行时，任务$C$一定在同一个执行实例中被执行，同时当任务$C$被执行时，任务$B$一定在同一个执行实例中被执行”时，只有图\ref{fig:basic_concurrency_drawback_compare}中的模型符合条件。显然，精炼后的任务间有序关系能够更加精确地刻画过程模型的行为语义。类似的，这种精炼后的刻画方法可以被当作业务规则用于过程模型的符合性检测。
 \end{example}
 
-Jin等人已经提出了一种带有不确定性的精炼有序关系RORU及其计算方法\cite{jin2014computing}，任务对之间的关系由于它们执行轨迹的实际情况产生了不确定性，“确定”（Certain，简写为“C”）表示一个任务总是和另一个任务在同一个执行实例中出现，而“不确定”刚好相反。这两种不确定性组合成4种双向关系，即C-C、C-U、U-C和U-U。用这些双向关系去修饰因果关系和并行关系后，RORU得到8种子关系。基于文中提出的紧邻任务间的一些规则和非紧邻任务间的传递性规则，\onlinecite{jin2014computing}给出了在无环过程模型中计算RORU关系的算法。RORU算法存在一些严重缺陷，如只能处理无环模型、无法处理不可见任务和非自由选择结构等。针对该方法存在的问题，本文提出了改进方案，将新的方法命名为扩展的任务间不确定性精炼有序关系（Extended Refined Ordering Relations with Uncertainty，简称ExRORU）。由于ExRORU是一种刻画过程行为语义的方法，因此在实验过程中，本文将ExRORU与基于行为语义的过程特征刻画算法和过程相似性度量算法进行比较。
+Jin等人已经提出了一种带有不确定性的精炼有序关系RORU及其计算方法\cite{jin2014computing}，任务对之间的关系由于它们执行轨迹的实际情况产生了不确定性，“确定”（Certain，简写为“C”）表示一个任务总是和另一个任务在同一个执行实例中出现，而“不确定”刚好相反。这两种不确定性组合成4种双向关系，即C-C、C-U、U-C和U-U。用这些双向关系去修饰因果关系和并行关系后，RORU得到8种子关系。基于文中提出的紧邻任务间的一些规则和非紧邻任务间的传递性规则，\onlinecite{jin2014computing}给出了在无环过程模型中计算RORU关系的算法。RORU算法存在一些严重缺陷，如只能处理无环模型、无法处理不可见任务和非自由选择结构等。针对该方法存在的问题，本文提出了改进方案，将新的方法命名为任务间扩展不确定精炼有序关系（Extended Refined Ordering Relations with Uncertainty，简称ExRORU）。由于ExRORU是一种刻画过程行为语义的方法，因此在实验过程中，本文将ExRORU与基于行为语义的过程特征刻画算法和过程相似性度量算法进行比较。
 
 \section{预备知识}\label{sec:preliminaries}
 本节介绍论文中需要用到的预备知识，其中\ref{subsec:petrinet}介绍Petri网，\ref{subsec:workflow_net}介绍工作流网及相关概念，\ref{subsec:process_run}和\ref{subsec:cpu}分别介绍过程流和完全前缀展开。
@@ -124,7 +124,7 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
 图\ref{fig:petri_net_example}中的标识Petri网是安全的（也是有界的），因为它的8个可达标识中没有库所会包含超过一个托肯。
 
 \begin{definition}[死变迁，活性]\label{def:dead_transition}
-令$(N=(P,T,F),s)$是一个标识Petri网。变迁$t\in T$是死变迁当且仅当$\nexists s'\in[N,s\rangle,s.t.~(N,s')[t\rangle$。$(N,s)$是活的，当且仅当$\forall s'\in[N,s\rangle,\forall t\in T,s.t.~\exists s'\in[N,s''\rangle,(N,s'')[t\rangle$。显然，活性隐含不存在死变迁。
+令$(N=(P,T,F),s)$是一个标识Petri网。变迁$t\in T$是死变迁当且仅当$\nexists s'\in[N,s\rangle,s.t.~(N,s')[t\rangle$。$(N,s)$是活的，当且仅当$\forall s'\in[N,s\rangle,\forall t\in T,s.t.~\exists s''\in[N,s'\rangle,(N,s'')[t\rangle$。显然，活性隐含不存在死变迁。
 \end{definition}
 
 图\ref{fig:petri_net_example}中的标识Petri网的所有变迁都不是死变迁。但是它不是活的，因为它无法使每个变迁不断地发生。
@@ -170,7 +170,7 @@ Petri网是一个三元组$N=(P,T,F)$，其中：
   \end{itemize}
 \end{definition}
 
-如前文所述，本文对因果关系和并行关系进行精炼。为了便于定义与描述，本文使用过程流来描述仅含有上述两种关系的模型。使用过程流可以恰当地描述变迁发生序列中的因果和并行关系。一个网系统的过程流是一种称作因果网的特殊网，并使用一个函数将因果网的节点映射到原网系统的节点上。
+如前文所述，本文对因果关系和并行关系进行精炼。为了便于定义与描述，本文使用过程流来描述仅含有上述两种关系的模型。使用过程流可以恰当地描述变迁发生序列中的因果和并行关系。一个网系统的过程流是一种被称作因果网的特殊网，并使用一个函数将因果网的节点映射到原网系统的节点上。
 
 \begin{definition}[因果网\cite{polyvyanyy20144c}]\label{def:causal_net}
 $N=(B,E,G)$是因果网，当且仅当：
@@ -200,28 +200,30 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
   \begin{subfigure}{1\textwidth}
   	\centering
   	\includegraphics[width=0.65\textwidth]{process_run_example_1}
-  	\caption{\label{fig:process_run_example_1}}
+  	\caption{过程流$\pi_{1}$}
+    \label{fig:process_run_example_1}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
   	\vspace{1em}
   	\centering
   	\includegraphics[width=1\textwidth]{process_run_example_2}
-  	\caption{\label{fig:process_run_example_2}}
+    \caption{过程流$\pi_{2}$}
+  	\label{fig:process_run_example_2}
   \end{subfigure}
   \vspace{6pt}
   \caption{图\ref{fig:petri_net_example}中模型的两个过程流示例}
 \end{figure}
 
-图\ref{fig:process_run_example_1}和图\ref{fig:process_run_example_2}展示了图\ref{fig:petri_net_example}中模型的两个过程流$\pi_{1}$和$\pi_{2}$。当对过程流进行图形化展示时，条件$c_{i},c_{i}'...$对应于库所$p_{i}$，即$\rho(c_{i})=\rho(c_{i}')=p_{i}$。类似的，事件$e_{j},e_{j}'...$对应于变迁$t_{j}$，即$\rho(e_{j})=\rho(e_{j}')=t_{j}$。在图\ref{fig:process_run_example_2}中，$e_{3}\parallel e_{4}$、$e_{4}\rightarrow e_{4}'$、$e_{3}'\parallel e_{4}'$。显然，若两个事件在一个Petri网$N$的过程流$\pi$中满足因果关系，则它们在原网中对应的变迁必然能在某个变迁发生序列中顺序发生。类似的，若两个事件在$\pi$中满足并行关系，则它们在原网中对应的变迁必然会在某个可达标识$s$下同时被使能，而且可以在$s$这个标识下以任意顺序发生。
+图\ref{fig:process_run_example_1}和图\ref{fig:process_run_example_2}展示了图\ref{fig:petri_net_example}中模型的两个过程流$\pi_{1}$和$\pi_{2}$。当对过程流进行图形化展示时，条件$b_{i},b_{i}'...$对应于库所$p_{i}$，即$\rho(b_{i})=\rho(b_{i}')=p_{i}$。类似的，事件$e_{j},e_{j}'...$对应于变迁$t_{j}$，即$\rho(e_{j})=\rho(e_{j}')=t_{j}$。在图\ref{fig:process_run_example_2}中，$e_{3}\parallel_{\pi_{2}}e_{4}$、$e_{4}\rightarrow_{\pi_{2}}e_{4}'$、$e_{3}'\parallel_{\pi_{2}}e_{4}'$。显然，若两个事件在一个Petri网$N$的过程流$\pi$中满足因果关系，则它们在原网中对应的变迁必然能在某个变迁发生序列中顺序发生。类似的，若两个事件在$\pi$中满足并行关系，则它们在原网中对应的变迁必然会在某个可达标识$s$下同时被使能，而且可以在$s$这个标识下以任意顺序发生。
 
-每个事件$e\in E_{\pi}$都代表着对应变迁$\rho_{\pi}(e)$的一次发生。J{\"o}rg Desel等人给出了一个网系统的过程流与其变迁发生序列对应的方法\cite{desel2000validation}。给定一个Petri网，对其过程流加标识得到$(N_{\pi},s)$，其中$N_{\pi}$是该网过程流$(N_{\pi},\rho)$的因果网且标识$s$仅在每个源条件中放置一个托肯。通过映射函数$\rho$可以将该过程流的事件发生序列与原网的变迁发生序列对应起来。例如，图\ref{fig:process_run_example_1}中的过程流的事件发生序列可以对应图\ref{fig:petri_net_example}中模型的变迁发生序列$t_{1}t_{2}t_{3}t_{4}t_{5}t_{6}$。
+每个事件$e\in E_{\pi}$都代表着对应变迁$\rho_{\pi}(e)$的一次发生。J{\"o}rg Desel等人给出了一个网系统的过程流与其变迁发生序列对应的方法\cite{desel2000validation}。给定一个Petri网，对其过程流加标识得到$(N_{\pi},s)$，其中$N_{\pi}$是该网过程流$(N_{\pi},\rho)$的因果网且标识$s$仅在每个源条件中放置一个托肯。通过映射函数$\rho$可以将该过程流的事件发生序列与原网的变迁发生序列对应起来。例如，图\ref{fig:process_run_example_1}中的过程流的事件发生序列可以对应图\ref{fig:petri_net_example}中模型的变迁发生序列$\langle t_{1},t_{2},t_{3},t_{4},t_{5},t_{6}\rangle$。
 
 \subsection{完全前缀展开}\label{subsec:cpu}
-在一个模型的所有过程流中，只有因果关系和并行关系被抽取出来。因此，在一个过程流中只存在顺序和并发结构，而不存在循环和互斥结构。然而，由于过程模型中循环结构的存在，一个模型可能有无穷多个过程流，区别在于循环结构展开的程度。另外，一个含有大量互斥结构的过程模型可能非常多的过程流，这些过程流包含大量重复信息。显然，使用这无穷多个过程流去抽取ExRORU是不现实的。Javier Esparza等人提出了完全前缀展开（Complete Prefix Unfolding，简称CPU）的概念来避免此问题\cite{esparza2002improvement}。
+在一个模型的所有过程流中，只有因果关系和并行关系被抽取出来。因此，在一个过程流中只存在顺序和并发结构，而不存在循环和互斥结构。然而，由于过程模型中循环结构的存在，一个模型可能有无穷多个过程流，区别在于循环结构展开的程度。另外，一个含有大量互斥结构的过程模型可能拥有非常多的过程流，这些过程流包含大量重复信息。显然，使用这无穷多个过程流去抽取本文的ExRORU关系是不现实的。Javier Esparza等人提出了完全前缀展开（Complete Prefix Unfolding，简称CPU）的概念来避免这些问题\cite{esparza2002improvement}。
 
 考虑一个含有根节点的有向图$G$。众所周知该图可以被展开成一棵带有标签的树（树的节点正好是图$G$中从根节点开始的所有路径上的点）。树上的节点标签由图中的节点决定。上述展开过程可以在任意时间停止，从而得到不同的树。显然，如果尽可能多地将图展开，总会得到一棵唯一的标签树，通常是无穷大的。这棵最大的树称为该图的展开（unfolding）。
 
-类似的，Petri网也可以被展开成带标签的发生网（occurrence nets，是一种带有类树型结构的简单图）。发生网的节点标签由原网的库所和标签决定。通过一个Petri网展开得到的发生网被称作分支过程（branching processes）。展开过程可以在任意时间停止，从而得到不同的分支过程。显然，如果尽可能多地将Petri网展开，总会得到一个唯一的分支过程，通常是无穷大的。这个最大的分支过程称为该Petri网的展开。
+类似的，Petri网也可以被展开成带标签的发生网（occurrence net，是一种带有类树型结构的简单图）。发生网的节点标签由原网的库所和标签决定。通过一个Petri网展开得到的发生网被称作分支过程（branching process）。展开过程可以在任意时间停止，从而得到不同的分支过程。显然，如果尽可能多地将Petri网展开，总会得到一个唯一的分支过程，通常是无穷大的。这个最大的分支过程称为该Petri网的展开。
 
 \begin{definition}[发生网]\label{def:occurrence_net}
 发生网$O=(B,E,F)$是满足如下条件的网：
@@ -301,7 +303,7 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
 显然，将一个模型的CPU从截断事件后面继续展开可以得到这个模型的所有过程流。换句话说，CPU是一个模型最小但最完整的过程流表达。因此，本文使用过程流来定义所有的关系，并使用CPU来高效计算它们。
 
 \section{当前面临的挑战}\label{sec:challenge}
-本文主要工作在于对RORU算法的扩展上，因此有必要探讨原算法所面临的挑战。本文之所以选择RORU作为研究基础，一方面是因为它是定义在被广泛使用的WF-net上，有很多成熟的建模和分析工具可以利用，且其算法能被扩展到使用各种语言建模的过程模型中；另一方面，RORU对过程行为语义进行了细致的刻画，且给出了高效、准确的计算方法。本小节只简单列举RORU的部分不足之处，更详细的讨论会在本文后续章节中涉及。本文提出的ExRORU同样定义在WF-net上，但是与RORU相似，其思路可以被扩展到使用各种语言建模的过程模型中。
+本文主要工作在于对RORU算法的扩展上，因此有必要探讨原算法所面临的挑战。本文之所以选择RORU作为研究基础，一方面是因为它是定义在被广泛使用的WF-net上，有很多成熟的建模和分析工具可以利用，且其算法能被扩展到使用任意语言建模的过程模型中；另一方面，RORU对过程行为语义进行了细致的刻画，且给出了高效、准确的计算方法。本小节只简单列举RORU的部分不足之处，更详细的讨论会在本文后续章节中涉及。本文提出的ExRORU同样定义在WF-net上，但是与RORU相似，其思路可以被扩展到使用任意语言建模的过程模型中。
 
 {\heiti 循环结构。}正如\onlinecite{jin2014computing}所述，RORU算法针对无环过程模型。然而实际生活中，大约10\%-20\%都是含有循环结构的。所以RORU对于环处理的缺失会大大降低其能力。
 
@@ -316,10 +318,10 @@ $B$和$E$中的元素分别称为$N$的条件和事件。因果网$N=(B,E,G)$的
 \section{论文的主要贡献}\label{sec:contribution}
 本文尝试对RORU算法\cite{jin2014computing}的不足进行扩展，主要有以下几点贡献：
 \begin{enumerate}[1.]
-  \item 提出了扩展不确定性精炼任务间关系，即ExRORU。利用ExRORU可以刻画所有类型的合理过程模型，包括含有循环结构、不可见任务及非自由选择结构的模型。
+  \item 提出了任务间扩展不确定精炼有序关系，即ExRORU。利用ExRORU可以刻画所有类型的合理过程模型，包括含有循环结构、不可见任务及非自由选择结构的模型。
   \item 探讨ExRORU如何能识别任意一对过程模型之间的行为差异，即给出一个过程模型行为语义的唯一刻画。
   \item 给出ExRORU算法的实现并在效率、能力和可扩展性上将其与现有的计算任务间关系的主流算法进行比较。
 \end{enumerate}
 
 \section{论文章节安排}\label{sec:structure}
-本文章节安排如下，第\ref{cha:intro}章对全文进行概述，介绍本文选题背景和意义、涉及到的基本知识以及当前算法所面临的主要挑战，从而引出本文的工作重点。第\ref{cha:related_work}章主要介绍过程模型行为刻画方法的研究现状，分类介绍了国内外学者提出的各类算法并分析其优缺点，尤其重点介绍了本文基础RORU算法的处理能力和不足之处。第\ref{cha:exroru}章详细阐述了ExRORU的定义和计算方法，并探讨了其检测任意一对过程模型行为差异的能力，并重点分析了事件间ExRORU和变迁间ExRORU关系的相互关系。第\ref{cha:experiment}章给出了ExRORU算法的实现并将其与现有的计算任务间关系的主流算法进行了比较，此外还重点将其与RORU进行了效率、能力等方面的对比。第\ref{cha:conclusion}章对本文工作进行总结并对未来工作进行了展望。
+本文章节安排如下，第\ref{cha:intro}章对全文进行概述，介绍本文选题背景和意义、涉及到的基本知识以及当前算法所面临的主要挑战，从而引出本文的工作重点。第\ref{cha:related_work}章主要介绍过程模型行为刻画方法的研究现状，分类介绍了国内外学者提出的各类算法并分析其优缺点，尤其重点介绍了本文基础RORU算法的处理能力和不足之处。第\ref{cha:exroru}章详细阐述了ExRORU的定义和计算方法，重点分析了事件间ExRORU和变迁间ExRORU关系的相互关系，并探讨了其检测任意一对过程模型行为差异的能力。第\ref{cha:experiment}章给出了ExRORU算法的实现并将其与现有的计算任务间关系的主流算法进行了比较，此外还重点将其与RORU进行了效率、能力等方面的对比。第\ref{cha:conclusion}章对本文工作进行总结并对未来工作进行了展望。

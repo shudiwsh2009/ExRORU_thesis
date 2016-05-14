@@ -70,18 +70,18 @@
 
 % 定义中英文摘要和关键字
 \begin{cabstract}
-如今信息系统需要支持业务过程的执行，它应该能管理组织内的工作流。很多拥有大量业务过程的组织和企业对工作流的管理有着极为迫切的需求，抽取过程模型的特征是其先决条件之一。业务过程的行为语义是刻画该过程的本质特征，而任务间有序关系常常被用来描述业务过程的行为。近期有论文提出了无环过程模型中的任务间不确定性有序关系，并给出了基于完全前缀展开计算任务对之间新关系的算法。然而该算法有严重的局限，它不能处理带环过程模型和含有不可见任务及非自由选择结构的过程模型。
+如今信息系统需要支持业务过程的执行，它应该能管理组织内的工作流。很多拥有大量业务过程的组织和企业对工作流的管理有着极为迫切的需求，抽取过程模型的特征是其先决条件之一。业务过程的行为语义是刻画该过程的本质特征，而任务间有序关系常常被用来描述业务过程的行为。近期有论文提出了无环过程模型中的任务间不确定有序关系，并给出了基于完全前缀展开计算任务对之间新关系的算法。然而该算法有严重的局限，它不能处理带环过程模型和含有不可见任务及非自由选择结构的过程模型。
 
 本文提出了一种精炼有序关系来解决上述问题，即ExRORU（\textbf{Ex}tended \textbf{R}efined \textbf{O}rdering \textbf{R}ealtions with \textbf{U}ncertainty）。本文主要工作包括：
 \begin{enumerate}[1.]
   \item 研究已有的过程模型行为语义刻画方法，深入分析其优缺点。同时对本文算法的扩展基础进行详细探讨，指出其局限性。
-  \item 提出扩展不确定性精炼任务间有序关系，包括三大类（因果、逆因果、并行）13种关系，能够处理各种类型的合理过程模型，包括含有环、不可见任务及非自由选择结构的模型。
+  \item 提出扩展不确定精炼有序关系，包括三大类（因果、逆因果、并行）13种关系，能够处理各种类型的合理过程模型，包括含有环、不可见任务及非自由选择结构的模型。
   \item 设计算法基于完全前缀展开高效计算过程模型的ExRORU关系矩阵，解决了因循环结构和高并发分支结构带来的无穷执行序列和状态爆炸问题。随后，探讨并证明ExRORU如何识别任意一对过程模型之间的行为差异，即给出一个过程模型行为语义的唯一刻画。
   \item 设计实验基于企业实际模型和人工合成模型在有效性、性能、可扩展性等方面与现有的过程模型行为语义刻画算法进行比较。
 \end{enumerate}
 \end{cabstract}
 
-\ckeywords{过程模型, 不确定性精炼有序关系, 完全前缀展开, 行为语义}
+\ckeywords{过程模型, 不确定有序关系, 完全前缀展开, 行为语义}
 % 如果习惯关键字跟在摘要文字后面，可以用直接命令来设置，如下：
 % \ckeywords{\TeX, \LaTeX, CJK, 模板, 论文}
 
@@ -97,5 +97,5 @@ In this paper, we show how to overcome these problems by a refinement of the rel
 \end{enumerate}
 \end{eabstract}
 
-\ekeywords{Process Model, Refined Ordering Relations with Uncertainty, Complete Prefix Unfolding, Behavioral Semantics}
+\ekeywords{Process Model, Ordering Relations with Uncertainty, Complete Prefix Unfolding, Behavioral Semantics}
 % \ekeywords{\TeX, \LaTeX, CJK, template, thesis}
