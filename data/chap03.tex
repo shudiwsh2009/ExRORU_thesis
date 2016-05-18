@@ -249,7 +249,7 @@
 
 图\ref{fig:concurrent_formula_c}中的局部CPU有诸如$\langle I*A*B*\rangle$、$\langle I*B*A*\rangle$、$\langle I*X*\rangle$等形式的轨迹，事件$A$和事件$B$要么都被执行一次，要么都不被执行，因此事件$A$和事件$B$满足“总是并行关系”，即$A\Updownarrow B$，反之亦然，即$B\Updownarrow A$。类似的，在图\ref{fig:concurrent_formula_d}中的局部CPU中，事件$A$和事件$B$要么都被执行一次，要么都被执行两次……以此类推，它们被执行的次数相同且与循环次数有关。显然，含有事件$A$或者$B$的轨迹都符合定义\ref{def:exroru_event_concurrent}中的正则表达式，因此事件$A$和事件$B$满足“总是并行关系”，即$A\Updownarrow B$，反之亦然，即$B\Updownarrow A$。
 
-图\ref{fig:concurrent_formula_d}中的局部CPU展示了一个非自由选择结构的部分，其有诸如$\langle *I*A*B*\rangle$、$\langle *I*B*A*\rangle$、$\langle *X*A*\rangle$等形式的轨迹。当考察事件$A$和事件$B$的并行关系时，含有事件$A$的轨迹不一定包含事件$B$，故事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$；当考察事件$B$和事件$A$的并行关系时，含有事件$B$的轨迹一定包含事件$A$，且轨迹符合定义\ref{def:exroru_event_concurrent}中的正则表达式，故事件$B$和事件$A$满足“总是并行关系”，即$B\Updownarrow A$。本文将会对非自由选择结构进行更为详细的探讨。
+图\ref{fig:concurrent_formula_e}中的局部CPU展示了一个非自由选择结构的部分，其有诸如$\langle *I*A*B*\rangle$、$\langle *I*B*A*\rangle$、$\langle *X*A*\rangle$等形式的轨迹。当考察事件$A$和事件$B$的并行关系时，含有事件$A$的轨迹不一定包含事件$B$，故事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$；当考察事件$B$和事件$A$的并行关系时，含有事件$B$的轨迹一定包含事件$A$，且轨迹符合定义\ref{def:exroru_event_concurrent}中的正则表达式，故事件$B$和事件$A$满足“总是并行关系”，即$B\Updownarrow A$。本文将会对非自由选择结构进行更为详细的探讨。
 
 表\ref{tab:exroru_event}给出了所有的事件间ExRORU关系，共13种。
 

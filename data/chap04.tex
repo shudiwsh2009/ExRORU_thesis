@@ -47,8 +47,8 @@ ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不�
       \centering
       \begin{tabular}{|c|c|c|c|c|c|} \hline
         $\rightarrow$ & $A$ & $B$ & $C$ & $D$ & $E$\\ \hline
-        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{DA}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
-        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{DA}}}{\rightarrow}$\\ \hline
+        $A$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{IA}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
+        $B$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DA}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\rightarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{IA}}}{\rightarrow}$\\ \hline
         $C$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$ & $\overset{\text{\tiny{DS}}}{\rightarrow}$\\ \hline
         $D$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
         $E$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$ & $\overset{\text{\tiny{N}}}{\rightarrow}$\\ \hline
@@ -61,8 +61,8 @@ ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不�
         $A$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
         $B$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
         $C$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{DS}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $D$ & \cellcolor{lightgray}$\overset{\text{\tiny{DA}}}{\leftarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
-        $E$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\leftarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $D$ & \cellcolor{lightgray}$\overset{\text{\tiny{IA}}}{\leftarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
+        $E$ & \cellcolor{lightgray}$\overset{\text{\tiny{N}}}{\leftarrow}$ & \cellcolor{lightgray}$\overset{\text{\tiny{IA}}}{\leftarrow}$ & $\overset{\text{\tiny{DA}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$ & $\overset{\text{\tiny{N}}}{\leftarrow}$\\ \hline
       \end{tabular}
     \end{minipage}
     \begin{minipage}[b]{0.3\textwidth}
