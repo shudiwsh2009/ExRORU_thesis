@@ -2,13 +2,14 @@
 % !TEX program = xelatex
 
 \chapter{ExRORU的实现与实验}\label{cha:experiment}
+本章介绍ExRORU算法的实现与实验。\ref{sec:implementation}节介绍算法的实现，给出了算法的类图和主要类的说明。\ref{sec:experiment}节从有效性、性能和扩展性三个方面对本文算法进行了实验评估。最后，\ref{sec:experiment_conclusion}节对本章进行总结。
 
 \section{ExRORU算法的实现}\label{sec:implementation}
 本文实现的ExRORU算法基于jbpt\footnote{\url{https://code.google.com/p/jbpt}}\cite{polyvyanyy2013towards}中的CPU抽取WF-net的ExRORU关系并以矩阵形式展现，相关代码已开源共享在Github上\footnote{\url{https://github.com/shudiwsh2009/ExRORU}}。ExRORU算法的开发环境为IntelliJ IDEA 2016.1，JDK版本为1.8.0\_72。该算法接收一个PMNL文件为输入，将其解析为Petri网对象并抽取它所含的变迁之间的ExRORU关系，以矩阵形式输出。图\ref{fig:class_diagram}是该算法的类图。下面对该算法涉及到的主要类进行介绍。
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{class_diagram}
+  \includegraphics[width=0.85\textwidth]{class_diagram}
   \caption{ExRORU算法的实现类图}
   \label{fig:class_diagram}
 \end{figure}
@@ -339,6 +340,8 @@ CBP等算法不考虑任务间紧邻关系也不区分并行关系的不确定�
 
 从表\ref{tab:efficiency_dataset}中可以看出，ExRORU算法在来自企业的实际过程模型数据集中表现良好，能够在几毫秒至几十毫秒的时间范围内抽取过程模型的ExRORU关系矩阵，该耗时规模在实际应用中完全满足业务需求。
 
+值得注意的是，SAP数据集中的模型主要来自SAP企业的参考模型（reference model），该类模型刻画流程的主要执行流程而忽略诸多细节，故该模型集中的模型变迁、库所和边的数量较少，即模型较为简单，因此本文算法在SAP模型集中的平均耗时最短。TC模型集中的模型变迁、库所和边的数量最多，即模型最为复杂，因此本文算法在TC模型集中的平均耗时最长。
+
 \begin{table}[htbp]
   \centering
   \caption{各企业实际业务过程模型集的结构特征及ExRORU算法的性能表现}
@@ -377,5 +380,5 @@ CBP等算法不考虑任务间紧邻关系也不区分并行关系的不确定�
 
 考虑到ExRORU算法包含任务间关系的诸多细节，扩展性实验的结果是完全可接受的。ExRORU是目前唯一可以同时处理多种复杂结构——如不可见变迁、非自由选择结构、多关系、循环结构——的算法，这显示了其杰出的性能。
 
-\section{本章小结}
-本章介绍了ExRORU算法的实现方案和实验结果。通过与其他过程模型行为语义刻画算法和相似性度量算法的比较，ExRORU拥有更为精细的刻画粒度，在含有各种复杂结构的过程模型中表现优异。同时，本文使用来自企业的实际业务过程模型数据集验证ExRORU算法的效率并使用人工创建的含高并发分支结构的过程模型数据集验证ExRORU算法的扩展性，两项实验均表明了ExRORU算法兼顾了性能和效率。
+\section{本章小结}\label{sec:experiment_conclusion}
+本章介绍了ExRORU算法的实现方案和实验结果。通过与其他过程模型行为语义刻画算法和相似性度量算法的比较，ExRORU拥有更为精细的刻画粒度，在含有各种复杂结构的过程模型中表现优异。同时，本文使用来自企业的实际业务过程模型数据集验证算法效率并使用人工创建的含高并发分支结构的过程模型数据集验证其扩展性，两项实验均表明了ExRORU算法兼顾了性能和效率。
