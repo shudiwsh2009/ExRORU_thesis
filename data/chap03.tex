@@ -332,6 +332,7 @@
 算法\ref{algo:exroru_event_causal}给出了计算事件间因果关系的伪代码。算法接收完全前缀展开$U$和两个事件$A$、$B$作为输入，输出事件$A$和事件$B$之间的因果关系。算法分两种情况抽取因果关系：若事件$A$和事件$B$是相同事件（第1行），则尝试在$U$中找一条从事件$A$到自身的自循环路径，若该路径存在说明事件$A$与自身满足“有时因果关系”（第2-3行），否则满足“从不因果关系”（第4-5行）；若事件$A$和事件$B$是不同事件（第6行），则尝试在$U$中找一条从事件$A$到事件$B$的路径，若该路径存在（第7行），则依次遍历路径上的XOR-split条件并寻找图\ref{fig:event_causal_formulas}中的“Loop”和“Skip”结构（第8-9行），若该类结构存在说明事件$A$和事件$B$满足“有时因果关系”（第10行），否则说明事件$A$和事件$B$满足“总是因果关系”（第11行），若从$A$到$B$的路径不存在，说明事件$A$和事件$B$满足“从不因果关系”（第12-13行）。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.8}
   \LinesNumbered
   \caption{计算事件间因果关系}
   \label{algo:exroru_event_causal}
@@ -359,6 +360,8 @@
 
 % \textcolor{red}{证明任意一条路径都能抽取正确的关系}
 
+假定在一个有$V$个节点和$E$条边的模型中计算一对事件间的因果关系，寻找这一对事件间的路径需要遍历一遍模型，时间复杂度为$O(V+E)$。第8行对所有XOR-split结点的遍历循环最多被执行$V/2$次，循环内部的寻找路径最多遍历2遍模型，所以时间复杂度为$O(V/2\times 2\times(V+E))=O(V(V+E))$。算法\ref{algo:exroru_event_causal}的时间复杂度为$O(V+E+V(V+E))=O(V(V+E))$。
+
 类似的，在计算事件$B$和事件$A$的逆因果关系时，同样可以借助图\ref{fig:event_causal_formulas}中的因果关系抽象形式，从CPU中抽取一条从$A$到$B$的路径，并逆向遍历其中的条件以判断是否存在符合抽象形式中的“Skip”或者“Loop”结构，从而得到事件$B$和事件$A$之间的逆因果关系。与算法\ref{algo:exroru_event_causal}不同的是，在计算事件$B$和事件$A$的逆因果关系时，需要关注的是路径中的XOR-join条件而不是XOR-split条件。
 
 % \textcolor{red}{计算直接因果关系的算法}
@@ -367,9 +370,8 @@
 
 在计算事件$A$和事件$B$之间的并行关系时，实际上需要考虑两个方向并行关系的不确定性，即$A\parallel B$和$B\parallel A$。类似的，可以借助图\ref{fig:event_concurrent_formulas}中的并行关系抽象形式，首先找到两个事件的并行结构入口，并依次遍历从入口分别到事件$A$、事件$B$的路径以判断是否存在符合抽象形式中的“Skip”或者“Loop”结构，从而得到事件$A$和事件$B$之间的并行关系。
 
-算法\ref{algo:exroru_event_concurrent}给出了计算事件间并行关系的伪代码。算法接收完全前缀展开$U$和两个事件$A$、$B$作为输入，输出事件$A$和事件$B$之间的双向并行关系。算法首先判断事件$A$和事件$B$是否满足并行关系（第1行）：若不满足，则事件$A$和事件$B$满足“从不并行关系”，即$A\nparallel B$，且事件$B$和事件$A$也满足“从不并行关系”，即$B\nparallel A$（第2行）；否则，分别寻找从并行结构入口到事件$A$的路径$s_{1}$和从并行结构入口到事件$B$的路径$s_{2}$（第3-5行），然后依次检查$s_{1}$和$s_{2}$上的XOR-split和XOR-join条件节点（第6-7行），并依据上述检查结果判定事件$A$和事件$B$的并行关系不确定性（第8-9行）。
-
 \begin{algorithm}[htbp]
+  \setstretch{0.8}
   \LinesNumbered
   \caption{计算事件间并行关系}
   \label{algo:exroru_event_concurrent}
@@ -388,9 +390,12 @@
   }
 \end{algorithm}
 
+算法\ref{algo:exroru_event_concurrent}给出了计算事件间并行关系的伪代码。算法接收完全前缀展开$U$和两个事件$A$、$B$作为输入，输出事件$A$和事件$B$之间的双向并行关系。算法首先判断事件$A$和事件$B$是否满足并行关系（第1行）：若不满足，则事件$A$和事件$B$满足“从不并行关系”，即$A\nparallel B$，且事件$B$和事件$A$也满足“从不并行关系”，即$B\nparallel A$（第2行）；否则，分别寻找从并行结构入口到事件$A$的路径$s_{1}$和从并行结构入口到事件$B$的路径$s_{2}$（第3-5行），然后依次检查$s_{1}$和$s_{2}$上的XOR-split和XOR-join条件节点（第6-7行），并依据上述检查结果判定事件$A$和事件$B$的并行关系不确定性（第8-9行）。
+
 算法\ref{algo:exroru_event_concurrent}中对于XOR-split节点的处理（第6行）如算法\ref{algo:exroru_event_concurrent_xorsplit}所示。函数\texttt{CheckXORSplit}接收并行结构入口$lcp$、事件$A$、事件$B$和从并行结构入口到事件$A$和$B$的路径$s_{1}$和$s_{2}$作为参数，返回两条路径XOR-split节点作用下的事件$A$和事件$B$之间的双向并行关系。函数首先初始化双向并行关系不确定性为“Always”（第1行），然后遍历两条路径找到所有满足抽象形式的XOR-split节点（第2-3行）。接下来，函数执行两重循环处理未被访问过的XOR-split节点（第4-5行），若满足图\ref{fig:concurrent_formula_c}的抽象形式（$lcs(a_{i},b_{j})$表示两个节点的最近公共后继，即抽象形式中的变迁$X$），则将这两个节点标记为“已访问”（第6-7行）；否则事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$，且事件$B$和事件$A$也满足“有时并行关系”，即$B\Uparrow A$（第8-9行）。最后函数依据未访问过的XOR-split节点返回XOR-split作用下的事件$A$和事件$B$之间的双向并行关系（第10-14行）。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.8}
   \LinesNumbered
   \caption{检查XOR-split节点}
   \label{algo:exroru_event_concurrent_xorsplit}
@@ -421,6 +426,7 @@
 算法\ref{algo:exroru_event_concurrent}中对于XOR-join节点的处理（第7行）如算法\ref{algo:exroru_event_concurrent_xorjoin}所示。函数\texttt{CheckXORJoin}接收并行结构入口$lcp$、事件$A$、事件$B$和从并行结构入口到事件$A$和事件$B$的路径$s_{1}$和$s_{2}$作为参数，返回两条路径XOR-join节点作用下的事件$A$和事件$B$之间的双向并行关系。函数首先初始化双向并行关系不确定性为“Always”（第1行），然后遍历两条路径找到所有满足抽象形式的XOR-join节点（第2-3行）。接下来，函数执行两重循环处理未被访问过的XOR-join节点（第4-5行），若满足图\ref{fig:concurrent_formula_d}的抽象形式（$lcp(a_{i},b_{j})$表示两个节点的最近公共前驱，即抽象形式中的变迁$X$），则将这两个节点标记为“已访问”（第6-7行）；否则事件$A$和事件$B$满足“有时并行关系”，即$A\Uparrow B$，且事件$B$和事件$A$也满足“有时并行关系”，即$B\Uparrow A$（第8-9行）。最后函数依据未访问过的XOR-join节点返回XOR-join作用下的事件$A$和事件$B$之间的双向并行关系（第10-14行）。
 
 \begin{algorithm}[htbp]
+  \setstretch{0.8}
   \LinesNumbered
   \caption{检查XOR-join节点}
   \label{algo:exroru_event_concurrent_xorjoin}
@@ -447,6 +453,8 @@
   	\nl \Return{$A\&B,B\&A$}
   }
 \end{algorithm}
+
+算法\ref{algo:exroru_event_concurrent}中寻找并行入口到两个事件的路径需要各遍历一遍模型，时间复杂度为$O(2(V+E))$。检查路径上的XOR-split节点的内外循环分别最多被执行$V/2$次和$V/2$次，算法\ref{algo:exroru_event_concurrent_xorsplit}的时间复杂度为$O(V/2\times V/2\times(V+E))=O(V^{2}(V+E))$。同理，算法\ref{algo:exroru_event_concurrent_xorjoin}的时间复杂度为$O(V^{2}(V+E))$。综上，算法\ref{algo:exroru_event_concurrent}的时间复杂度为$O(V^{2}(V+E))$。
 
 \section{变迁间扩展不确定精炼有序关系}\label{sec:exroru_transition}
 本小节重点介绍如何折叠定义\ref{def:exroru_event_causal}、定义\ref{def:exroru_event_inverse_causal}和定义\ref{def:exroru_event_concurrent}中的事件间ExRORU关系得到原WF-net中变迁间ExRORU关系。一个WF-net中的变迁可能对应其CPU中的多个事件。这些对应的事件互不相同，在获取CPU中事件间ExRORU关系时都被当作独立事件处理。然而，这多个对应的事件与其他事件间的ExRORU关系通常是不一样的。因此，在获取WF-net中变迁间ExRORU关系时，需要逐一检查这些对应事件与其他变迁的对应事件间的关系，并将不同的事件间ExRORU关系折叠得到变迁间ExRORU关系。
@@ -510,10 +518,11 @@
 \end{example}
 
 \subsection{基于WF-net计算变迁间ExRORU关系}\label{subsec:exroru_transition_computation}
+
 依据定义\ref{def:exroru_transition_causal}的折叠方法，算法\ref{algo:exroru_transition_causal}给出了计算变迁间因果关系的伪代码。算法接收WF-net $\Sigma$和两个变迁$A$、$B$作为输入，输出变迁$A$和变迁$B$之间的因果关系。算法首先初始化“Always”计数、“Never”计数和“Direct”标识（第1行），接下来利用双重循环判断变迁$A$和变迁$B$的对应事件之间的关系（第2-12行）。对于变迁$A$的每一个对应事件$a$，初始化局部因果标识和局部“Always”标识（第2-3行）：若存在变迁$B$的对应事件$b$使得两者满足因果关系，则改变局部因果标识（第5-6行）；若存在变迁$B$的对应事件$b$使得两者满足“总是因果关系”，则增加“Always”计数（第7-8行）；若存在变迁$B$的对应事件$b$使得两者满足“直接因果关系”，则改变“Direct”标识（第9-10行）。在遍历完变迁$B$的对应事件后，若局部因果标识未被改变，则增加“Never”计数（第11-12行）。最后，算法依据“Always”计数、“Never”计数和“Direct”标识判断变迁$A$和变迁$B$的因果关系（第13-22行）。
 
 \begin{algorithm}[htbp]
-  \setstretch{0.9}
+  \setstretch{0.8}
   \LinesNumbered
   \caption{计算变迁间因果关系}
   \label{algo:exroru_transition_causal}
@@ -521,39 +530,39 @@
   \KwOut{变迁$A$和变迁$B$之间的因果关系}
   $NumAlways\leftarrow 0,NumNever\leftarrow 0,IsDirect\leftarrow false$\;
   \For{$a$ \textnormal{in} map-to-events(A)} {
-	$LocalCausal\leftarrow false,LocalAlways\leftarrow false$\;
-	\For{$b$ \textnormal{in} map-to-events(B)} {
-  	  \If{$LocalCausal=false$ \textnormal{and} $(a\overset{\text{\tiny{A}}}{\rightarrow}b$ \textnormal{or} $a\overset{\text{\tiny{S}}}{\rightarrow}b)$} {
-  	    $LocalCausal\leftarrow true$\;
-  	  }
-	  \If{$LocalAlways=false$ \textnormal{and} $a\overset{\text{\tiny{A}}}{\rightarrow}b$} {
-		$NumAlways\leftarrow NumAlways+1,LocalAlways\leftarrow true$\;
-	  }
-	  \If{$IsDirect=false$ \textnormal{and} $(a\overset{\text{\tiny{DA}}}{\rightarrow}b$ \textnormal{or} $a\overset{\text{\tiny{DS}}}{\rightarrow}b)$} {
-	    $IsDirect\leftarrow true$\;
-	  }
-	}
-	\If{$LocalCausal=false$} {
-	  $NumNever\leftarrow NumNever+1$\;
-	}
+  $LocalCausal\leftarrow false,LocalAlways\leftarrow false$\;
+  \For{$b$ \textnormal{in} map-to-events(B)} {
+      \If{$LocalCausal=false$ \textnormal{and} $(a\overset{\text{\tiny{A}}}{\rightarrow}b$ \textnormal{or} $a\overset{\text{\tiny{S}}}{\rightarrow}b)$} {
+        $LocalCausal\leftarrow true$\;
+      }
+    \If{$LocalAlways=false$ \textnormal{and} $a\overset{\text{\tiny{A}}}{\rightarrow}b$} {
+    $NumAlways\leftarrow NumAlways+1,LocalAlways\leftarrow true$\;
+    }
+    \If{$IsDirect=false$ \textnormal{and} $(a\overset{\text{\tiny{DA}}}{\rightarrow}b$ \textnormal{or} $a\overset{\text{\tiny{DS}}}{\rightarrow}b)$} {
+      $IsDirect\leftarrow true$\;
+    }
+  }
+  \If{$LocalCausal=false$} {
+    $NumNever\leftarrow NumNever+1$\;
+  }
   }
   \uIf{$NumAlways=|\text{map-to-events(A)}|$ \textnormal{and} $IsDirect=true$} {
-	\Return{$A\overset{\text{\tiny{DA}}}{\rightarrow}B$}
+  \Return{$A\overset{\text{\tiny{DA}}}{\rightarrow}B$}
   } \uElseIf{$NumAlways=|\text{map-to-events(A)}|$ \textnormal{and} $IsDirect=false$} {
-	\Return{$A\overset{\text{\tiny{IA}}}{\rightarrow}B$}
+  \Return{$A\overset{\text{\tiny{IA}}}{\rightarrow}B$}
   } \uElseIf{$NumNever=|\text{map-to-events(A)}|$} {
-	\Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$}
+  \Return{$A\overset{\text{\tiny{N}}}{\rightarrow}B$}
   } \uElseIf{$IsDirect=true$} {
-	\Return{$A\overset{\text{\tiny{DS}}}{\rightarrow}B$}
+  \Return{$A\overset{\text{\tiny{DS}}}{\rightarrow}B$}
   } \Else {
-	\Return{$A\overset{\text{\tiny{IS}}}{\rightarrow}B$}
+  \Return{$A\overset{\text{\tiny{IS}}}{\rightarrow}B$}
   }
 \end{algorithm}
 
 计算变迁间逆因果关系的伪代码与算法\ref{algo:exroru_transition_causal}类似，不再赘述。需要注意的是，与事件间因果关系类似，对于一对变迁$A$和$B$，其因果关系$A\rightarrow B$和逆因果关系$B\leftarrow A$可能有着不同的不确定性。例如，在图\ref{fig:case_study_petri}所示的WF-net中，变迁$A$和变迁$O$满足“间接总是因果关系”，即$A\overset{\text{\tiny{IA}}}{\rightarrow}O$；而变迁$O$和变迁$A$满足“间接有时逆因果关系”，即$O\overset{\text{\tiny{IS}}}{\leftarrow}A$。
 
 \begin{algorithm}[htbp]
-  % \setstretch{0.9}
+  \setstretch{0.8}
   \LinesNumbered
   \caption{计算变迁间并行关系}
   \label{algo:exroru_transition_concurrent}

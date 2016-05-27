@@ -122,8 +122,6 @@ ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不�
 
 {\heiti 多关系\qquad}如本文算法所述，过程模型中的两个变迁$X$和$Y$之间可能存在多种类型的关系。如图\ref{fig:multi_relation}所示，图\subref{fig:multi_relation_petri}是含有多关系变迁对的WF-net示例，图\subref{fig:multi_relation_cpu}是其对应的CPU，其中变迁$A$和变迁$D$可以同时满足因果关系和并行关系。具体分析，当在该WF-net的源库所$P_{0}$中放置一个托肯时，变迁$I$被使能，当其被触发后，会在库所$P_{1}$和库所$P_{2}$中各产生一个托肯；接下来触发变迁$A$，则此时库所$P_{2}$和库所$P_{3}$中各有一个托肯，变迁$B$、变迁$C$和变迁$E$同时被使能；在这种情况下，若选择触发变迁$E$则会同时消耗两个托肯，并在库所$P_{4}$和库所$P_{5}$中各产生一个托肯，变迁$B$和变迁$C$都被跳过，然而若触发变迁$B$或者变迁$C$，则会夺走变迁$E$输入库所中的托肯使其不能被触发。
 
-从CPU中可知该模型共有两个过程流，分别表示为$[I\{AC,BD\}O]$和$[I\{A\}E\{D\}O]$，由ExRORU算法得到变迁$A$和变迁$D$满足“间接有时因果关系”，即$A\overset{\text{\tiny{IS}}}{\rightarrow}D$；同时它们满足“有时并行关系”，即$A\Uparrow D$。
-
 \begin{figure}[htbp]
   \centering
   \begin{subfigure}{1\textwidth}
@@ -143,6 +141,8 @@ ExRORUGenerator是抽取变迁间ExRORU关系的主类，其调用了三个不�
   \caption{含有多关系变迁对的模型示例}
   \label{fig:multi_relation}
 \end{figure}
+
+从CPU中可知该模型共有两个过程流，分别表示为$[I\{AC,BD\}O]$和$[I\{A\}E\{D\}O]$，由ExRORU算法得到变迁$A$和变迁$D$满足“间接有时因果关系”，即$A\overset{\text{\tiny{IS}}}{\rightarrow}D$；同时它们满足“有时并行关系”，即$A\Uparrow D$。
 
 绝大多数算法如BP、TAR等都不能识别变迁对之间多关系的存在，因为它们将每对变迁之间的关系定义为单独一种，因此这些算法也无法准确地刻画过程模型的行为语义从而不能有效地区分含有多关系变迁对的模型。虽然RORU算法允许一对变迁之间存在多种关系，但是它并没有对一个变迁在CPU中对应多个事件的情况作处理。根据RORU的计算方法，CPU中的每个事件都被当作独立事件参与事件间RORU关系的计算，RORU并没有提及如何将多个对应事件与其他事件的关系折叠回原始变迁对之间的RORU关系。例如，在图\ref{fig:multi_relation}的模型中，RORU无法确定变迁$D$（变迁$D$在图\ref{fig:multi_relation_cpu}的CPU中有两个对应事件，变迁$O$也一样）和其他变迁之间的关系。
 
