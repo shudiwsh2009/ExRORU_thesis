@@ -1,19 +1,13 @@
 % !TEX root = ../main.tex
 % !TEX program = xelatex
 
-\chapter{ExRORU算法的唯一性证明}
+\chapter{ExRORU算法的唯一性补充说明}
 \label{app:uniqueness}
+对过程模型$P$结构上的任意单步变动产生了新的过程模型$Q$，可以从三个方面证明$P$和$Q$的ExRORU矩阵是不同的：（1）改变一对变迁间的关系；（2）增加/删除一个可见变迁；（3）增加/删除一个不可见变迁。接下来用图示法从三个方面分别说明。
 
-\begin{theorem}[唯一性]
-如果两个过程模型在其轨迹上表现出任何不同的行为，它们的ExRORU矩阵必然是不同的。
-\end{theorem}
+{\heiti（1）改变一对变迁间的关系：}如果一对关系被改变了，例如一对处于顺序结构中的变迁被改造成并行结构或者循环结构，这类基本关系的改变显然会直接反映在模型的ExRORU矩阵中，在此不加赘述。
 
-\begin{proof}
-对过程模型$P$结构上的任意单步变动产生了新的过程模型$Q$，可以从三个方面证明$P$和$Q$的ExRORU矩阵是不同的：（1）改变一对变迁间的关系；（2）增加/删除一个可见变迁；（3）增加/删除一个不可见变迁。接下来从三个方面分别证明。
-
-\textbf{（1）改变一对变迁间的关系：}如果一对关系被改变了，例如一对处于顺序结构中的变迁被改造成并行结构或者循环结构，这类基本关系的改变显然会直接反映在模型的ExRORU矩阵中，在此不加赘述。
-
-\textbf{（2）增加/删除一个可见变迁：}一个新的可见变迁可以被添加在过程模型中，且其必然会与一个已有的变迁（更一般化地，与一个包含多个变迁和库所的子过程）同处一个顺序结构、或并行结构、或互斥结构、或循环结构，如图\ref{fig:uniqueness_2}所示。为便于展示，图中只展示了一个WF-net的部分结构，$A$和$B$是两个不同的变迁，带斜线的阴影框表示不可见变迁。矩阵中的$A$和$B$对应图中的两个变迁，$S$代表该部分结构前与之紧邻的前驱变迁，$E$代表该部分结构后与之紧邻的后继变迁。
+{\heiti（2）增加/删除一个可见变迁：}一个新的可见变迁可以被添加在过程模型中，且其必然会与一个已有的变迁（更一般化地，与一个包含多个变迁和库所的子过程）同处一个顺序结构、或并行结构、或互斥结构、或循环结构，如图\ref{fig:uniqueness_2}所示。为便于展示，图中只展示了一个WF-net的部分结构，$A$和$B$是两个不同的变迁，带斜线的阴影框表示不可见变迁。矩阵中的$A$和$B$对应图中的两个变迁，$S$代表该部分结构前与之紧邻的前驱变迁，$E$代表该部分结构后与之紧邻的后继变迁。
 \begin{enumerate}[(a)]
   \item 原始模型的部分结构，只含有一个可见变迁$A$，如图\ref{fig:uniqueness_2_a}。
   \item 在变迁$A$之后增加一个可见变迁$B$，与变迁$A$同处顺序结构，如图\ref{fig:uniqueness_2_b}。此时ExRORU矩阵多了有关变迁$B$的行列，显然发生了改变。
@@ -24,7 +18,7 @@
 \end{enumerate}
 从图中可以看出，上述所有变化都会导致对应的ExRORU矩阵发生变化。因为一个新的过程模型是通过将上述单步变化连续应用在原始过程模型中产生的，归纳可知新的过程模型和原始模型拥有不同的ExRORU矩阵。类似的证明可应用于“删除一个可见变迁”中。
 
-\textbf{（3）增加/删除一个不可见变迁：}一个新的不可见变迁也可以被添加在过程模型中，与情形（2）中的结构类似，如图\ref{fig:uniqueness_3}所示。
+{\heiti（3）增加/删除一个不可见变迁：}一个新的不可见变迁也可以被添加在过程模型中，与情形（2）中的结构类似，如图\ref{fig:uniqueness_3}所示。
 \begin{enumerate}[(a)]
   \item 原始模型的部分结构，只含有一个可见变迁$A$，如图\ref{fig:uniqueness_3_a}。
   \item 将变迁$A$两侧的库所合并成一个库所，如图\ref{fig:uniqueness_3_b}。变迁$S$和变迁$A$的因果关系、变迁$A$和变迁$S$的逆因果关系从“直接总是因果关系”、“直接总是逆因果关系”变为“直接有时因果关系”、“直接有时逆因果关系”，即$S\overset{\text{\tiny{DA}}}{\rightarrow}A,A\overset{\text{\tiny{DA}}}{\leftarrow}S\Rightarrow S\overset{\text{\tiny{DS}}}{\rightarrow}A,A\overset{\text{\tiny{DS}}}{\leftarrow}S$；变迁$A$和变迁$E$的因果关系、变迁$E$和变迁$A$的逆因果关系从“直接总是因果关系”、“直接总是逆因果关系”变为“直接有时因果关系”、“直接有时逆因果关系”，即$A\overset{\text{\tiny{DA}}}{\rightarrow}E,E\overset{\text{\tiny{DA}}}{\leftarrow}A\Rightarrow A\overset{\text{\tiny{DS}}}{\rightarrow}E,E\overset{\text{\tiny{DS}}}{\leftarrow}A$；变迁$A$与其自身的因果关系和逆因果关系从“从不因果关系”和“从不逆因果关系”变为“直接有时因果关系”和“直接有时逆因果关系”，即$A\overset{\text{\tiny{N}}}{\rightarrow}A,A\overset{\text{\tiny{N}}}{\leftarrow}A\Rightarrow A\overset{\text{\tiny{DS}}}{\rightarrow}A,A\overset{\text{\tiny{DS}}}{\leftarrow}A$；变迁$S$和变迁$E$的因果关系、变迁$E$与变迁$S$的逆因果关系从“间接总是因果关系”、“间接总是逆因果关系”变为“直接总是因果关系”、“直接总是逆因果关系”，即$S\overset{\text{\tiny{IA}}}{\rightarrow}E,E\overset{\text{\tiny{IA}}}{\leftarrow}S\Rightarrow S\overset{\text{\tiny{DA}}}{\rightarrow}E,E\overset{\text{\tiny{DA}}}{\leftarrow}S$。
@@ -37,7 +31,6 @@
   \item 增加一个不可见变迁，与$A$同处循环结构，如图\ref{fig:uniqueness_3_i}。变迁$A$和变迁$S$的逆因果关系从“直接总是逆因果关系”变为“直接有时逆因果关系”，即$A\overset{\text{\tiny{DA}}}{\leftarrow}S\Rightarrow A\overset{\text{\tiny{DS}}}{\leftarrow}S$；变迁$A$和变迁$E$的因果关系从“直接总是因果关系”变为“直接有时因果关系”，即$A\overset{\text{\tiny{DA}}}{\rightarrow}E\Rightarrow A\overset{\text{\tiny{DS}}}{\rightarrow}E$；变迁$A$与其自身的因果关系和逆因果关系从“从不因果关系”和“从不逆因果关系”变为“直接有时因果关系”和“直接有时逆因果关系”，即$A\overset{\text{\tiny{N}}}{\rightarrow}A,A\overset{\text{\tiny{N}}}{\leftarrow}A\Rightarrow A\overset{\text{\tiny{DS}}}{\rightarrow}A,A\overset{\text{\tiny{DS}}}{\leftarrow}A$；变迁$A$和变迁$B$的并行关系从“总是并行关系”变为“有时并行关系”，即$A\Updownarrow B\Rightarrow A\Uparrow B$。
 \end{enumerate}
 任意单步变化都会导致对应的ExRORU矩阵发生变化，根据归纳法可知将上述单步变化连续应用在原始过程模型中产生的新过程模型拥有与原始模型不同的ExRORU矩阵。类似的证明可应用于“删除一个不可见变迁”中。
-\end{proof}
 
 \begin{figure}[htbp]
   \centering
